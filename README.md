@@ -5,13 +5,13 @@
 
 ### Student email: *sbb24@student.le.ac.uk*
 
-###Project description:
+### Project description:
 
 _Managing pension benefits can often be complex and time-consuming. The goal of this project is to develop a secure, online platform that allows users to efficiently manage all aspects of their pension plans. The system will provide functionalities such as viewing pension statements, tracking contributions, updating personal details, and accessing fund information. Given the sensitive nature of financial data, implementing robust security measures—such as encryption, multi-factor authentication (MFA), and role-based access control—will be a primary concern.
 The platform will be designed with usability, scalability, and compliance in mind, ensuring compatibility with various pension schemes and regulatory requirements. By providing an intuitive and user-friendly interface, this tool will empower individuals to make well-informed financial decisions regarding their retirement planning._
 
 
-###List of requirements (objectives):
+### List of requirements (objectives):
 
 Essential:
 
