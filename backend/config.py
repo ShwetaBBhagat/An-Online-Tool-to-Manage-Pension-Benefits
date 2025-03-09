@@ -11,3 +11,6 @@ class Config:
     MAIL_USE_TLS = True
     MAIL_USERNAME = "pensionmanagementtool@gmail.com"
     MAIL_PASSWORD = "Shweta17@"
+   
+    # JWT Secret Key
+    JWT_SECRET_KEY = "280303"  

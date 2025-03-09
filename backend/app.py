@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_cors import CORS
 from models.user_model import db
 from api.auth_routes import auth_bp
@@ -20,6 +20,10 @@ mail = Mail(app)
 
 # Register Blueprint
 app.register_blueprint(auth_bp, url_prefix='/api/auth')
+
+@app.route('/')
+def home():
+    return jsonify({"message": "Welcome to the Pension Benefits API"}), 200
 
 # Create tables if they don’t exist
 with app.app_context():
