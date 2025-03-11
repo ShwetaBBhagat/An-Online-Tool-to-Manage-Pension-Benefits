@@ -35,3 +35,23 @@ Thank you!
 
     # Send email in a separate thread
     Thread(target=send_async_email, args=(current_app._get_current_object(), msg)).start()
+
+def send_reset_email(user_email, reset_url):
+    """Send a password reset email with a reset link."""
+    msg = Message("Password Reset Request",
+                  sender="your-email@example.com",
+                  recipients=[user_email])
+
+    msg.body = f"""Hello,
+
+To reset your password, please click the link below:
+
+{reset_url}
+
+If you did not request this reset, please ignore this email.
+
+Thank you!
+"""
+    # Send email in a separate thread
+    Thread(target=send_async_email, args=(current_app._get_current_object(), msg)).start()
+

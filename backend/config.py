@@ -14,3 +14,4 @@ class Config:
    
     # JWT Secret Key
     JWT_SECRET_KEY = "280303"  
+    JWT_RESET_SECRET = "170598"

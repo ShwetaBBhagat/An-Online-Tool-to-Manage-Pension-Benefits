@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, url_for
 from models.user_model import db, User
 import bcrypt
 from flask_bcrypt import check_password_hash
@@ -7,7 +7,8 @@ import jwt
 import datetime
 from config import Config
 import re
-from utils.email_service import send_welcome_email
+from utils.email_service import send_welcome_email, send_reset_email
+from utils.password_reset import generate_reset_token, verify_reset_token
 from utils.helpers import generate_mfa_qr
 from utils.auth_middleware import token_required, admin_required
 import os
@@ -154,3 +155,52 @@ def admin_dashboard(current_user):
         "admin_id": current_user.id,
         "email": current_user.email
     }), 200
+
+@auth_bp.route('/request-reset', methods=['POST'])
+def request_reset():
+    """Step 1: User requests a password reset."""
+    data = request.get_json()
+    email = data.get("email")
+
+    if not email:
+        return jsonify({"error": "Email is required"}), 400
+
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    # Generate reset token
+    reset_token = generate_reset_token(email)
+    
+    # Generate Reset Link
+    reset_url = url_for('auth_bp.reset_password', token=reset_token, _external=True)
+
+    # Send email
+    send_reset_email(email, reset_url)
+
+    return jsonify({"message": "Password reset link sent to your email"}), 200
+
+@auth_bp.route('/reset-password', methods=['POST'])
+def reset_password():
+    """Step 2: User submits a new password with the reset token."""
+    data = request.get_json()
+    token = data.get("token")
+    new_password = data.get("password")
+
+    if not token or not new_password:
+        return jsonify({"error": "Token and new password are required"}), 400
+
+    email = verify_reset_token(token)
+    if not email:
+        return jsonify({"error": "Invalid or expired token"}), 400
+
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    # Hash new password
+    hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+    user.password = hashed_password
+    db.session.commit()
+
+    return jsonify({"message": "Password has been reset successfully"}), 200
