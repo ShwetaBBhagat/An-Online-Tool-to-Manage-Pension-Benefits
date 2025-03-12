@@ -3,6 +3,7 @@ from flask import request, jsonify
 from config import Config
 from functools import wraps
 from models.user_model import User
+from utils.token_blacklist import is_token_blacklisted
 
 def token_required(f):
     """Middleware to check if the user has a valid JWT token."""
@@ -10,12 +11,16 @@ def token_required(f):
     def decorated(*args, **kwargs):
         token = None
 
-        # Check if the token is provided in headers
+        # Extract token from Authorization header
         if 'Authorization' in request.headers:
-            token = request.headers['Authorization'].split(" ")[1]  # Extract Bearer token
+            token = request.headers['Authorization'].split(" ")[1]
 
         if not token:
             return jsonify({"error": "Token is missing!"}), 401
+
+        # Check if token is blacklisted
+        if is_token_blacklisted(token):
+            return jsonify({"error": "Token has been revoked! Please log in again."}), 401
 
         try:
             data = jwt.decode(token, Config.JWT_SECRET_KEY, algorithms=["HS256"])

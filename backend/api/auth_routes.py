@@ -13,6 +13,7 @@ from utils.helpers import generate_mfa_qr
 from utils.auth_middleware import token_required, admin_required
 import os
 import qrcode
+from utils.token_blacklist import blacklist_token
 
 auth_bp = Blueprint('auth_bp', __name__)  # Authentication Blueprint
 
@@ -204,3 +205,29 @@ def reset_password():
     db.session.commit()
 
     return jsonify({"message": "Password has been reset successfully"}), 200
+
+@auth_bp.route('/logout', methods=['POST'])
+def logout():
+    """Invalidate JWT token (Logout)"""
+    token = None
+
+    # Extract token from Authorization header
+    if 'Authorization' in request.headers:
+        token = request.headers['Authorization'].split(" ")[1]
+
+    if not token:
+        return jsonify({"error": "Token is missing!"}), 401
+
+    try:
+        # Decode token to check validity
+        jwt.decode(token, Config.JWT_SECRET_KEY, algorithms=["HS256"])
+        
+        # Blacklist token
+        blacklist_token(token)
+
+        return jsonify({"message": "Logged out successfully!"}), 200
+
+    except jwt.ExpiredSignatureError:
+        return jsonify({"error": "Token has already expired"}), 401
+    except jwt.InvalidTokenError:
+        return jsonify({"error": "Invalid token"}), 401
