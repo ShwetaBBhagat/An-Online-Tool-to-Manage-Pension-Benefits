@@ -147,16 +147,6 @@ def login():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@auth_bp.route('/admin/dashboard', methods=['GET'])
-@token_required
-@admin_required
-def admin_dashboard(current_user):
-    return jsonify({
-        "message": "Welcome Admin!",
-        "admin_id": current_user.id,
-        "email": current_user.email
-    }), 200
-
 @auth_bp.route('/request-reset', methods=['POST'])
 def request_reset():
     """Step 1: User requests a password reset."""
@@ -231,3 +221,41 @@ def logout():
         return jsonify({"error": "Token has already expired"}), 401
     except jwt.InvalidTokenError:
         return jsonify({"error": "Invalid token"}), 401
+
+@auth_bp.route('/user/profile', methods=['GET'])
+@token_required
+def get_user_profile(current_user):
+    profile_data = {
+        "id": current_user.id,
+        "name": current_user.name,
+        "email": current_user.email,
+        "date_of_birth": current_user.date_of_birth,
+        "ni_number": current_user.ni_number,
+        "current_salary": float(current_user.current_salary) if current_user.current_salary else None,
+        "employment_status": current_user.employment_status,
+        "investment_type": current_user.investment_type,
+        "address": current_user.address,
+        "postal_code": current_user.postal_code,
+        "contact_number": current_user.contact_number,
+        "profile_completed": current_user.profile_completed
+    }
+    return jsonify(profile_data), 200
+
+
+@auth_bp.route('/user/update-profile', methods=['PUT'])
+@token_required
+def update_user_profile(current_user):
+    data = request.get_json()
+
+    current_user.date_of_birth = data.get("date_of_birth", current_user.date_of_birth)
+    current_user.ni_number = data.get("ni_number", current_user.ni_number)
+    current_user.current_salary = data.get("current_salary", current_user.current_salary)
+    current_user.employment_status = data.get("employment_status", current_user.employment_status)
+    current_user.investment_type = data.get("investment_type", current_user.investment_type)
+    current_user.address = data.get("address", current_user.address)
+    current_user.postal_code = data.get("postal_code", current_user.postal_code)
+    current_user.contact_number = data.get("contact_number", current_user.contact_number)
+    current_user.profile_completed = True
+
+    db.session.commit()
+    return jsonify({"message": "Profile updated successfully!"}), 200
