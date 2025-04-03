@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify, url_for
 from models.user_model import db, User
+from models.pension_statement_model import db, PensionStatement
 import bcrypt
 from flask_bcrypt import check_password_hash
 import pyotp
@@ -14,9 +15,24 @@ from utils.auth_middleware import token_required, admin_required
 import os
 import qrcode
 from utils.token_blacklist import blacklist_token
+from flask import send_file
+from utils.pdf_generator import StatementPDF
+import io
+from werkzeug.utils import secure_filename
+from models.document_model import Document
+
+
 
 auth_bp = Blueprint('auth_bp', __name__)  # Authentication Blueprint
 
+UPLOAD_FOLDER = os.path.join(os.getcwd(), "backend", "uploads")
+ALLOWED_EXTENSIONS = {'pdf', 'jpg', 'jpeg', 'png'}
+
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def is_strong_password(password):
     """
@@ -259,3 +275,183 @@ def update_user_profile(current_user):
 
     db.session.commit()
     return jsonify({"message": "Profile updated successfully!"}), 200
+
+@auth_bp.route('/user/statements', methods=['GET'])
+@token_required
+def get_user_statements(current_user):
+    try:
+        # Get all statements for the logged-in user
+        statements = PensionStatement.query.filter_by(user_id=current_user.id).order_by(
+            PensionStatement.statement_date.desc()
+        ).all()
+
+        result = []
+        for s in statements:
+            result.append({
+                "statement_id": s.id,
+                "statement_start_date": s.statement_start_date.strftime("%Y-%m-%d"),
+                "statement_end_date": s.statement_end_date.strftime("%Y-%m-%d"),
+                "statement_date": s.statement_date.strftime("%Y-%m-%d"),
+                "account_number": s.account_number,
+                "salary": str(s.salary),
+                "employer_contribution": str(s.employer_contribution),
+                "employee_contribution": str(s.employee_contribution),
+                "total_contribution": str(s.total_contribution),
+                "employer_percent": float(s.employer_percent),
+                "employee_percent": float(s.employee_percent),
+                "fund_name": s.fund_name,
+                "fund_performance": str(s.fund_performance),
+                "pot_value": str(s.pot_value)
+            })
+
+        return jsonify({"status": "success", "data": result}), 200
+
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+@auth_bp.route('/user/statements/<int:statement_id>/download', methods=['GET'])
+@token_required
+def download_statement_pdf(current_user, statement_id):
+    statement = PensionStatement.query.filter_by(id=statement_id, user_id=current_user.id).first()
+    if not statement:
+        return jsonify({"error": "Statement not found"}), 404
+
+    # Prepare data
+    data = {
+        "Statement ID": statement.id,
+        "Period": f"{statement.statement_start_date} to {statement.statement_end_date}",
+        "Date Issued": statement.statement_date,
+        "Pension Account": statement.account_number or "N/A",
+        "Salary": f"£{statement.salary}",
+        "Employer Contribution": f"£{statement.employer_contribution} ({statement.employer_percent}%)",
+        "Employee Contribution": f"£{statement.employee_contribution} ({statement.employee_percent}%)",
+        "Total Contribution": f"£{statement.total_contribution}",
+        "Fund": statement.fund_name,
+        "Fund Performance": f"{statement.fund_performance}%",
+        "Pot Value": f"£{statement.pot_value}"
+    }
+
+    # Generate PDF
+    pdf = StatementPDF()
+    pdf.add_page()
+    pdf.add_statement(data)
+
+    # Output to BytesIO
+    pdf_bytes = pdf.output(dest='S').encode('latin-1')
+    buffer = io.BytesIO(pdf_bytes)
+
+    return send_file(
+        buffer,
+        as_attachment=True,
+        download_name=f"statement_{statement.id}.pdf",
+        mimetype='application/pdf'
+    )
+
+@auth_bp.route('/user/upload-document', methods=['POST'])
+@token_required
+def upload_document(current_user):
+    if 'file' not in request.files:
+        return jsonify({"error": "No file part"}), 400
+
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({"error": "No file selected"}), 400
+
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        filepath = os.path.join(UPLOAD_FOLDER, filename)
+        file.save(filepath)
+
+        new_doc = Document(user_id=current_user.id, filename=filename, filepath=filepath)
+        db.session.add(new_doc)
+        db.session.commit()
+
+        return jsonify({"message": "Document uploaded successfully!"}), 201
+
+    return jsonify({"error": "File type not allowed"}), 400
+
+@auth_bp.route('/user/documents', methods=['GET'])
+@token_required
+def list_user_documents(current_user):
+    docs = Document.query.filter_by(user_id=current_user.id).all()
+    result = [{"id": d.id, "filename": d.filename, "uploaded_at": d.uploaded_at.strftime("%Y-%m-%d %H:%M")} for d in docs]
+    return jsonify({"documents": result}), 200
+
+@auth_bp.route('/user/documents/<int:doc_id>/download', methods=['GET'])
+@token_required
+def download_document(current_user, doc_id):
+    doc = Document.query.get(doc_id)
+    if not doc:
+        return jsonify({"error": "Document not found"}), 404
+
+    # Role-based access: users can only access their own docs, admins can access all
+    if current_user.id != doc.user_id and current_user.role != 'admin':
+        return jsonify({"error": "Access denied"}), 403
+
+    return send_file(doc.filepath, as_attachment=True, download_name=doc.filename)
+
+@auth_bp.route('/user/analytics', methods=['GET'])
+@token_required
+def get_user_analytics(current_user):
+    try:
+        statements = PensionStatement.query.filter_by(user_id=current_user.id).order_by(
+            PensionStatement.statement_date.asc()
+        ).all()
+
+        if not statements:
+            return jsonify({"message": "No pension data found"}), 404
+
+        # Build timeline data
+        contributions_chart = []
+        total_employee = 0
+        total_employer = 0
+
+        for s in statements:
+            total_employee += float(s.employee_contribution)
+            total_employer += float(s.employer_contribution)
+
+            contributions_chart.append({
+                "month": s.statement_date.strftime("%b %Y"),
+                "employee_contribution": float(s.employee_contribution),
+                "employer_contribution": float(s.employer_contribution),
+                "pot_value": float(s.pot_value)
+            })
+
+        current_pot = float(statements[-1].pot_value)
+
+        # Estimate growth rate (fallback to 5% if missing or unreliable)
+        try:
+            avg_growth = sum([float(s.fund_performance) for s in statements]) / len(statements)
+        except:
+            avg_growth = 5.0
+        growth_rate = (avg_growth or 5.0) / 100
+
+        # Project till UK retirement age (68)
+        if current_user.date_of_birth:
+            current_age = datetime.datetime.now().year - current_user.date_of_birth.year
+            years_to_retire = max(0, 68 - current_age)
+        else:
+            years_to_retire = 30  # default
+
+        projected_pot = round(current_pot * ((1 + growth_rate) ** years_to_retire), 2)
+
+        return jsonify({
+            "status": "success",
+            "analytics": {
+                "total_contributions": {
+                    "employee": round(total_employee, 2),
+                    "employer": round(total_employer, 2),
+                    "combined": round(total_employee + total_employer, 2)
+                },
+                "average_growth_rate": round(growth_rate * 100, 2),
+                "contributions_chart": contributions_chart,
+                "projections": {
+                    "current_pot": current_pot,
+                    "years_to_retirement": years_to_retire,
+                    "projected_pot_at_retirement": projected_pot
+                }
+            }
+        }), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500

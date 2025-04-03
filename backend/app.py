@@ -4,16 +4,19 @@ from flask_cors import CORS
 from config import Config
 from models import db  # ✅ Import the globally shared 'db' instance
 from models.user_model import User
+from models.pension_statement_model import PensionStatement
 from api.auth_routes import auth_bp
 from flask_mail import Mail
 from utils.email_service import mail
 import os
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 app.config.from_object(Config)
 
 # Initialize Database and Flask-Mail
 db.init_app(app)  # ✅ Ensure SQLAlchemy is correctly linked with Flask
+migrate = Migrate(app, db)
 
 # Flask-Mail Configuration
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # Change this to your email provider's SMTP server
