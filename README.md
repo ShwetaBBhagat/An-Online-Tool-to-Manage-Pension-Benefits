@@ -33,7 +33,6 @@ Optional:
 - Multi-language support – Provide support for multiple languages to enhance accessibility for diverse user demographics.
 - Chatbot assistance for user queries – Implement an AI-powered chatbot to assist users with pension-related inquiries and platform navigation.
 - Gamification elements for financial education – Introduce gamification features (e.g., progress badges, rewards) to encourage better pension management habits.
-- Voice assistant integration – Enable users to interact with the system using voice commands for an enhanced user experience.
 
 
 Tech Stack:
