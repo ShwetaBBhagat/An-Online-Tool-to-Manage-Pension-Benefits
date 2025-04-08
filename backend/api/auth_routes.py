@@ -156,8 +156,9 @@ def login():
         token = jwt.encode(payload, Config.JWT_SECRET_KEY, algorithm="HS256")
 
         return jsonify({
-            "message": "Login successful",
-            "access_token": token
+            "message": f"{user.role.capitalize()} login successful",
+            "access_token": token,
+            "role": user.role
         }), 200
 
     except Exception as e:
@@ -238,43 +239,87 @@ def logout():
     except jwt.InvalidTokenError:
         return jsonify({"error": "Invalid token"}), 401
 
-@auth_bp.route('/user/profile', methods=['GET'])
-@token_required
-def get_user_profile(current_user):
-    profile_data = {
-        "id": current_user.id,
-        "name": current_user.name,
-        "email": current_user.email,
-        "date_of_birth": current_user.date_of_birth,
-        "ni_number": current_user.ni_number,
-        "current_salary": float(current_user.current_salary) if current_user.current_salary else None,
-        "employment_status": current_user.employment_status,
-        "investment_type": current_user.investment_type,
-        "address": current_user.address,
-        "postal_code": current_user.postal_code,
-        "contact_number": current_user.contact_number,
-        "profile_completed": current_user.profile_completed
-    }
-    return jsonify(profile_data), 200
-
-
 @auth_bp.route('/user/update-profile', methods=['PUT'])
 @token_required
 def update_user_profile(current_user):
     data = request.get_json()
 
-    current_user.date_of_birth = data.get("date_of_birth", current_user.date_of_birth)
-    current_user.ni_number = data.get("ni_number", current_user.ni_number)
-    current_user.current_salary = data.get("current_salary", current_user.current_salary)
-    current_user.employment_status = data.get("employment_status", current_user.employment_status)
-    current_user.investment_type = data.get("investment_type", current_user.investment_type)
+    # === 1. Validate NI Number ===
+    ni_number = data.get("ni_number")
+    ni_regex = r'^[A-CEGHJ-PR-TW-Z]{2}\d{6}[A-D]$'
+    if ni_number and not re.match(ni_regex, ni_number.upper()):
+        return jsonify({"error": "Invalid UK NI number format (e.g., AB123456C)"}), 400
+
+    # === 2. Validate DOB ===
+    try:
+        dob_str = data.get("date_of_birth")
+        dob = datetime.datetime.strptime(dob_str, "%Y-%m-%d").date() if dob_str else None
+        if dob:
+            today = datetime.date.today()
+            age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
+            if age < 16:
+                return jsonify({"error": "You must be at least 16 years old"}), 400
+    except ValueError:
+        return jsonify({"error": "Invalid date format. Use YYYY-MM-DD"}), 400
+
+    # === 3. Validate Salary ===
+    salary = data.get("current_salary")
+    if salary is not None and (not isinstance(salary, (int, float)) or salary < 6240):
+        return jsonify({"error": "Salary must be at least £6,240 (UK qualifying threshold)"}), 400
+
+    # === 4. Validate Postal Code ===
+    postal_code = data.get("postal_code")
+    postcode_regex = r"^[A-Z]{1,2}\d{1,2}[A-Z]?\s?\d[A-Z]{2}$"
+    if postal_code and not re.match(postcode_regex, postal_code.upper()):
+        return jsonify({"error": "Invalid UK postal code"}), 400
+
+    # === 5. Validate Contact Number ===
+    contact_number = data.get("contact_number")
+    if contact_number and not re.match(r'^07\d{9}$', contact_number):
+        return jsonify({"error": "Invalid UK mobile number. Format: 07XXXXXXXXX"}), 400
+
+    # === 6. Validate Employment Status ===
+    employment_status = data.get("employment_status")
+    if employment_status and employment_status not in ["Active", "Retired"]:
+        return jsonify({"error": "Invalid employment status. Choose 'Active' or 'Retired'"}), 400
+
+    # === 7. Validate Investment Type ===
+    investment_type = data.get("investment_type")
+    if investment_type and investment_type not in ["Low", "Medium", "High"]:
+        return jsonify({"error": "Invalid investment type. Choose 'Low', 'Medium', or 'High'"}), 400
+
+    # ✅ Passed all validations, now update fields
+    current_user.date_of_birth = dob or current_user.date_of_birth
+    current_user.ni_number = ni_number or current_user.ni_number
+    current_user.current_salary = salary or current_user.current_salary
+    current_user.employment_status = employment_status or current_user.employment_status
+    current_user.investment_type = investment_type or current_user.investment_type
     current_user.address = data.get("address", current_user.address)
-    current_user.postal_code = data.get("postal_code", current_user.postal_code)
-    current_user.contact_number = data.get("contact_number", current_user.contact_number)
+    current_user.postal_code = postal_code or current_user.postal_code
+    current_user.contact_number = contact_number or current_user.contact_number
     current_user.profile_completed = True
 
     db.session.commit()
     return jsonify({"message": "Profile updated successfully!"}), 200
+
+
+# @auth_bp.route('/user/update-profile', methods=['PUT'])
+# @token_required
+# def update_user_profile(current_user):
+#     data = request.get_json()
+
+#     current_user.date_of_birth = data.get("date_of_birth", current_user.date_of_birth)
+#     current_user.ni_number = data.get("ni_number", current_user.ni_number)
+#     current_user.current_salary = data.get("current_salary", current_user.current_salary)
+#     current_user.employment_status = data.get("employment_status", current_user.employment_status)
+#     current_user.investment_type = data.get("investment_type", current_user.investment_type)
+#     current_user.address = data.get("address", current_user.address)
+#     current_user.postal_code = data.get("postal_code", current_user.postal_code)
+#     current_user.contact_number = data.get("contact_number", current_user.contact_number)
+#     current_user.profile_completed = True
+
+#     db.session.commit()
+#     return jsonify({"message": "Profile updated successfully!"}), 200
 
 @auth_bp.route('/user/statements', methods=['GET'])
 @token_required

@@ -6,6 +6,7 @@ from models import db  # ✅ Import the globally shared 'db' instance
 from models.user_model import User
 from models.pension_statement_model import PensionStatement
 from api.auth_routes import auth_bp
+from api.admin_routes import admin_bp
 from flask_mail import Mail
 from utils.email_service import mail
 import os
@@ -33,6 +34,7 @@ CORS(app)
 
 # Register authentication routes
 app.register_blueprint(auth_bp, url_prefix="/api/auth")
+app.register_blueprint(admin_bp, url_prefix='/api')
 
 # Serve QR codes via Flask
 @app.route('/qrcodes/<filename>')

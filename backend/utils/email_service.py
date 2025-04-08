@@ -55,3 +55,21 @@ Thank you!
     # Send email in a separate thread
     Thread(target=send_async_email, args=(current_app._get_current_object(), msg)).start()
 
+def send_statement_notification(user_email, user_name):
+    subject = "New Pension Statement Added"
+    msg = Message(subject, recipients=[user_email])
+    msg.body = f"""Hi {user_name},
+
+A new pension statement has been added to your account.
+
+Please log in to your pension dashboard to view the details:
+{Config.CLIENT_URL}/login
+
+Thank you,
+Pension Benefits Team
+"""
+    try:
+        mail.send(msg)
+        print(f"✅ Notification email sent to {user_email}")
+    except Exception as e:
+        print(f"❌ Failed to send statement notification email: {e}")
