@@ -1,6 +1,7 @@
 import jwt
 import datetime
 from config import Config
+from itsdangerous import URLSafeTimedSerializer
 
 def generate_reset_token(email):
     """Generate a secure JWT token for password reset."""
@@ -19,3 +20,15 @@ def verify_reset_token(token):
         return None  # Token expired
     except jwt.InvalidTokenError:
         return None  # Invalid token
+
+def generate_employer_token(email):
+    s = URLSafeTimedSerializer(Config.JWT_SECRET_KEY)
+    return s.dumps(email, salt="employer-set-password")
+
+def verify_employer_token(token, max_age=3600):
+    s = URLSafeTimedSerializer(Config.JWT_SECRET_KEY)
+    try:
+        email = s.loads(token, salt="employer-set-password", max_age=max_age)
+        return email
+    except:
+        return None

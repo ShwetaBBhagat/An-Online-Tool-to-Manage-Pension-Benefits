@@ -11,7 +11,6 @@ class User(db.Model):
     name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
-    role = db.Column(db.Enum('user', 'admin', name='user_roles'), default='user')
     mfa_secret = db.Column(db.String(32), nullable=True)
     date_of_birth = db.Column(db.Date, nullable=True)
     ni_number = db.Column(db.String(20), nullable=True)
@@ -23,6 +22,7 @@ class User(db.Model):
     contact_number = db.Column(db.String(15), nullable=True)
     profile_completed = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+    employer_id = db.Column(db.Integer, db.ForeignKey('employers.id'), nullable=True)
 
     def set_password(self, password):
         self.password = bcrypt.generate_password_hash(password).decode('utf-8')

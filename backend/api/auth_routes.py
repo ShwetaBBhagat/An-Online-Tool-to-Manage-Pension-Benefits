@@ -55,68 +55,68 @@ def is_strong_password(password):
     return None  # Password is strong
 
 
-@auth_bp.route('/signup', methods=['POST'])
-def signup():
-    """User Signup API with MFA, QR Code generation, and Welcome Email."""
-    try:
-        # Get user details from request
-        data = request.get_json()
-        name = data.get('name')
-        email = data.get('email')
-        password = data.get('password')
-        role = data.get('role', 'user')  # Default role: user
+# @auth_bp.route('/signup', methods=['POST'])
+# def signup():
+#     """User Signup API with MFA, QR Code generation, and Welcome Email."""
+#     try:
+#         # Get user details from request
+#         data = request.get_json()
+#         name = data.get('name')
+#         email = data.get('email')
+#         password = data.get('password')
+#         role = data.get('role', 'user')  # Default role: user
 
-        # Validate inputs
-        if not name or not email or not password:
-            return jsonify({"error": "All fields are required"}), 400
+#         # Validate inputs
+#         if not name or not email or not password:
+#             return jsonify({"error": "All fields are required"}), 400
 
-         # Validate email format
-        email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
-        if not re.match(email_regex, email):
-            return jsonify({"error": "Invalid email format"}), 400
+#          # Validate email format
+#         email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+#         if not re.match(email_regex, email):
+#             return jsonify({"error": "Invalid email format"}), 400
 
-        # Ensure password is strong
-        if len(password) < 8 or not any(c.isupper() for c in password) or not any(c.isdigit() for c in password) or not any(c in "!@#$%^&*()-_=+" for c in password):
-            return jsonify({"error": "Password must be at least 8 characters long, include uppercase letters, numbers, and special symbols"}), 400
+#         # Ensure password is strong
+#         if len(password) < 8 or not any(c.isupper() for c in password) or not any(c.isdigit() for c in password) or not any(c in "!@#$%^&*()-_=+" for c in password):
+#             return jsonify({"error": "Password must be at least 8 characters long, include uppercase letters, numbers, and special symbols"}), 400
 
-        # Check if user already exists
-        if User.query.filter_by(email=email).first():
-            return jsonify({"error": "Email already registered"}), 409
+#         # Check if user already exists
+#         if User.query.filter_by(email=email).first():
+#             return jsonify({"error": "Email already registered"}), 409
         
-        # Hash password
-        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+#         # Hash password
+#         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
-        # Generate MFA Secret Key
-        mfa_secret = pyotp.random_base32()
+#         # Generate MFA Secret Key
+#         mfa_secret = pyotp.random_base32()
 
-        # Generate MFA QR Code
-        otp_uri = f"otpauth://totp/PensionBenefits:{email}?secret={mfa_secret}&issuer=PensionBenefitsApp"
-        qr_code_dir = os.path.join(os.getcwd(), "backend", "qrcodes")
+#         # Generate MFA QR Code
+#         otp_uri = f"otpauth://totp/PensionBenefits:{email}?secret={mfa_secret}&issuer=PensionBenefitsApp"
+#         qr_code_dir = os.path.join(os.getcwd(), "backend", "qrcodes")
 
-        # Ensure QR Code directory exists
-        if not os.path.exists(qr_code_dir):
-            os.makedirs(qr_code_dir)
+#         # Ensure QR Code directory exists
+#         if not os.path.exists(qr_code_dir):
+#             os.makedirs(qr_code_dir)
 
-        qr_code_path = os.path.join(qr_code_dir, f"{email}_mfa.png")
-        qr = qrcode.make(otp_uri)
-        qr.save(qr_code_path)
+#         qr_code_path = os.path.join(qr_code_dir, f"{email}_mfa.png")
+#         qr = qrcode.make(otp_uri)
+#         qr.save(qr_code_path)
 
-        # Save user to database
-        new_user = User(name=name, email=email, password=hashed_password, role=role, mfa_secret=mfa_secret)
-        db.session.add(new_user)
-        db.session.commit()
+#         # Save user to database
+#         new_user = User(name=name, email=email, password=hashed_password, role=role, mfa_secret=mfa_secret)
+#         db.session.add(new_user)
+#         db.session.commit()
 
-        # Send welcome email with MFA QR Code
-        send_welcome_email(email, name, qr_code_path)
+#         # Send welcome email with MFA QR Code
+#         send_welcome_email(email, name, qr_code_path)
 
-        return jsonify({
-            "message": "User registered successfully! A welcome email with your MFA QR Code has been sent.",
-            "mfa_secret": mfa_secret,
-            "qr_code": f"/qrcodes/{email}_mfa.png"
-        }), 201
+#         return jsonify({
+#             "message": "User registered successfully! A welcome email with your MFA QR Code has been sent.",
+#             "mfa_secret": mfa_secret,
+#             "qr_code": f"/qrcodes/{email}_mfa.png"
+#         }), 201
 
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+#     except Exception as e:
+#         return jsonify({"error": str(e)}), 500
 
 
 @auth_bp.route('/login', methods=['POST'])

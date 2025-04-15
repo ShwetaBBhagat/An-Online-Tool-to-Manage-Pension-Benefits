@@ -70,6 +70,44 @@ Pension Benefits Team
 """
     try:
         mail.send(msg)
-        print(f"✅ Notification email sent to {user_email}")
+        print(f"Notification email sent to {user_email}")
     except Exception as e:
-        print(f"❌ Failed to send statement notification email: {e}")
+        print(f"Failed to send statement notification email: {e}")
+
+
+def send_employer_setup_email(email, name, setup_link):
+    subject = "Set Your Employer Account Password"
+    body = f"""
+    Dear {name},
+
+    You have been registered as an employer in our Pension Management System.
+
+    Please click the link below to set your password and activate your account:
+    {setup_link}
+
+    This link will expire in 1 hour.
+
+    Kind regards,  
+    Pension Benefits Team
+    """
+    msg = Message(subject, recipients=[email])
+    msg.body = body
+    mail.send(msg)
+
+def send_statement_notification(email, name):
+    subject = "Your New Pension Statement Is Ready"
+    body = f"""
+    Dear {name},
+
+    A new pension statement has been generated for your account.
+
+    You can log in to your pension portal to view the details and download your PDF copy.
+
+    Kind regards,  
+    Pension Benefits Team
+    """
+
+    msg = Message(subject, recipients=[email])
+    msg.body = body
+    mail.send(msg)
+

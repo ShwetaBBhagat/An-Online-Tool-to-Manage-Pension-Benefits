@@ -11,6 +11,10 @@ from flask_mail import Mail
 from utils.email_service import mail
 import os
 from flask_migrate import Migrate
+from models.employer_model import Employer 
+from models.admin_model import Admin  # ✅ This ensures it gets registered with Flask-Migrate
+from apscheduler.schedulers.background import BackgroundScheduler
+from tasks.scheduler_tasks import generate_monthly_statements
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -47,3 +51,11 @@ with app.app_context():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+scheduler = BackgroundScheduler()
+scheduler.add_job(func=generate_monthly_statements, trigger='interval', days=30)
+scheduler.start()
+
+# Ensure shutdown on exit
+import atexit
+atexit.register(lambda: scheduler.shutdown())

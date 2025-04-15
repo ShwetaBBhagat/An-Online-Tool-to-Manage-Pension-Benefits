@@ -4,6 +4,10 @@ from config import Config
 from functools import wraps
 from models.user_model import User
 from utils.token_blacklist import is_token_blacklisted
+from functools import wraps
+from flask import request, jsonify
+import jwt
+from config import Config
 
 def token_required(f):
     """Middleware to check if the user has a valid JWT token."""
@@ -39,11 +43,49 @@ def token_required(f):
     return decorated
 
 def admin_required(f):
-    """Middleware to check if the user is an admin."""
     @wraps(f)
-    def decorated(current_user, *args, **kwargs):
-        if current_user.role != "admin":
-            return jsonify({"error": "Admin access required"}), 403  # Forbidden
-        return f(current_user, *args, **kwargs)
+    def decorated(*args, **kwargs):
+        token = None
 
+        if 'Authorization' in request.headers:
+            token = request.headers['Authorization'].split(" ")[1]
+
+        if not token:
+            return jsonify({'error': 'Token is missing'}), 401
+
+        try:
+            data = jwt.decode(token, Config.JWT_SECRET_KEY, algorithms=["HS256"])
+            
+            # Check for 'admin' role from token payload
+            if data.get('role') != 'admin':
+                return jsonify({'error': 'Admin access only'}), 403
+
+        except jwt.ExpiredSignatureError:
+            return jsonify({'error': 'Token has expired'}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({'error': 'Invalid token'}), 401
+
+        return f(*args, **kwargs)
+    return decorated
+
+def employer_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = None
+        if 'Authorization' in request.headers:
+            token = request.headers['Authorization'].split(" ")[1]
+
+        if not token:
+            return jsonify({'error': 'Token is missing'}), 401
+
+        try:
+            data = jwt.decode(token, Config.JWT_SECRET_KEY, algorithms=["HS256"])
+            if data.get('role') != 'employer':
+                return jsonify({'error': 'Employer access only'}), 403
+        except jwt.ExpiredSignatureError:
+            return jsonify({'error': 'Token expired'}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({'error': 'Invalid token'}), 401
+
+        return f(*args, **kwargs)
     return decorated
