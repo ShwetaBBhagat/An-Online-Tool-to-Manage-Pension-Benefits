@@ -1,0 +1,25 @@
+.footer-section {
+    background-color: #1a2b49;
+    color: #ffffff;
+    font-size: 0.9rem;
+  }
+  
+  .footer-link {
+    color: #d4af37;
+    text-decoration: none;
+  }
+  
+  .footer-link:hover {
+    text-decoration: underline;
+  }
+  
+  .social-icons i {
+    font-size: 1.2rem;
+    color: #d4af37;
+    transition: color 0.3s ease;
+  }
+  
+  .social-icons i:hover {
+    color: #ffffff;
+  }
+  

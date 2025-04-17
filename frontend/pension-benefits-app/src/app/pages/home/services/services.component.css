@@ -1,0 +1,17 @@
+.services-section {
+    background-color: #f8f9fa;
+  }
+  
+  h2 {
+    font-size: 2rem;
+    color: #1a2b49;
+  }
+  
+  .service-card .icon {
+    font-size: 2rem;
+  }
+  
+  .service-card h5 {
+    color: #1a2b49;
+  }
+  

@@ -426,36 +426,7 @@ def create_employer(current_admin):
         "message": "Employer created successfully. Setup email sent.",
         "email": email
     }), 201
-
-
-#employer set password
-@employer_bp.route('/employer/set-password', methods=['POST'])
-def set_employer_password():
-    from utils.password_reset import verify_employer_token
-    from models.employer_model import Employer
-    import bcrypt
-
-    data = request.get_json()
-    token = data.get("token")
-    password = data.get("password")
-
-    if not token or not password:
-        return jsonify({"error": "Token and password required"}), 400
-
-    email = verify_employer_token(token)
-    if not email:
-        return jsonify({"error": "Invalid or expired token"}), 400
-
-    employer = Employer.query.filter_by(email=email).first()
-    if not employer:
-        return jsonify({"error": "Employer not found"}), 404
-
-    hashed_pw = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-    employer.password = hashed_pw
-    db.session.commit()
-
-    return jsonify({"message": "Password has been set successfully!"}), 200
-
+    
 #View Users of an Employer 
 @admin_bp.route('/admin/employer/<int:employer_id>/users', methods=['GET'])
 @token_required
