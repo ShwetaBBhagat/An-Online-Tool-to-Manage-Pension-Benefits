@@ -302,25 +302,6 @@ def update_user_profile(current_user):
     db.session.commit()
     return jsonify({"message": "Profile updated successfully!"}), 200
 
-
-# @auth_bp.route('/user/update-profile', methods=['PUT'])
-# @token_required
-# def update_user_profile(current_user):
-#     data = request.get_json()
-
-#     current_user.date_of_birth = data.get("date_of_birth", current_user.date_of_birth)
-#     current_user.ni_number = data.get("ni_number", current_user.ni_number)
-#     current_user.current_salary = data.get("current_salary", current_user.current_salary)
-#     current_user.employment_status = data.get("employment_status", current_user.employment_status)
-#     current_user.investment_type = data.get("investment_type", current_user.investment_type)
-#     current_user.address = data.get("address", current_user.address)
-#     current_user.postal_code = data.get("postal_code", current_user.postal_code)
-#     current_user.contact_number = data.get("contact_number", current_user.contact_number)
-#     current_user.profile_completed = True
-
-#     db.session.commit()
-#     return jsonify({"message": "Profile updated successfully!"}), 200
-
 @auth_bp.route('/user/statements', methods=['GET'])
 @token_required
 def get_user_statements(current_user):

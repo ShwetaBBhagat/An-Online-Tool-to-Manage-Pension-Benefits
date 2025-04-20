@@ -15,6 +15,7 @@ from models.employer_model import Employer
 from models.admin_model import Admin  # ✅ This ensures it gets registered with Flask-Migrate
 from apscheduler.schedulers.background import BackgroundScheduler
 from tasks.scheduler_tasks import generate_monthly_statements
+from api.employer_routes import employer_bp
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -39,6 +40,7 @@ CORS(app)
 # Register authentication routes
 app.register_blueprint(auth_bp, url_prefix="/api/auth")
 app.register_blueprint(admin_bp, url_prefix='/api')
+app.register_blueprint(employer_bp, url_prefix='/api')
 
 # Serve QR codes via Flask
 @app.route('/qrcodes/<filename>')

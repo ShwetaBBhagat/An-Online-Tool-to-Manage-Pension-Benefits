@@ -4,6 +4,10 @@ from flask_bcrypt import check_password_hash
 import jwt
 import datetime
 from config import Config
+from utils.auth_middleware import token_required, employer_required, admin_required
+from models import db
+
+
 
 employer_bp = Blueprint('employer_bp', __name__)
 

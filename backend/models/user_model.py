@@ -12,6 +12,7 @@ class User(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
     mfa_secret = db.Column(db.String(32), nullable=True)
+    role = db.Column(db.String(20), default='user')
     date_of_birth = db.Column(db.Date, nullable=True)
     ni_number = db.Column(db.String(20), nullable=True)
     current_salary = db.Column(db.Numeric(10, 2), nullable=True)

@@ -3,42 +3,49 @@ from flask import request, jsonify
 from config import Config
 from functools import wraps
 from models.user_model import User
+from models.admin_model import Admin
+from models.employer_model import Employer
 from utils.token_blacklist import is_token_blacklisted
 from functools import wraps
 from flask import request, jsonify
-import jwt
-from config import Config
 
 def token_required(f):
-    """Middleware to check if the user has a valid JWT token."""
     @wraps(f)
     def decorated(*args, **kwargs):
         token = None
 
-        # Extract token from Authorization header
+        # Extract token from header
         if 'Authorization' in request.headers:
-            token = request.headers['Authorization'].split(" ")[1]
+            try:
+                token = request.headers['Authorization'].split(" ")[1]
+            except IndexError:
+                return jsonify({'message': 'Invalid token format'}), 401
 
         if not token:
-            return jsonify({"error": "Token is missing!"}), 401
-
-        # Check if token is blacklisted
-        if is_token_blacklisted(token):
-            return jsonify({"error": "Token has been revoked! Please log in again."}), 401
+            return jsonify({'message': 'Token is missing!'}), 401
 
         try:
             data = jwt.decode(token, Config.JWT_SECRET_KEY, algorithms=["HS256"])
-            current_user = User.query.filter_by(id=data['user_id']).first()
+
+            current_user = None
+            if data.get("role") == "admin":
+                current_user = Admin.query.get(data.get("admin_id"))
+            elif data.get("role") == "employer":
+                current_user = Employer.query.get(data.get("employer_id"))
+            elif data.get("role") == "user":
+                current_user = User.query.get(data.get("user_id"))
 
             if not current_user:
-                return jsonify({"error": "User not found"}), 401
-
-            return f(current_user, *args, **kwargs)
+                return jsonify({'message': 'User not found'}), 401
 
         except jwt.ExpiredSignatureError:
-            return jsonify({"error": "Token has expired"}), 401
+            return jsonify({'message': 'Token has expired!'}), 401
         except jwt.InvalidTokenError:
-            return jsonify({"error": "Invalid token"}), 401
+            return jsonify({'message': 'Invalid token!'}), 401
+        except Exception as e:
+            return jsonify({'message': str(e)}), 500
+
+        return f(current_user, *args, **kwargs)
 
     return decorated
 

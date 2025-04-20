@@ -6,15 +6,17 @@ from models.pension_statement_model import PensionStatement
 from models.document_model import Document
 from utils.email_service import send_statement_notification
 from models.admin_model import Admin
-from flask_bcrypt import check_password_hash
 import jwt
 import datetime
 from config import Config
 from utils.password_reset import generate_employer_token
 from utils.email_service import send_employer_setup_email
+from werkzeug.security import check_password_hash
+
 
 admin_bp = Blueprint('admin_bp', __name__)
 
+#admin login
 @admin_bp.route('/admin/login', methods=['POST'])
 def admin_login():
     data = request.get_json()
@@ -385,7 +387,7 @@ def get_all_employers(current_admin):
     }), 200
 
 #Add Employer
-@admin_bp.route('/admin/employers', methods=['POST'])
+@admin_bp.route('/admin/add-employers', methods=['POST'])
 @token_required
 @admin_required
 def create_employer(current_admin):
@@ -475,4 +477,3 @@ def delete_employer(current_admin, employer_id):
 
     return jsonify({"message": "Employer deleted successfully"}), 200
 
-#

@@ -9,3 +9,9 @@ class Admin(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    role = db.Column(db.String(50), default="admin")
+    is_active = db.Column(db.Boolean, default=True)
+    last_login = db.Column(db.DateTime)
+
+
+
