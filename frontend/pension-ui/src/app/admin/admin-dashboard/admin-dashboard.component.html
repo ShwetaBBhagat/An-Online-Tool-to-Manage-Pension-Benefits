@@ -1,0 +1,61 @@
+<div class="container mt-4">
+  <h2 class="mb-4 text-center">Welcome, Admin</h2>
+  <div class="text-center my-4">
+    <a routerLink="/admin/all-users" class="btn btn-outline-primary btn-lg">
+      👥 View All Users
+    </a>
+    <a routerLink="/admin/view-employers" class="btn btn-outline-primary btn-lg">
+      🏢 View Employers
+    </a>
+    <a routerLink="/admin/add-employer" class="btn btn-outline-success">
+      ➕ Add Employer
+    </a>
+  </div>
+  
+  <div class="row g-4">
+    <div class="col-md-4 col-sm-6">
+      <div class="card text-white bg-primary shadow">
+        <div class="card-body">
+          <h5 class="card-title">Total Users</h5>
+          <p class="card-text fs-4">{{ totalUsers }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-6">
+      <div class="card text-white bg-success shadow">
+        <div class="card-body">
+          <h5 class="card-title">Total Employers</h5>
+          <p class="card-text fs-4">{{ totalEmployers }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-6">
+      <div class="card text-white bg-warning shadow">
+        <div class="card-body">
+          <h5 class="card-title">Documents Uploaded</h5>
+          <p class="card-text fs-4">{{ totalDocuments }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-sm-6">
+      <div class="card text-white bg-info shadow">
+        <div class="card-body">
+          <h5 class="card-title">Pension Statements</h5>
+          <p class="card-text fs-4">{{ totalStatements }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-sm-6">
+      <div class="card text-white bg-dark shadow">
+        <div class="card-body">
+          <h5 class="card-title">Total Pot Value</h5>
+          <p class="card-text fs-4">£{{ totalPotValue | number:'1.2-2' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

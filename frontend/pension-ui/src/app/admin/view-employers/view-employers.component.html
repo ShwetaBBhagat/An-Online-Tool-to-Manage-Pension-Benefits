@@ -1,0 +1,45 @@
+<div class="container mt-4">
+    <h3 class="mb-4 text-center">🏢 Registered Employers</h3>
+  
+    <div *ngIf="employers.length === 0" class="text-muted text-center">
+      No employers found.
+    </div>
+  
+    <div *ngIf="employers.length > 0" class="table-responsive">
+      <table class="table table-striped table-hover shadow">
+        <thead class="table-dark text-center">
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Contact Number</th>
+            <th>Address</th>
+            <th>Registered On</th>
+            <th>View Users</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let emp of employers; let i = index">
+            <td class="text-center">{{ i + 1 }}</td>
+            <td>{{ emp.name }}</td>
+            <td>{{ emp.email }}</td>
+            <td>{{ emp.contact_number || '-' }}</td>
+            <td>{{ emp.address || '-' }}</td>
+            <td>{{ emp.created_at }}</td>
+            <td>
+              <a [routerLink]="['/admin/employers', emp.id, 'users']" class="btn btn-sm btn-outline-primary">
+                View Users
+              </a>              
+            </td>  
+            <td class="text-center">
+              <button class="btn btn-sm btn-outline-danger" (click)="deleteEmployer(emp.id)">
+                🗑️ Delete
+              </button>
+            </td>                       
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

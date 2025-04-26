@@ -1,0 +1,49 @@
+<div class="container mt-5">
+    <h3 class="mb-4 text-center">📊 Employer Dashboard Summary</h3>
+  <div>
+    <a [routerLink]="['/employer/my-users']" class="btn btn-outline-secondary">
+      👥 View My Staff
+    </a>    
+    <a [routerLink]="['/employer/employer-profile']" class="btn btn-outline-info">
+      🏢 View Profile
+    </a>
+    <a [routerLink]="['/employer/add-user']" class="btn btn-outline-success">
+      ➕ Add Staff
+    </a>    
+    <a routerLink="/employer/documents" class="btn btn-outline-secondary">
+      📄 View Staff Documents
+    </a>
+      
+  </div>
+    <div *ngIf="summary" class="row g-4">
+      <div class="col-md-4 col-sm-6">
+        <div class="card text-white bg-primary shadow">
+          <div class="card-body text-center">
+            <h5>Total Staff</h5>
+            <p class="fs-4">{{ summary.total_staff }}</p>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-md-4 col-sm-6">
+        <div class="card text-white bg-success shadow">
+          <div class="card-body text-center">
+            <h5>Total Pot Value (£)</h5>
+            <p class="fs-4">£{{ summary.total_pot_value | number:'1.2-2' }}</p>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-md-4 col-sm-6">
+        <div class="card text-white bg-info shadow">
+          <div class="card-body text-center">
+            <h5>Average Pot per User (£)</h5>
+            <p class="fs-4">£{{ summary.average_pot_value | number:'1.2-2' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="errorMsg" class="alert alert-danger text-center mt-4">{{ errorMsg }}</div>
+  </div>
+  

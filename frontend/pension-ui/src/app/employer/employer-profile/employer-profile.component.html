@@ -1,0 +1,40 @@
+<div class="container mt-5">
+  <h3 class="mb-4 text-center">🏢 My Employer Profile</h3>
+
+  <div *ngIf="profile" class="card shadow p-4 mb-4">
+    <div class="mb-3">
+      <strong>Name:</strong> {{ profile.name }}
+    </div>
+    <div class="mb-3">
+      <strong>Email:</strong> {{ profile.email }}
+    </div>
+    <div class="mb-3">
+      <strong>Contact Number:</strong> {{ profile.contact_number || '-' }}
+    </div>
+    <div class="mb-3">
+      <strong>Address:</strong> {{ profile.address || '-' }}
+    </div>
+    <div class="mb-3">
+      <strong>Joined On:</strong> {{ profile.created_at }}
+    </div>
+  </div>
+
+  <h5 class="text-center mb-3">✏️ Update Profile</h5>
+
+  <form (ngSubmit)="updateProfile()" #updateForm="ngForm" class="card shadow p-4">
+    <div class="mb-3">
+      <label>Contact Number</label>
+      <input type="text" [(ngModel)]="editContactNumber" name="contact_number" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label>Address</label>
+      <textarea [(ngModel)]="editAddress" name="address" class="form-control"></textarea>
+    </div>
+
+    <button class="btn btn-primary w-100" [disabled]="updateForm.invalid">Update Profile</button>
+  </form>
+
+  <div *ngIf="successMsg" class="alert alert-success mt-3 text-center">{{ successMsg }}</div>
+  <div *ngIf="errorMsg" class="alert alert-danger mt-3 text-center">{{ errorMsg }}</div>
+</div>

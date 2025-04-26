@@ -1,0 +1,50 @@
+<div class="container mt-5">
+    <h3 class="mb-4 text-center">👥 My Staff</h3>
+  
+    <div *ngIf="users.length === 0" class="text-center text-muted">
+      No users found under your company.
+    </div>
+  
+    <div *ngIf="users.length > 0" class="table-responsive">
+      <table class="table table-hover table-striped shadow-sm">
+        <thead class="table-dark text-center">
+          <tr>
+            <th>#</th>
+            <th>user id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>NI Number</th>
+            <th>Salary (£)</th>
+            <th>Investment Type</th>
+            <th>Profile Completed</th>
+            <th>Statements</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.ni_number || '-' }}</td>
+            <td>{{ user.current_salary }}</td>
+            <td>{{ user.investment_type || '-' }}</td>
+            <td>
+              <span class="badge" [ngClass]="user.profile_completed ? 'bg-success' : 'bg-danger'">
+                {{ user.profile_completed ? 'Yes' : 'No' }}
+              </span>
+            </td>
+            <td>
+              <a [routerLink]="['/employer/user', user.id, 'statements']" class="btn btn-sm btn-outline-primary">
+                View Statements
+              </a>
+            </td>
+            
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <div *ngIf="errorMsg" class="alert alert-danger mt-3 text-center">{{ errorMsg }}</div>
+  </div>
+  

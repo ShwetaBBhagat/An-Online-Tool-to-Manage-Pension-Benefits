@@ -1,0 +1,39 @@
+<div class="container mt-5">
+    <h3 class="mb-4 text-center">📜 Pension Statements</h3>
+  
+    <div *ngIf="statements.length === 0" class="text-center text-muted">
+      No statements found for this user.
+    </div>
+  
+    <div *ngIf="statements.length > 0" class="table-responsive">
+      <table class="table table-striped table-hover shadow">
+        <thead class="table-dark text-center">
+          <tr>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Fund</th>
+            <th>Salary (£)</th>
+            <th>Employee %</th>
+            <th>Employer %</th>
+            <th>Total Contribution (£)</th>
+            <th>Pot Value (£)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let s of statements">
+            <td>{{ s.statement_start_date }}</td>
+            <td>{{ s.statement_end_date }}</td>
+            <td>{{ s.fund_name }}</td>
+            <td>{{ s.salary }}</td>
+            <td>{{ s.employee_percent }}%</td>
+            <td>{{ s.employer_percent }}%</td>
+            <td>{{ s.total_contribution }}</td>
+            <td>{{ s.pot_value }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <div *ngIf="errorMsg" class="alert alert-danger mt-3 text-center">{{ errorMsg }}</div>
+  </div>
+  

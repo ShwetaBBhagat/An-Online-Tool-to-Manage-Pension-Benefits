@@ -152,7 +152,8 @@ def get_user_statements_admin(current_user, user_id):
     for s in statements:
         result.append({
             "statement_id": s.id,
-            "statement_date": s.statement_date.strftime("%Y-%m-%d"),
+            "statement_start_date": s.statement_start_date.strftime("%Y-%m-%d") if s.statement_end_date else None,
+            "statement_end_date": s.statement_end_date.strftime("%Y-%m-%d") if s.statement_end_date else None,
             "fund_name": s.fund_name,
             "salary": str(s.salary),
             "fund_performance": str(s.fund_performance),
@@ -220,9 +221,14 @@ def auto_generate_statement(current_user, user_id):
     previous_pot = float(last_statement.pot_value) if last_statement else 0
     pot_value = round(previous_pot + total_contribution, 2)
 
-    # Generate statement dates
+   # Generate statement dates for current month
     start_date = datetime.date.today().replace(day=1)
     end_date = (start_date + datetime.timedelta(days=32)).replace(day=1) - datetime.timedelta(days=1)
+
+    # Prevent duplicate generation for same month
+    existing = PensionStatement.query.filter_by(user_id=user.id, statement_start_date=start_date).first()
+    if existing:
+        return jsonify({"error": "A statement for this month has already been generated."}), 400
 
     new_statement = PensionStatement(
         user_id=user.id,
@@ -328,6 +334,7 @@ def view_all_documents(current_user):
         "total_documents": len(result),
         "documents": result
     }), 200
+
 
 #Admin Dashboard Summary Shows totals: users, employers, documents, statements, and pot value
 @admin_bp.route('/admin/dashboard-summary', methods=['GET'])
@@ -474,6 +481,7 @@ def delete_employer(current_admin, employer_id):
 
     db.session.delete(employer)
     db.session.commit()
+    
 
     return jsonify({"message": "Employer deleted successfully"}), 200
 

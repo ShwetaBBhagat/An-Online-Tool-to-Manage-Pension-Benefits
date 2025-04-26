@@ -1,0 +1,40 @@
+<div class="container mt-5">
+    <h3 class="mb-4 text-center">➕ Add New User</h3>
+  
+    <form (ngSubmit)="addUser()" #userForm="ngForm" class="card shadow p-4">
+      <div class="mb-3">
+        <label>Name</label>
+        <input type="text" [(ngModel)]="name" name="name" class="form-control" required />
+      </div>
+  
+      <div class="mb-3">
+        <label>Email</label>
+        <input type="email" [(ngModel)]="email" name="email" class="form-control" required />
+      </div>
+  
+      <div class="mb-3">
+        <label>Salary (£)</label>
+        <input type="number" [(ngModel)]="salary" name="salary" class="form-control" required />
+      </div>
+  
+      <div class="mb-3">
+        <label>Date of Birth</label>
+        <input type="date" [(ngModel)]="dateOfBirth" name="date_of_birth" class="form-control" required />
+      </div>
+  
+      <div class="mb-3">
+        <label>Investment Type</label>
+        <select [(ngModel)]="investmentType" name="investment_type" class="form-select">
+          <option value="Low">Low</option>
+          <option value="Medium" selected>Medium</option>
+          <option value="High">High</option>
+        </select>
+      </div>
+  
+      <button class="btn btn-success w-100" [disabled]="userForm.invalid">Add User</button>
+    </form>
+  
+    <div *ngIf="successMsg" class="alert alert-success mt-3 text-center">{{ successMsg }}</div>
+    <div *ngIf="errorMsg" class="alert alert-danger mt-3 text-center">{{ errorMsg }}</div>
+  </div>
+  
