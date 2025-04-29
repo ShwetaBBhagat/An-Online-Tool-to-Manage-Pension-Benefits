@@ -1,0 +1,34 @@
+<div class="container mt-5">
+  <h3 class="mb-4 text-center">📤 Upload Document</h3>
+
+  <form (ngSubmit)="uploadDocument()" #uploadForm="ngForm" class="card shadow-sm p-4" enctype="multipart/form-data">
+    <div class="mb-3">
+      <label for="fileInput" class="form-label">Select Document to Upload</label>
+      <input 
+        type="file" 
+        id="fileInput"
+        (change)="onFileSelected($event)" 
+        accept=".pdf, .png, .jpg, .jpeg" 
+        class="form-control" 
+        required 
+      />
+    </div>
+
+    <div class="d-flex justify-content-between mt-4">
+      <button type="button" class="btn btn-secondary" [routerLink]="['/dashboard']">
+        ⬅️ Back
+      </button>
+
+      <button type="submit" class="btn btn-primary" [disabled]="!selectedFile">
+        Upload
+      </button>
+    </div>
+  </form>
+
+  <div *ngIf="successMsg" class="alert alert-success mt-3 text-center">
+    {{ successMsg }}
+  </div>
+  <div *ngIf="errorMsg" class="alert alert-danger mt-3 text-center">
+    {{ errorMsg }}
+  </div>
+</div>

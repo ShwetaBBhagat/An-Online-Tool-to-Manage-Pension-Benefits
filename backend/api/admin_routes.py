@@ -12,7 +12,7 @@ from config import Config
 from utils.password_reset import generate_employer_token
 from utils.email_service import send_employer_setup_email
 from werkzeug.security import check_password_hash
-
+from utils.token_blacklist import blacklist_token
 
 admin_bp = Blueprint('admin_bp', __name__)
 
@@ -280,60 +280,54 @@ def delete_pension_statement(current_user, statement_id):
         "message": f"Pension statement ID {statement_id} has been deleted successfully."
     }), 200
 
-#view documents
-@admin_bp.route('/admin/documents', methods=['GET'])
+@admin_bp.route('/documents/<int:doc_id>/view', methods=['GET'])
 @token_required
 @admin_required
-def view_all_documents(current_user):
-    from sqlalchemy import and_, or_
-    from models.document_model import Document
+def admin_view_document(current_user, doc_id):
+    token = request.args.get('token')
+    if not token:
+        return jsonify({"error": "Token is missing!"}), 401
 
-    # Get optional filters from query string
-    user_id = request.args.get('user_id')
-    email = request.args.get('email')
-    start_date = request.args.get('start')
-    end_date = request.args.get('end')
+    try:
+        decoded_token = jwt.decode(token, Config.JWT_SECRET_KEY, algorithms=["HS256"])
+        if decoded_token.get('role') != 'admin':
+            return jsonify({"error": "Not authorized"}), 403
 
-    # Base query
-    query = Document.query.join(User)
+        doc = Document.query.get(doc_id)
+        if not doc:
+            return jsonify({"error": "Document not found"}), 404
 
-    # Apply filters
-    if user_id:
-        query = query.filter(Document.user_id == user_id)
-    if email:
-        query = query.filter(User.email.ilike(f"%{email}%"))
-    if start_date and end_date:
-        try:
-            start = datetime.datetime.strptime(start_date, "%Y-%m-%d")
-            end = datetime.datetime.strptime(end_date, "%Y-%m-%d")
-            query = query.filter(Document.uploaded_at.between(start, end))
-        except ValueError:
-            return jsonify({"error": "Invalid date format. Use YYYY-MM-DD"}), 400
+        return send_file(doc.filepath, mimetype='application/pdf')
 
-    documents = query.order_by(Document.uploaded_at.desc()).all()
+    except jwt.ExpiredSignatureError:
+        return jsonify({"error": "Token has expired!"}), 401
+    except jwt.InvalidTokenError:
+        return jsonify({"error": "Invalid token!"}), 401
 
-    result = []
-    for doc in documents:
-        result.append({
-            "document_id": doc.id,
-            "filename": doc.filename,
-            "uploaded_at": doc.uploaded_at.strftime("%Y-%m-%d %H:%M:%S"),
-            "user_id": doc.user.id,
-            "user_name": doc.user.name,
-            "user_email": doc.user.email
-        })
+@admin_bp.route('/documents/<int:doc_id>/download', methods=['GET'])
+@token_required
+@admin_required
+def admin_download_document(current_user, doc_id):
+    token = request.args.get('token')
+    if not token:
+        return jsonify({"error": "Token is missing!"}), 401
 
-    return jsonify({
-        "status": "success",
-        "filters": {
-            "user_id": user_id,
-            "email": email,
-            "start": start_date,
-            "end": end_date
-        },
-        "total_documents": len(result),
-        "documents": result
-    }), 200
+    try:
+        decoded_token = jwt.decode(token, Config.JWT_SECRET_KEY, algorithms=["HS256"])
+        if decoded_token.get('role') != 'admin':
+            return jsonify({"error": "Not authorized"}), 403
+
+        doc = Document.query.get(doc_id)
+        if not doc:
+            return jsonify({"error": "Document not found"}), 404
+
+        return send_file(doc.filepath, as_attachment=True, download_name=doc.filename)
+
+    except jwt.ExpiredSignatureError:
+        return jsonify({"error": "Token has expired!"}), 401
+    except jwt.InvalidTokenError:
+        return jsonify({"error": "Invalid token!"}), 401
+
 
 
 #Admin Dashboard Summary Shows totals: users, employers, documents, statements, and pot value
@@ -485,3 +479,23 @@ def delete_employer(current_admin, employer_id):
 
     return jsonify({"message": "Employer deleted successfully"}), 200
 
+@admin_bp.route('/logout', methods=['POST'])
+@admin_required
+def admin_logout(current_admin):
+    """Admin Logout — Invalidate the Admin JWT Token."""
+    token = None
+
+    # Extract token from Authorization header
+    if 'Authorization' in request.headers:
+        token = request.headers['Authorization'].split(" ")[1]
+
+    if not token:
+        return jsonify({"error": "Token is missing!"}), 401
+
+    try:
+        # No need to decode again, just blacklist
+        blacklist_token(token)
+        return jsonify({"message": "Admin logged out successfully!"}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500

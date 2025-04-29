@@ -4,6 +4,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -19,9 +21,35 @@ export class AdminDashboardComponent {
   totalStatements = 0;
   totalPotValue = 0;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.loadDashboardStats();
   }
+
+  logoutAdmin() {
+    const token = localStorage.getItem('adminToken');
+    if (!token) {
+      console.error('No admin token found');
+      return;
+    }
+  
+    this.http.post<{ message: string }>('http://127.0.0.1:5000/api/admin/logout', {}, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).subscribe({
+      next: (res) => {
+        console.log('Admin logged out:', res.message);
+        localStorage.removeItem('adminToken');
+        this.router.navigate(['/admin/login']);
+      },
+      error: (err) => {
+        console.error('Logout failed:', err);
+        localStorage.removeItem('adminToken');
+        this.router.navigate(['/admin/login']);
+      }
+    });
+  }  
+  
 
   loadDashboardStats() {
     const token = localStorage.getItem('adminToken');

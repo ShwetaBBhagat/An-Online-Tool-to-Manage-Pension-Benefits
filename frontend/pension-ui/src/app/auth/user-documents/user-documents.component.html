@@ -1,0 +1,49 @@
+<div class="container mt-5">
+  <h3 class="mb-4 text-center">📑 My Uploaded Documents</h3>
+
+  <div *ngIf="documents.length > 0; else noDocuments">
+    <div class="table-responsive">
+      <table class="table table-hover table-striped align-middle">
+        <thead class="table-dark text-center">
+          <tr>
+            <th>File Name</th>
+            <th>Uploaded At</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let doc of documents" class="text-center">
+            <td>{{ doc.filename }}</td>
+            <td>{{ doc.uploaded_at }}</td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary me-2" (click)="viewDocument(doc.id)">
+                👁️ View
+              </button>
+              <button class="btn btn-sm btn-outline-success" (click)="downloadDocument(doc.id, doc.filename)">
+                📥 Download
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Back Button -->
+    <div class="text-center mt-4">
+      <button class="btn btn-secondary" [routerLink]="['/auth/dashboard']">
+        ⬅️ Back to Dashboard
+      </button>
+    </div>
+  </div>
+
+  <ng-template #noDocuments>
+    <div class="alert alert-info text-center">
+      No documents uploaded yet.
+    </div>
+    <div class="text-center mt-4">
+      <button class="btn btn-secondary" [routerLink]="['/dashboard']">
+        ⬅️ Back to Dashboard
+      </button>
+    </div>
+  </ng-template>
+</div>

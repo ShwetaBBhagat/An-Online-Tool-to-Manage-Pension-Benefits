@@ -55,70 +55,6 @@ def is_strong_password(password):
     return None  # Password is strong
 
 
-# @auth_bp.route('/signup', methods=['POST'])
-# def signup():
-#     """User Signup API with MFA, QR Code generation, and Welcome Email."""
-#     try:
-#         # Get user details from request
-#         data = request.get_json()
-#         name = data.get('name')
-#         email = data.get('email')
-#         password = data.get('password')
-#         role = data.get('role', 'user')  # Default role: user
-
-#         # Validate inputs
-#         if not name or not email or not password:
-#             return jsonify({"error": "All fields are required"}), 400
-
-#          # Validate email format
-#         email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
-#         if not re.match(email_regex, email):
-#             return jsonify({"error": "Invalid email format"}), 400
-
-#         # Ensure password is strong
-#         if len(password) < 8 or not any(c.isupper() for c in password) or not any(c.isdigit() for c in password) or not any(c in "!@#$%^&*()-_=+" for c in password):
-#             return jsonify({"error": "Password must be at least 8 characters long, include uppercase letters, numbers, and special symbols"}), 400
-
-#         # Check if user already exists
-#         if User.query.filter_by(email=email).first():
-#             return jsonify({"error": "Email already registered"}), 409
-        
-#         # Hash password
-#         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-
-#         # Generate MFA Secret Key
-#         mfa_secret = pyotp.random_base32()
-
-#         # Generate MFA QR Code
-#         otp_uri = f"otpauth://totp/PensionBenefits:{email}?secret={mfa_secret}&issuer=PensionBenefitsApp"
-#         qr_code_dir = os.path.join(os.getcwd(), "backend", "qrcodes")
-
-#         # Ensure QR Code directory exists
-#         if not os.path.exists(qr_code_dir):
-#             os.makedirs(qr_code_dir)
-
-#         qr_code_path = os.path.join(qr_code_dir, f"{email}_mfa.png")
-#         qr = qrcode.make(otp_uri)
-#         qr.save(qr_code_path)
-
-#         # Save user to database
-#         new_user = User(name=name, email=email, password=hashed_password, role=role, mfa_secret=mfa_secret)
-#         db.session.add(new_user)
-#         db.session.commit()
-
-#         # Send welcome email with MFA QR Code
-#         send_welcome_email(email, name, qr_code_path)
-
-#         return jsonify({
-#             "message": "User registered successfully! A welcome email with your MFA QR Code has been sent.",
-#             "mfa_secret": mfa_secret,
-#             "qr_code": f"/qrcodes/{email}_mfa.png"
-#         }), 201
-
-#     except Exception as e:
-#         return jsonify({"error": str(e)}), 500
-
-
 @auth_bp.route('/login', methods=['POST'])
 def login():
     try:
@@ -181,7 +117,7 @@ def request_reset():
     reset_token = generate_reset_token(email)
     
     # Generate Reset Link
-    reset_url = url_for('auth_bp.reset_password', token=reset_token, _external=True)
+    reset_url = f"http://localhost:4200/reset-password?token={reset_token}"
 
     # Send email
     send_reset_email(email, reset_url)
@@ -238,6 +174,22 @@ def logout():
         return jsonify({"error": "Token has already expired"}), 401
     except jwt.InvalidTokenError:
         return jsonify({"error": "Invalid token"}), 401
+
+@auth_bp.route('/user/profile', methods=['GET'])
+@token_required
+def get_user_profile(current_user):
+    return jsonify({
+        "email": current_user.email,
+        "ni_number": current_user.ni_number,
+        "date_of_birth": current_user.date_of_birth.isoformat() if current_user.date_of_birth else None,
+        "current_salary": current_user.current_salary,
+        "employment_status": current_user.employment_status,
+        "investment_type": current_user.investment_type,
+        "address": current_user.address,
+        "postal_code": current_user.postal_code,
+        "contact_number": current_user.contact_number
+    }), 200
+
 
 @auth_bp.route('/user/update-profile', methods=['PUT'])
 @token_required
@@ -403,17 +355,33 @@ def list_user_documents(current_user):
     result = [{"id": d.id, "filename": d.filename, "uploaded_at": d.uploaded_at.strftime("%Y-%m-%d %H:%M")} for d in docs]
     return jsonify({"documents": result}), 200
 
+@auth_bp.route('/user/documents/<int:doc_id>/view', methods=['GET'])
+def view_user_document(doc_id):
+    token = request.args.get('token')
+    if not token:
+        return jsonify({"error": "Token is missing!"}), 401
+
+    try:
+        decoded_token = jwt.decode(token, Config.JWT_SECRET_KEY, algorithms=["HS256"])
+        user_id = decoded_token.get('user_id')
+
+        doc = Document.query.filter_by(id=doc_id, user_id=user_id).first()
+        if not doc:
+            return jsonify({"error": "Document not found"}), 404
+
+        return send_file(doc.filepath, mimetype='application/pdf')
+
+    except jwt.ExpiredSignatureError:
+        return jsonify({"error": "Token has expired!"}), 401
+    except jwt.InvalidTokenError:
+        return jsonify({"error": "Invalid token!"}), 401
+
 @auth_bp.route('/user/documents/<int:doc_id>/download', methods=['GET'])
 @token_required
 def download_document(current_user, doc_id):
     doc = Document.query.get(doc_id)
     if not doc:
         return jsonify({"error": "Document not found"}), 404
-
-    # Role-based access: users can only access their own docs, admins can access all
-    if current_user.id != doc.user_id and current_user.role != 'admin':
-        return jsonify({"error": "Access denied"}), 403
-
     return send_file(doc.filepath, as_attachment=True, download_name=doc.filename)
 
 @auth_bp.route('/user/analytics', methods=['GET'])
@@ -433,22 +401,27 @@ def get_user_analytics(current_user):
         total_employer = 0
 
         for s in statements:
-            total_employee += float(s.employee_contribution)
-            total_employer += float(s.employer_contribution)
+            employee_contribution = float(s.employee_contribution) if s.employee_contribution else 0.0
+            employer_contribution = float(s.employer_contribution) if s.employer_contribution else 0.0
+            pot_value = float(s.pot_value) if s.pot_value else 0.0
+
+            total_employee += employee_contribution
+            total_employer += employer_contribution
 
             contributions_chart.append({
                 "month": s.statement_date.strftime("%b %Y"),
-                "employee_contribution": float(s.employee_contribution),
-                "employer_contribution": float(s.employer_contribution),
-                "pot_value": float(s.pot_value)
+                "employee_contribution": employee_contribution,
+                "employer_contribution": employer_contribution,
+                "pot_value": pot_value
             })
 
-        current_pot = float(statements[-1].pot_value)
+        # Handle pot value for projections
+        current_pot = contributions_chart[-1]["pot_value"]
 
-        # Estimate growth rate (fallback to 5% if missing or unreliable)
+        # Estimate growth rate (fallback to 5%)
         try:
-            avg_growth = sum([float(s.fund_performance) for s in statements]) / len(statements)
-        except:
+            avg_growth = sum([float(s.fund_performance or 5.0) for s in statements]) / len(statements)
+        except Exception:
             avg_growth = 5.0
         growth_rate = (avg_growth or 5.0) / 100
 
@@ -457,7 +430,7 @@ def get_user_analytics(current_user):
             current_age = datetime.datetime.now().year - current_user.date_of_birth.year
             years_to_retire = max(0, 68 - current_age)
         else:
-            years_to_retire = 30  # default
+            years_to_retire = 30
 
         projected_pot = round(current_pot * ((1 + growth_rate) ** years_to_retire), 2)
 

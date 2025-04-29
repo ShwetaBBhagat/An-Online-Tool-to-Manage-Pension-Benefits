@@ -10,7 +10,7 @@ def send_async_email(app, msg):
     with app.app_context():
         mail.send(msg)
 
-def send_welcome_email(user_email, user_name, qr_code_path):
+def send_welcome_email(user_email, user_name, qr_code_path, temp_password):
     """Send a real-time welcome email with the MFA QR code."""
     msg = Message("Welcome to Pension Benefits App!",
                   sender="your-email@example.com",
@@ -18,15 +18,22 @@ def send_welcome_email(user_email, user_name, qr_code_path):
     
     msg.body = f"""Hello {user_name},
 
-Welcome to the Pension Benefits Platform! Your account has been successfully created.
+Welcome to the Pension Benefits Platform! Your account has been successfully created by your employer.
 
-To complete your account setup, please enable Multi-Factor Authentication (MFA) using Google Authenticator.
+🛡 Your temporary login password is: {temp_password}
+
+To complete your account setup, please enable Multi-Factor Authentication (MFA) using Google Authenticator:
 
 1. Download Google Authenticator from your app store.
 2. Scan the attached QR Code in Google Authenticator.
 3. Use the generated 6-digit codes during login.
 
-Thank you!
+⚠️ Important:
+- Please change your password after your first login for security.
+- Your MFA 6-digit code will be required at every login.
+
+Thank you,
+Pension Benefits Team
 """
 
     # Attach QR Code to Email

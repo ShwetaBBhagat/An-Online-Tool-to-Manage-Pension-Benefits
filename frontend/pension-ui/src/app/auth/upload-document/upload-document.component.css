@@ -1,0 +1,36 @@
+.container {
+    margin-top: 4rem;
+  }
+  
+  h3 {
+    font-weight: bold;
+  }
+  
+  .card {
+    border-radius: 1rem;
+    background-color: #ffffff;
+  }
+  
+  label {
+    font-weight: 600;
+  }
+  
+  input.form-control {
+    height: 50px;
+    font-size: 1rem;
+  }
+  
+  button.btn {
+    min-width: 140px;
+    height: 45px;
+    font-weight: 500;
+  }
+  
+  button.btn-primary:hover {
+    background-color: #0056b3;
+  }
+  
+  button.btn-secondary:hover {
+    background-color: #5a6268;
+  }
+  

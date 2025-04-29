@@ -1,72 +1,89 @@
-<div class="container mt-4">
-    <h3 class="text-center mb-4">Registered Users</h3>
-  
-    <div class="table-responsive">
-      <form class="row g-3 mb-4 align-items-end" (ngSubmit)="fetchUsers()">
-        <div class="col-md-4">
-          <label class="form-label">Search by Email</label>
-          <input [(ngModel)]="email" name="email" type="text" class="form-control" placeholder="user@example.com">
-        </div>
-    
-      
-        <div class="col-md-4">
-          <label class="form-label">Profile Completed</label>
-          <select [(ngModel)]="profileCompleted" name="profileCompleted" class="form-select">
-            <option value="">-- All --</option>
-            <option value="true">Yes</option>
-            <option value="false">No</option>
-          </select>
-        </div>
-      
-        <div class="col-md-2 d-flex gap-2">
-          <button type="submit" class="btn btn-primary w-100">Search</button>
-          <button type="button" class="btn btn-secondary" (click)="onResetFilters()">Reset</button>
-        </div>
-      </form>
-      
-      <table class="table table-bordered table-striped table-hover align-middle shadow-sm">
-        <thead class="table-dark text-center">
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>NI Number</th>
-            <th>Profile Completed</th>
-            <th>Registered On</th>
-            <th>Actions</th>
-            <th>Documents</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let user of users; let i = index">
-            <td class="text-center">{{ i + 1 }}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.email }}</td>
-            <td class="text-capitalize">{{ user.role }}</td>
-            <td>{{ user.ni_number || '-' }}</td>
-            <td>
-              <span class="badge" [ngClass]="{
-                'bg-success': user.profile_completed,
-                'bg-secondary': !user.profile_completed
-              }">
-                {{ user.profile_completed ? 'Yes' : 'No' }}
-              </span>
-            </td>
-            <td>{{ user.created_at }}</td>
-            <td>
-              <a [routerLink]="['/admin/users', user.id, 'statements']" class="btn btn-sm btn-outline-primary">
-                View Statements
-              </a>              
-            </td>
-            <td>
-              <a [routerLink]="['/admin/view-documents']" [queryParams]="{ user_id: user.id }" class="btn btn-sm btn-outline-info">
-                View Documents
-              </a>
-            </td>            
-          </tr>
-        </tbody>
-      </table>
+<div class="container mt-5">
+  <h3 class="text-center mb-4 text-primary">👥 Registered Users</h3>
+
+  <!-- Search Filters -->
+  <form class="row g-3 mb-5 align-items-end card shadow-sm p-4" (ngSubmit)="fetchUsers()">
+    <div class="col-md-4">
+      <label class="form-label">Search by Email</label>
+      <input 
+        [(ngModel)]="email" 
+        name="email" 
+        type="text" 
+        class="form-control" 
+        placeholder="user@example.com"
+      />
     </div>
+
+    <div class="col-md-4">
+      <label class="form-label">Profile Completed</label>
+      <select [(ngModel)]="profileCompleted" name="profileCompleted" class="form-select">
+        <option value="">-- All --</option>
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+      </select>
+    </div>
+
+    <div class="col-md-4 d-flex gap-2">
+      <button type="submit" class="btn btn-primary w-50">
+        🔍 Search
+      </button>
+      <button type="button" class="btn btn-secondary w-50" (click)="onResetFilters()">
+        🔄 Reset
+      </button>
+    </div>
+  </form>
+
+  <!-- Users Table -->
+  <div class="table-responsive card shadow-sm p-3">
+    <table class="table table-hover table-striped align-middle">
+      <thead class="table-dark text-center">
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>NI Number</th>
+          <th>Profile Completed</th>
+          <th>Registered On</th>
+          <th>Statements</th>
+          <th>Documents</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users; let i = index" class="text-center">
+          <td>{{ i + 1 }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td class="text-capitalize">{{ user.role }}</td>
+          <td>{{ user.ni_number || '-' }}</td>
+          <td>
+            <span class="badge" [ngClass]="{
+              'bg-success': user.profile_completed,
+              'bg-secondary': !user.profile_completed
+            }">
+              {{ user.profile_completed ? 'Yes' : 'No' }}
+            </span>
+          </td>
+          <td>{{ user.created_at }}</td>
+          <td>
+            <a [routerLink]="['/admin/users', user.id, 'statements']" class="btn btn-sm btn-outline-primary">
+              📄 View
+            </a>
+          </td>
+          <td>
+            <a [routerLink]="['/admin/view-documents']" [queryParams]="{ user_id: user.id }" class="btn btn-sm btn-outline-info">
+              📑 View
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  
+
+  <!-- Back Button -->
+  <div class="text-center mt-4">
+    <button class="btn btn-secondary" [routerLink]="['/admin/dashboard']">
+      ⬅️ Back to Dashboard
+    </button>
+  </div>
+</div>

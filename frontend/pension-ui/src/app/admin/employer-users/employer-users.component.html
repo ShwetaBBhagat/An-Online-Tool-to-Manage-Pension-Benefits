@@ -1,33 +1,39 @@
-<div class="container mt-4">
-    <h3 class="mb-4 text-center">👥 Users under Employer #{{ employerId }}</h3>
-  
-    <div *ngIf="users.length === 0" class="text-muted text-center">
-      No users found for this employer.
-    </div>
-  
-    <div *ngIf="users.length > 0" class="table-responsive">
-      <table class="table table-hover table-striped shadow-sm">
-        <thead class="table-dark text-center">
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>NI Number</th>
-            <th>Salary (£)</th>
-            <th>Investment Type</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let user of users; let i = index">
-            <td>{{ i + 1 }}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.ni_number || '-' }}</td>
-            <td>{{ user.salary }}</td>
-            <td>{{ user.investment_type || '-' }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+<div class="container mt-5">
+  <h3 class="text-center mb-4 text-primary">👥 Users under Employer #{{ employerId }}</h3>
+
+  <div *ngIf="users.length === 0" class="alert alert-info text-center">
+    No users found for this employer.
   </div>
-  
+
+  <div *ngIf="users.length > 0" class="table-responsive card shadow-sm p-3">
+    <table class="table table-hover table-striped align-middle">
+      <thead class="table-dark text-center">
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>NI Number</th>
+          <th>Salary (£)</th>
+          <th>Investment Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users; let i = index" class="text-center">
+          <td>{{ i + 1 }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.ni_number || '-' }}</td>
+          <td>£{{ user.salary }}</td>
+          <td>{{ user.investment_type || '-' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Back Button -->
+  <div class="text-center mt-4">
+    <button class="btn btn-secondary" [routerLink]="['/admin/view-employers']">
+      ⬅️ Back to Employers
+    </button>
+  </div>
+</div>

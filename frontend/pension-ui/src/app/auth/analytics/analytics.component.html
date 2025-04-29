@@ -1,0 +1,58 @@
+<div class="container mt-5">
+  <h3 class="text-center mb-4">📊 Pension Analytics</h3>
+
+  <div *ngIf="analytics; else noData">
+
+    <!-- Summary Cards -->
+    <div class="row mb-4 text-center">
+      <div class="col-md-4 mb-3">
+        <div class="card shadow-sm p-3 h-100">
+          <h5 class="text-primary">Total Contributions</h5>
+          <p class="h4 mt-2">£{{ analytics.total_contributions.combined }}</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="card shadow-sm p-3 h-100">
+          <h5 class="text-success">Average Growth Rate</h5>
+          <p class="h4 mt-2">{{ analytics.average_growth_rate }}%</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="card shadow-sm p-3 h-100">
+          <h5 class="text-warning">Projected Pot at Retirement</h5>
+          <p class="h4 mt-2">£{{ analytics.projections.projected_pot_at_retirement }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contributions Chart -->
+    <div class="card shadow-sm p-4 mb-4">
+      <h5 class="text-center mb-3">📈 Contribution Timeline</h5>
+      <div style="position: relative; height:400px; width:100%;">
+        <canvas id="contributionsChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Retirement Projection Details -->
+    <div class="card shadow-sm p-4 mb-4">
+      <h5 class="mb-3">🎯 Retirement Projection</h5>
+      <p><strong>Current Pot Value:</strong> £{{ analytics.projections.current_pot }}</p>
+      <p><strong>Years to Retirement:</strong> {{ analytics.projections.years_to_retirement }} years</p>
+    </div>
+
+    <!-- Back to Dashboard Button -->
+    <div class="text-center">
+      <button class="btn btn-secondary" [routerLink]="['/dashboard']">
+        ⬅️ Back to Dashboard
+      </button>
+    </div>
+
+  </div>
+
+  <!-- No Data Available -->
+  <ng-template #noData>
+    <div class="alert alert-info text-center">
+      No pension data available yet.
+    </div>
+  </ng-template>
+</div>

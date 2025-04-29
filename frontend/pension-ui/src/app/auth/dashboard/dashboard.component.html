@@ -1,0 +1,61 @@
+<div class="container mt-5">
+  <h3 class="text-center mb-4">👤 User Dashboard</h3>
+
+  <!-- User Profile Card -->
+  <div class="card shadow-sm p-4 mb-4" *ngIf="user">
+    <h5 class="mb-3 text-primary">Your Profile</h5>
+    <div class="row">
+      <div class="col-md-6 mb-2">
+        <strong>Email:</strong> {{ user.email || '-' }}
+      </div>
+      <div class="col-md-6 mb-2">
+        <strong>NI Number:</strong> {{ user.ni_number || '-' }}
+      </div>
+      <div class="col-md-6 mb-2">
+        <strong>Date of Birth:</strong> {{ user.date_of_birth || '-' }}
+      </div>
+      <div class="col-md-6 mb-2">
+        <strong>Current Salary:</strong> £{{ user.current_salary || '-' }}
+      </div>
+      <div class="col-md-6 mb-2">
+        <strong>Employment Status:</strong> {{ user.employment_status || '-' }}
+      </div>
+      <div class="col-md-6 mb-2">
+        <strong>Investment Type:</strong> {{ user.investment_type || '-' }}
+      </div>
+      <div class="col-md-6 mb-2">
+        <strong>Postal Code:</strong> {{ user.postal_code || '-' }}
+      </div>
+      <div class="col-md-6 mb-2">
+        <strong>Contact Number:</strong> {{ user.contact_number || '-' }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="row row-cols-1 row-cols-md-2 g-3">
+    <div class="col">
+      <button class="btn btn-primary w-100" [routerLink]="['/profile']">Update Profile</button>
+    </div>
+
+    <div class="col">
+      <button class="btn btn-info w-100" [routerLink]="['/statements']">View Pension Statements</button>
+    </div>
+
+    <div class="col">
+      <button class="btn btn-secondary w-100" [routerLink]="['/upload-document']">Upload Document</button>
+    </div>
+
+    <div class="col">
+      <button class="btn btn-info w-100" [routerLink]="['/my-documents']">My Uploaded Documents</button>
+    </div>
+
+    <div class="col">
+      <button class="btn btn-dark w-100" [routerLink]="['/analytics']">Pension Analytics</button>
+    </div>
+
+    <div class="col">
+      <button class="btn btn-danger w-100" (click)="logout()">Logout</button>
+    </div>
+  </div>
+</div>

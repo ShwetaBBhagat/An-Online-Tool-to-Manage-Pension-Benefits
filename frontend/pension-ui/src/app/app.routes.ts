@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
-import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
-import { UserDashboardComponent } from './user/user-dashboard/user-dashboard.component';
 import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { AllUsersComponent } from './admin/all-users/all-users.component';
@@ -17,13 +15,19 @@ import { EmployerProfileComponent } from './employer/employer-profile/employer-p
 import { AddUserComponent } from './employer/add-user/add-user.component';
 import { EmployerUserStatementsComponent } from './employer/user-statements/user-statements.component';
 import { ViewEmployerDocumentsComponent } from './employer/view-documents/view-documents.component';
-import { SetEmployerPasswordComponent } from './employer/set-password/set-password.component';
+import { SetPasswordComponent } from './employer/set-password/set-password.component';
+import { RequestResetComponent } from './auth/request-reset/request-reset.component';
+import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
+import { DashboardComponent } from './auth/dashboard/dashboard.component';
+import { ProfileComponent } from './auth/profile/profile.component';
+import { StatementsComponent } from './auth/statements/statements.component';
+import { UploadDocumentComponent } from './auth/upload-document/upload-document.component';
+import { UserDocumentsComponent } from './auth/user-documents/user-documents.component';
+import { AnalyticsComponent } from './auth/analytics/analytics.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'user/dashboard', component: UserDashboardComponent },
   { path: 'admin/login', component: AdminLoginComponent },
   { path: 'admin/dashboard',component: AdminDashboardComponent },
   { path: 'admin/all-users',component: AllUsersComponent },
@@ -39,6 +43,14 @@ export const routes: Routes = [
   { path: 'employer/add-user', component: AddUserComponent },
   { path: 'employer/user/:id/statements', component: EmployerUserStatementsComponent},
   { path: 'employer/documents', component: ViewEmployerDocumentsComponent },
-  { path: 'employer/set-password', component: SetEmployerPasswordComponent },
+  { path: 'employer/set-password', component: SetPasswordComponent },
+  { path: 'request-reset', component: RequestResetComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'profile', component: ProfileComponent },
+  { path: 'statements', component: StatementsComponent },
+  { path: 'upload-document', component: UploadDocumentComponent },
+  { path: 'my-documents', component: UserDocumentsComponent },
+  { path: 'analytics', component: AnalyticsComponent },
   { path: '**', redirectTo: 'login' }
 ];

@@ -1,0 +1,35 @@
+.container {
+    margin-top: 4rem;
+  }
+  
+  h3 {
+    font-weight: bold;
+  }
+  
+  input.form-control {
+    height: 45px;
+    font-size: 1rem;
+  }
+  
+  button.btn {
+    min-width: 120px;
+    height: 45px;
+    font-weight: 500;
+  }
+  
+  .card {
+    border-radius: 1rem;
+  }
+  
+  table thead th {
+    vertical-align: middle;
+  }
+  
+  td, th {
+    white-space: nowrap;
+  }
+  
+  .alert {
+    font-size: 1rem;
+  }
+  

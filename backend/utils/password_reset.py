@@ -21,14 +21,19 @@ def verify_reset_token(token):
     except jwt.InvalidTokenError:
         return None  # Invalid token
 
+# Generate a token for employer setup
 def generate_employer_token(email):
-    s = URLSafeTimedSerializer(Config.JWT_SECRET_KEY)
-    return s.dumps(email, salt="employer-set-password")
+    payload = {
+        "email": email,
+        "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=24)  # Token expires in 24 hours
+    }
+    token = jwt.encode(payload, Config.JWT_SECRET_KEY, algorithm="HS256")
+    return token
 
-def verify_employer_token(token, max_age=3600):
-    s = URLSafeTimedSerializer(Config.JWT_SECRET_KEY)
+# Verify the employer token when setting password
+def verify_employer_token(token):
     try:
-        email = s.loads(token, salt="employer-set-password", max_age=max_age)
-        return email
-    except:
+        payload = jwt.decode(token, Config.JWT_SECRET_KEY, algorithms=["HS256"])
+        return payload['email']
+    except (jwt.ExpiredSignatureError, jwt.InvalidTokenError):
         return None

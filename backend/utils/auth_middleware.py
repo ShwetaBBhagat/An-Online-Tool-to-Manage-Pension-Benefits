@@ -8,6 +8,7 @@ from models.employer_model import Employer
 from utils.token_blacklist import is_token_blacklisted
 from functools import wraps
 from flask import request, jsonify
+from models.admin_model import Admin  
 
 def token_required(f):
     @wraps(f)

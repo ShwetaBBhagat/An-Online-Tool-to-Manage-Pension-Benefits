@@ -1,0 +1,22 @@
+.container {
+    max-width: 1200px;
+    margin: auto;
+  }
+  
+  .card {
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+  }
+  
+  h3 {
+    font-weight: bold;
+  }
+  
+  a.btn {
+    min-width: 200px;
+  }
+  
+  .alert {
+    border-radius: 8px;
+  }
+  

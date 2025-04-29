@@ -6,7 +6,8 @@ import datetime
 from config import Config
 from utils.auth_middleware import token_required, employer_required, admin_required
 from models import db
-
+from utils.helpers import generate_random_password
+from utils.helpers import hash_password
 
 
 employer_bp = Blueprint('employer_bp', __name__)
@@ -204,13 +205,14 @@ def add_user_by_employer(current_user):
     qr_path = os.path.join(qr_dir, f"{email}_mfa.png")
     qrcode.make(otp_uri).save(qr_path)
 
-    temp_password = bcrypt.hashpw("Welcome123!".encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+    temp_password = generate_random_password()      # Step 1: Generate plain password
+    hashed_password = hash_password(temp_password)  # Step 2: Hash password to store in DB  
 
     # Create and save user
     new_user = User(
         name=name,
         email=email,
-        password=temp_password,
+        password=hashed_password,
         date_of_birth=dob,
         current_salary=salary,
         investment_type=investment_type,
@@ -222,7 +224,7 @@ def add_user_by_employer(current_user):
     db.session.commit()
 
     # Send welcome email with MFA QR
-    send_welcome_email(email, name, qr_path)
+    send_welcome_email(email, name, qr_path, temp_password)
 
     return jsonify({
         "message": "User added successfully via employer.",
@@ -391,3 +393,28 @@ def set_employer_password():
     db.session.commit()
 
     return jsonify({"message": "Password has been set successfully!"}), 200
+
+@employer_bp.route('/logout', methods=['POST'])
+@employer_required
+def employer_logout(current_employer):
+    """Employer Logout"""
+    token = None
+
+    if 'Authorization' in request.headers:
+        token = request.headers['Authorization'].split(" ")[1]
+
+    if not token:
+        return jsonify({'error': 'Token is missing!'}), 401
+
+    try:
+        jwt.decode(token, Config.JWT_SECRET_KEY, algorithms=["HS256"])
+
+        # Blacklist token
+        blacklist_token(token)
+
+        return jsonify({'message': 'Employer logged out successfully!'}), 200
+
+    except jwt.ExpiredSignatureError:
+        return jsonify({'error': 'Token has expired'}), 401
+    except jwt.InvalidTokenError:
+        return jsonify({'error': 'Invalid token'}), 401

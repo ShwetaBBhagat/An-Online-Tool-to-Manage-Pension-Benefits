@@ -1,0 +1,16 @@
+<div class="container mt-5">
+    <h3 class="mb-4 text-center">🔑 Request Password Reset</h3>
+  
+    <form (ngSubmit)="requestReset()" #requestForm="ngForm" class="card shadow p-4">
+      <div class="mb-3">
+        <label>Email</label>
+        <input type="email" [(ngModel)]="email" name="email" class="form-control" required />
+      </div>
+  
+      <button class="btn btn-warning w-100" [disabled]="requestForm.invalid">Send Reset Link</button>
+    </form>
+  
+    <div *ngIf="successMsg" class="alert alert-success mt-3 text-center">{{ successMsg }}</div>
+    <div *ngIf="errorMsg" class="alert alert-danger mt-3 text-center">{{ errorMsg }}</div>
+  </div>
+  

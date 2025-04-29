@@ -1,27 +1,41 @@
 <div class="container mt-5" style="max-width: 450px;">
-    <div class="card shadow p-4">
-      <h3 class="text-center mb-4">Admin Login</h3>
-  
-      <p class="text-danger text-center">⚠️ If you're not the admin, return to the homepage immediately!</p>
-  
-      <form (ngSubmit)="onSubmit()">
-        <div class="mb-3">
-          <label for="email" class="form-label">Admin Email</label>
-          <input type="email" id="email" class="form-control" [(ngModel)]="admin.email" name="email" required>
-        </div>
-      
-        <div class="mb-3">
-          <label for="password" class="form-label">Password</label>
-          <input type="password" id="password" class="form-control" [(ngModel)]="admin.password" name="password" required>
-        </div>
-      
-        <button class="btn btn-primary w-100" type="submit">Login</button>
-      </form>
-      
-  
-      <div *ngIf="errorMessage" class="alert alert-danger mt-3 text-center">
-        {{ errorMessage }}
+  <div class="card shadow-lg p-4 rounded">
+    <h3 class="text-center mb-4 text-primary">🛡️ Admin Login</h3>
+
+    <form (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="email" class="form-label">Admin Email</label>
+        <input 
+          type="email" 
+          id="email" 
+          class="form-control" 
+          [(ngModel)]="admin.email" 
+          name="email" 
+          required
+          placeholder="admin@example.com"
+        />
       </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input 
+          type="password" 
+          id="password" 
+          class="form-control" 
+          [(ngModel)]="admin.password" 
+          name="password" 
+          required
+          placeholder="Enter your password"
+        />
+      </div>
+
+      <button class="btn btn-primary w-100 mt-2" type="submit">
+        🔐 Login
+      </button>
+    </form>
+
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3 text-center">
+      {{ errorMessage }}
     </div>
   </div>
-  
+</div>

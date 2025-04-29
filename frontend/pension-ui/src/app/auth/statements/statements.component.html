@@ -1,0 +1,61 @@
+<div class="container mt-5">
+  <h3 class="mb-4 text-center">📄 Pension Statements</h3>
+
+  <div *ngIf="statements.length > 0; else noData">
+    <div class="table-responsive">
+      <table class="table table-hover table-striped align-middle">
+        <thead class="table-dark text-center">
+          <tr>
+            <th>Statement Date</th>
+            <th>Start - End</th>
+            <th>Account No.</th>
+            <th>Salary (£)</th>
+            <th>Employer (£)</th>
+            <th>Employee (£)</th>
+            <th>Pot Value (£)</th>
+            <th>Fund Name</th>
+            <th>Performance (%)</th>
+            <th>Download</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let s of statements" class="text-center">
+            <td>{{ s.statement_date }}</td>
+            <td>{{ s.statement_start_date }} → {{ s.statement_end_date }}</td>
+            <td>{{ s.account_number || '-' }}</td>
+            <td>£{{ s.salary }}</td>
+            <td>£{{ s.employer_contribution }}</td>
+            <td>£{{ s.employee_contribution }}</td>
+            <td>£{{ s.pot_value }}</td>
+            <td>{{ s.fund_name }}</td>
+            <td>{{ s.fund_performance }}%</td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary" (click)="downloadPDF(s.statement_id)">
+                📥
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Back Button -->
+    <div class="text-center mt-4">
+      <button class="btn btn-secondary" [routerLink]="['/dashboard']">
+        ⬅️ Back to Dashboard
+      </button>
+    </div>
+  </div>
+
+  <!-- No Statements Available -->
+  <ng-template #noData>
+    <div class="alert alert-info text-center">
+      No pension statements available.
+    </div>
+    <div class="text-center mt-4">
+      <button class="btn btn-secondary" [routerLink]="['/dashboard']">
+        ⬅️ Back to Dashboard
+      </button>
+    </div>
+  </ng-template>
+</div>

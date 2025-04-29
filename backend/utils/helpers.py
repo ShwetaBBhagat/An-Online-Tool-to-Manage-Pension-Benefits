@@ -1,6 +1,9 @@
 import qrcode
 import pyotp
 import os
+import random
+import string
+import bcrypt
 
 def generate_mfa_qr(email, mfa_secret):
     """Generate an MFA QR Code for Google Authenticator setup and save it as an image."""
@@ -21,3 +24,12 @@ def generate_mfa_qr(email, mfa_secret):
     print(f"QR Code saved at: {qr_code_path}")  # Debugging log
 
     return qr_code_path  # Return the full path to the saved QR code
+
+def generate_random_password(length=8):
+    letters = string.ascii_letters + string.digits
+    return ''.join(random.choice(letters) for i in range(length))
+
+def hash_password(password):
+    salt = bcrypt.gensalt()
+    hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
+    return hashed.decode('utf-8') 
