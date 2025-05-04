@@ -24,9 +24,9 @@ import { StatementsComponent } from './auth/statements/statements.component';
 import { UploadDocumentComponent } from './auth/upload-document/upload-document.component';
 import { UserDocumentsComponent } from './auth/user-documents/user-documents.component';
 import { AnalyticsComponent } from './auth/analytics/analytics.component';
-
+import { HomeComponent } from './shared/home/home.component';
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', component: HomeComponent, pathMatch: 'full'}, 
   { path: 'login', component: LoginComponent },
   { path: 'admin/login', component: AdminLoginComponent },
   { path: 'admin/dashboard',component: AdminDashboardComponent },

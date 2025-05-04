@@ -1,5 +1,49 @@
-.navbar-brand {
-    font-weight: bold;
-    font-size: 1.3rem;
+:host {
+    display: block;
+  }
+  
+  mat-toolbar {
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    background: linear-gradient(90deg, #6a11cb, #2575fc); /* Stylish violet-to-blue gradient */
+    color: white;
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    height: 64px;
+  }
+  
+  .brand {
+    font-size: 24px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    color: #fff;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .brand:hover {
+    transform: scale(1.08);
+    color: #e3f2fd;
+  }
+  
+  .spacer {
+    flex: 1 1 auto;
+  }
+  
+  a[mat-button] {
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+    text-transform: none;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    margin-left: 12px;
+  }
+  
+  a[mat-button]:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #e0f7fa;
+    transform: translateY(-1px);
   }
   

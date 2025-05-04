@@ -1,0 +1,23 @@
+.footer-gradient {
+    width: 100vw;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    text-align: center;
+    padding: 16px 12px;
+    color: #ffffff;
+    font-size: 0.9rem;
+    letter-spacing: 0.3px;
+    font-weight: 400;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    line-height: 1.5;
+  }
+  
+  /* Optional: Responsive adjustments for very small screens */
+  @media (max-width: 480px) {
+    .footer-gradient {
+      font-size: 0.8rem;
+      padding: 14px 10px;
+    }
+  }
+  

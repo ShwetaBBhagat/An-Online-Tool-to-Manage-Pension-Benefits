@@ -1,0 +1,160 @@
+<section class="hero-banner">
+  <div class="overlay">
+    <div class="hero-content">
+      <h1 class="fade-in-title">Secure Your Retirement with Confidence</h1>
+      <p class="fade-in-subtitle">Your Personalized UK Pension Companion</p>
+      <button mat-raised-button color="accent" routerLink="/auth/employee-login">Get Started</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============  IMPACT SECTION  ============ -->
+<section class="impact-section">
+  <div class="impact-container">
+    <h2 class="impact-heading">The Numbers That Define Our Impact</h2>
+    <p class="impact-subtitle">Trusted by professionals across the UK pension landscape</p>
+
+    <div class="impact-grid">
+      <div class="impact-card" *ngFor="let num of numbers">
+        <h3 class="impact-number">
+          {{ num.prefix }}
+          <span
+            #statRef
+            class="counter"
+            [attr.data-target]="num.target"
+          >0</span>
+          {{ num.suffix }}
+        </h3>
+    
+        <p class="impact-label">{{ num.label }}</p>
+        <p class="impact-text">{{ num.desc }}</p>
+      </div>
+    </div>    
+    
+  </div>
+</section>
+
+
+<!-- ============  FEATURES SECTION  ============ -->
+<section class="features-section">
+  <h2 class="features-heading">Power‑Packed Features</h2>
+  <p class="features-subtitle">
+    Everything you need to manage your pension—beautifully, securely, and on any device
+  </p>
+
+  <div class="features-grid">
+
+    <div class="feature-card slide-up" style="animation-delay: .1s">
+      <span class="material-icons feature-icon">trending_up</span>
+      <h3 class="feature-title">Track Contributions</h3>
+      <p class="feature-text">
+        Interactive graphs show exactly how your funds are growing.
+      </p>
+    </div>
+
+    <div class="feature-card slide-up" style="animation-delay: .3s">
+      <span class="material-icons feature-icon">lock</span>
+      <h3 class="feature-title">Secure MFA Login</h3>
+      <p class="feature-text">
+        Multi‑factor authentication & role‑based access protect your data.
+      </p>
+    </div>
+
+    <div class="feature-card slide-up" style="animation-delay: .4s">
+      <span class="material-icons feature-icon">notifications_active</span>
+      <h3 class="feature-title">Real‑Time Alerts</h3>
+      <p class="feature-text">
+        Get notified of policy changes, contributions, and deadlines instantly.
+      </p>
+    </div>
+
+    <div class="feature-card slide-up" style="animation-delay: .5s">
+      <span class="material-icons feature-icon">translate</span>
+      <h3 class="feature-title">Multi‑Language</h3>
+      <p class="feature-text">
+        Seamless i18n support—switch languages with one tap.
+      </p>
+    </div>
+    
+        <div class="feature-card slide-up" style="animation-delay: .8s">
+          <span class="material-icons feature-icon">chat_bubble</span>
+          <h3 class="feature-title">AI Pension Chatbot</h3>
+          <p class="feature-text">
+            Get 24/7 answers to pension queries and personalised guidance via an intelligent assistant.
+          </p>
+        </div>
+
+  </div>
+</section>
+
+<!-- ==========  TESTIMONIALS  ========== -->
+<section class="testimonials-wrapper">
+  <h2 class="section-heading">What Our Users Say</h2>
+
+  <!-- Card displaying the active testimonial -->
+  <div class="testimonial-card">
+    <!-- Mini sub‑headline -->
+<p class="mini-heading">★ 5‑Star Reviews</p>
+
+<!-- Stars row -->
+<div class="stars">
+  <i class="fa-solid fa-star"></i>
+  <i class="fa-solid fa-star"></i>
+  <i class="fa-solid fa-star"></i>
+  <i class="fa-solid fa-star"></i>
+  <i class="fa-solid fa-star"></i>
+</div>
+
+    <!-- Quotes (one per testimonial) -->
+    <p
+      class="quote"
+      *ngFor="let t of testimonials; let i = index"
+      [class.show]="i === activeIndex"
+    >
+      “{{ t.quote }}”
+    </p>
+
+    <hr />
+
+    <!-- Author / role of active testimonial -->
+    <p class="author">{{ testimonials[activeIndex].name }}</p>
+    <p class="role">{{ testimonials[activeIndex].role }}</p>
+  </div>
+
+  <!-- Navigation dots -->
+  <div class="dots">
+    <span
+      *ngFor="let _ of testimonials; let i = index"
+      class="dot"
+      [class.active]="i === activeIndex"
+      (click)="activeIndex = i"
+    ></span>
+  </div>
+</section>
+
+<!-- ========== COMPLIANCE & SECURITY STRIP ========== -->
+<section class="compliance-strip">
+  <div class="compliance-content">
+    <i class="fa-solid fa-shield-halved main-icon"></i>
+
+    <p class="compliance-text">
+      We are compliant with <strong>GDPR</strong>, <strong>ISO 27001</strong>,
+      and follow <strong>UK pension regulations</strong>.
+    </p>
+
+    <div class="compliance-icons">
+      <div class="icon-block">
+        <i class="fa-solid fa-user-shield"></i>
+        <span>GDPR</span>
+      </div>
+      <div class="icon-block">
+        <i class="fa-solid fa-certificate"></i>
+        <span>ISO 27001</span>
+      </div>
+      <div class="icon-block">
+        <i class="fa-solid fa-scale-balanced"></i>
+        <span>UK Regulation</span>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,27 +1,12 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
-  <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/">Pension Portal</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<mat-toolbar>
+  <span class="brand" routerLink="/">Pension Portal</span>
+  <span class="spacer"></span>
 
-    <div class="collapse navbar-collng generate component component-name
-    apse" id="navbarNav">
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/auth/login">Employee Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/employer/login">Employer Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/admin/login">Admin Login</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+  <a mat-button routerLink="/">Home</a>
+  <a mat-button routerLink="/shared/about">About Us</a>
+  <a mat-button routerLink="/contact">Contact Us</a>
+  <a mat-button routerLink="/faq">FAQ</a>
+  <button mat-button [routerLink]="'/auth/employee-login'">Employee Login</button>
+  <button mat-button [routerLink]="'/employer/login'">Employer Login</button>
+  <button mat-button [routerLink]="'/admin/login'">Admin Login</button>
+</mat-toolbar>
