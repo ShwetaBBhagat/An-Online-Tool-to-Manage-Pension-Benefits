@@ -25,8 +25,11 @@ import { UploadDocumentComponent } from './auth/upload-document/upload-document.
 import { UserDocumentsComponent } from './auth/user-documents/user-documents.component';
 import { AnalyticsComponent } from './auth/analytics/analytics.component';
 import { HomeComponent } from './shared/home/home.component';
+import { AboutComponent } from './shared/about/about.component';
+
 export const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full'}, 
+  { path: 'about', component: AboutComponent },
   { path: 'login', component: LoginComponent },
   { path: 'admin/login', component: AdminLoginComponent },
   { path: 'admin/dashboard',component: AdminDashboardComponent },

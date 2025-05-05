@@ -1,21 +1,27 @@
-<section class="hero-banner">
+<section class="hero-banner" data-aos="fade-in" data-aos-duration="1200">
   <div class="overlay">
     <div class="hero-content">
-      <h1 class="fade-in-title">Secure Your Retirement with Confidence</h1>
-      <p class="fade-in-subtitle">Your Personalized UK Pension Companion</p>
-      <button mat-raised-button color="accent" routerLink="/auth/employee-login">Get Started</button>
+      <h1 class="fade-in-title" data-aos="fade-up" data-aos-delay="100">Secure Your Retirement with Confidence</h1>
+      <p class="fade-in-subtitle" data-aos="fade-up" data-aos-delay="300">Your Personalized UK Pension Companion</p>
+      <button mat-raised-button color="accent" routerLink="/auth/employee-login"      data-aos="zoom-in"
+      data-aos-delay="500">Get Started</button>
     </div>
   </div>
 </section>
 
 <!-- ============  IMPACT SECTION  ============ -->
 <section class="impact-section">
-  <div class="impact-container">
+  <div class="impact-container" data-aos="fade-right">
     <h2 class="impact-heading">The Numbers That Define Our Impact</h2>
     <p class="impact-subtitle">Trusted by professionals across the UK pension landscape</p>
 
     <div class="impact-grid">
-      <div class="impact-card" *ngFor="let num of numbers">
+      <div
+      class="impact-card"
+      *ngFor="let num of numbers; let i = index"
+      [attr.data-aos]="'fade-up'"
+      [attr.data-aos-delay]="i * 100" >
+    
         <h3 class="impact-number">
           {{ num.prefix }}
           <span
@@ -42,7 +48,7 @@
     Everything you need to manage your pension—beautifully, securely, and on any device
   </p>
 
-  <div class="features-grid">
+  <div class="features-grid" data-aos="fade-left">
 
     <div class="feature-card slide-up" style="animation-delay: .1s">
       <span class="material-icons feature-icon">trending_up</span>
@@ -92,7 +98,7 @@
   <h2 class="section-heading">What Our Users Say</h2>
 
   <!-- Card displaying the active testimonial -->
-  <div class="testimonial-card">
+  <div class="testimonial-card" data-aos="fade-down">
     <!-- Mini sub‑headline -->
 <p class="mini-heading">★ 5‑Star Reviews</p>
 
@@ -134,7 +140,7 @@
 
 <!-- ========== COMPLIANCE & SECURITY STRIP ========== -->
 <section class="compliance-strip">
-  <div class="compliance-content">
+  <div class="compliance-content" data-aos="fade-up">
     <i class="fa-solid fa-shield-halved main-icon"></i>
 
     <p class="compliance-text">
@@ -143,15 +149,15 @@
     </p>
 
     <div class="compliance-icons">
-      <div class="icon-block">
+      <div class="icon-block" data-aos="zoom-in" data-aos-delay="100">
         <i class="fa-solid fa-user-shield"></i>
         <span>GDPR</span>
       </div>
-      <div class="icon-block">
+      <div class="icon-block" data-aos="zoom-in" data-aos-delay="200">
         <i class="fa-solid fa-certificate"></i>
         <span>ISO 27001</span>
       </div>
-      <div class="icon-block">
+      <div class="icon-block" data-aos="zoom-in" data-aos-delay="300">
         <i class="fa-solid fa-scale-balanced"></i>
         <span>UK Regulation</span>
       </div>
