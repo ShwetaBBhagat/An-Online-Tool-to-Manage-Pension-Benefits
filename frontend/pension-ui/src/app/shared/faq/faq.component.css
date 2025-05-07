@@ -1,0 +1,28 @@
+.faq-page {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 0 20px;
+    text-align: left;
+  }
+  
+  .faq-title {
+    font-size: 2.4rem;
+    font-weight: bold;
+    color: #1e1e2f;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  .faq-subtitle {
+    font-size: 1.15rem;
+    color: #666;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+  
+  .faq-accordion {
+    background-color: #fafbff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  }
+  

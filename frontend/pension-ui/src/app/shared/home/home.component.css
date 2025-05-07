@@ -421,3 +421,69 @@
 .icon-block:hover i {
   transform: scale(1.2);
 }
+
+/* ========== CONTACT US SECTION ========== */
+.contact-section {
+  width: 100%;
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  padding: 80px 20px;
+  text-align: center;
+  color: #fff;
+  margin-bottom: 60px;
+
+}
+
+.contact-container {
+  max-width: 800px;
+  margin: auto;
+}
+
+.contact-heading {
+  font-size: 2.6rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.contact-subtitle {
+  font-size: 1.15rem;
+  margin-bottom: 40px;
+  opacity: 0.9;
+}
+
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  font-size: 1.05rem;
+  margin-bottom: 40px;
+  align-items: center;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.05rem;
+}
+
+.contact-item i {
+  font-size: 1.2rem;
+  color: #ffffff;
+}
+
+.contact-item a {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.map-container {
+  margin-top: 20px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+
+
+
+

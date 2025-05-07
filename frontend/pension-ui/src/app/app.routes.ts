@@ -26,10 +26,12 @@ import { UserDocumentsComponent } from './auth/user-documents/user-documents.com
 import { AnalyticsComponent } from './auth/analytics/analytics.component';
 import { HomeComponent } from './shared/home/home.component';
 import { AboutComponent } from './shared/about/about.component';
+import { FaqComponent } from './shared/faq/faq.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full'}, 
   { path: 'about', component: AboutComponent },
+  { path: 'faq', component: FaqComponent },
   { path: 'login', component: LoginComponent },
   { path: 'admin/login', component: AdminLoginComponent },
   { path: 'admin/dashboard',component: AdminDashboardComponent },
