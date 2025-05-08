@@ -16,10 +16,12 @@ import { Router } from '@angular/router';
 export class AdminLoginComponent {
   admin = {
     email: '',
-    password: ''
+    password: '',
   };
 
   errorMessage = '';
+  showPassword = false;
+
 
   constructor(private http: HttpClient, private router: Router) {}
 

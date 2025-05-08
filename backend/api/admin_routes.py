@@ -1,18 +1,19 @@
-from flask import Blueprint, jsonify, request
-from models import db
-from models.user_model import User
-from utils.auth_middleware import token_required, admin_required
-from models.pension_statement_model import PensionStatement
-from models.document_model import Document
-from utils.email_service import send_statement_notification
-from models.admin_model import Admin
 import jwt
 import datetime
+from models import db
 from config import Config
-from utils.password_reset import generate_employer_token
-from utils.email_service import send_employer_setup_email
+from models.user_model import User
+from models.admin_model import Admin
+from models.document_model import Document
+from flask import Blueprint, jsonify, request
 from werkzeug.security import check_password_hash
 from utils.token_blacklist import blacklist_token
+from utils.password_reset import generate_employer_token
+from utils.email_service import send_employer_setup_email
+from models.pension_statement_model import PensionStatement
+from utils.email_service import send_statement_notification
+from utils.auth_middleware import token_required, admin_required
+
 
 admin_bp = Blueprint('admin_bp', __name__)
 
@@ -33,8 +34,8 @@ def admin_login():
     token = jwt.encode({
         "admin_id": admin.id,
         "email": admin.email,
-        "role": "admin",  # still include this to use in middleware
-        "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=2)
+        "role": "admin", 
+        "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=1)
     }, Config.JWT_SECRET_KEY, algorithm="HS256")
 
     return jsonify({
@@ -98,6 +99,60 @@ def get_all_users(current_user):
         "total_users": len(result),
         "users": result
     }), 200
+
+
+#Admin Dashboard Summary Shows totals: users, employers, documents, statements, and pot value
+@admin_bp.route('/admin/dashboard-summary', methods=['GET'])
+@token_required
+@admin_required
+def admin_dashboard_summary(current_admin):
+    from models.user_model import User
+    from models.employer_model import Employer
+    from models.pension_statement_model import PensionStatement
+    from models.document_model import Document  # if your docs are stored here
+
+    total_users = User.query.count()
+    total_employers = Employer.query.count()
+    total_documents = Document.query.count()
+    total_statements = PensionStatement.query.count()
+
+    pot_sum = db.session.query(
+        db.func.sum(PensionStatement.pot_value)
+    ).scalar() or 0.0
+
+    return jsonify({
+        "status": "success",
+        "summary": {
+            "total_users": total_users,
+            "total_employers": total_employers,
+            "total_documents": total_documents,
+            "total_statements": total_statements,
+            "total_pot_value": float(pot_sum)
+        }
+    }), 200
+
+
+#admin logout
+@admin_bp.route('/logout', methods=['POST'])
+@admin_required
+def admin_logout(current_admin):
+    """Admin Logout — Invalidate the Admin JWT Token."""
+    token = None
+
+    # Extract token from Authorization header
+    if 'Authorization' in request.headers:
+        token = request.headers['Authorization'].split(" ")[1]
+
+    if not token:
+        return jsonify({"error": "Token is missing!"}), 401
+
+    try:
+        # No need to decode again, just blacklist
+        blacklist_token(token)
+        return jsonify({"message": "Admin logged out successfully!"}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 #View Pension Statements for Any User
@@ -328,39 +383,6 @@ def admin_download_document(current_user, doc_id):
     except jwt.InvalidTokenError:
         return jsonify({"error": "Invalid token!"}), 401
 
-
-
-#Admin Dashboard Summary Shows totals: users, employers, documents, statements, and pot value
-@admin_bp.route('/admin/dashboard-summary', methods=['GET'])
-@token_required
-@admin_required
-def admin_dashboard_summary(current_admin):
-    from models.user_model import User
-    from models.employer_model import Employer
-    from models.pension_statement_model import PensionStatement
-    from models.document_model import Document  # if your docs are stored here
-
-    total_users = User.query.count()
-    total_employers = Employer.query.count()
-    total_documents = Document.query.count()
-    total_statements = PensionStatement.query.count()
-
-    pot_sum = db.session.query(
-        db.func.sum(PensionStatement.pot_value)
-    ).scalar() or 0.0
-
-    return jsonify({
-        "status": "success",
-        "summary": {
-            "total_users": total_users,
-            "total_employers": total_employers,
-            "total_documents": total_documents,
-            "total_statements": total_statements,
-            "total_pot_value": float(pot_sum)
-        }
-    }), 200
-
-
 #View all employers
 @admin_bp.route('/admin/employers', methods=['GET'])
 @token_required
@@ -479,23 +501,3 @@ def delete_employer(current_admin, employer_id):
 
     return jsonify({"message": "Employer deleted successfully"}), 200
 
-@admin_bp.route('/logout', methods=['POST'])
-@admin_required
-def admin_logout(current_admin):
-    """Admin Logout — Invalidate the Admin JWT Token."""
-    token = None
-
-    # Extract token from Authorization header
-    if 'Authorization' in request.headers:
-        token = request.headers['Authorization'].split(" ")[1]
-
-    if not token:
-        return jsonify({"error": "Token is missing!"}), 401
-
-    try:
-        # No need to decode again, just blacklist
-        blacklist_token(token)
-        return jsonify({"message": "Admin logged out successfully!"}), 200
-
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
