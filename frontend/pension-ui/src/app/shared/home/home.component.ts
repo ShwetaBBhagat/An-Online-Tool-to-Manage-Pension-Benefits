@@ -11,6 +11,9 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { PLATFORM_ID } from '@angular/core';
+import { VoiceflowLoaderService } from './voiceflow-loader.service';
+
+
 
 @Component({
   selector: 'app-home',
@@ -67,7 +70,11 @@ export class HomeComponent implements AfterViewInit {
   private intervalId!: ReturnType<typeof setInterval>;
   private touchStartX = 0;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private chatbot: VoiceflowLoaderService
+  ) {}
+  
 
   /* refs for counters */
   @ViewChildren('statRef') statRefs!: QueryList<ElementRef>;
@@ -75,6 +82,7 @@ export class HomeComponent implements AfterViewInit {
   /* ──────────  LIFECYCLE  ──────────── */
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
+      this.chatbot.loadChatbotScript();
       this.initCounters();
       this.startAutoRotate();
     }
