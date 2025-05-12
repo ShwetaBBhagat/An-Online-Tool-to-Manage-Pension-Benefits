@@ -77,11 +77,24 @@
         </button>
       </div>
 
+        <div class="col">
+        <button class="btn btn-warning w-100" [routerLink]="['/beneficiary']">
+          <i class="fas fa-user-friends me-2"></i>Manage Beneficiary
+        </button>
+      </div>
+
+      <div class="col">
+      <button class="btn btn-outline-danger w-100" [routerLink]="['/request-reset']">
+        <i class="fas fa-key me-2"></i>Reset Password
+      </button>
+    </div>
+
       <div class="col">
         <button class="btn btn-danger w-100" (click)="logout()">
           <i class="fas fa-sign-out-alt me-2"></i>Logout
         </button>
       </div>
+
     </div>
   </div>
 </div>

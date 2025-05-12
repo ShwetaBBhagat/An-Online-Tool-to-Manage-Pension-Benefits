@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-upload-document',
@@ -15,6 +17,7 @@ export class UploadDocumentComponent {
   selectedFile: File | null = null;
   successMsg = '';
   errorMsg = '';
+  selectedDocType: string = '';
 
   constructor(private http: HttpClient) {}
 
@@ -33,31 +36,44 @@ export class UploadDocumentComponent {
     }
   }
 
-  uploadDocument() {
-    if (!this.selectedFile) {
-      this.errorMsg = 'Please select a valid file.';
-      return;
-    }
+@ViewChild('uploadForm') uploadFormRef!: NgForm;
 
-    const formData = new FormData();
-    formData.append('file', this.selectedFile);
+uploadDocument() {
+  const token = localStorage.getItem('userToken');
 
-    const token = localStorage.getItem('userToken');
-
-    this.http.post<any>('http://127.0.0.1:5000/api/auth/user/upload-document', formData, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }).subscribe({
-      next: (res) => {
-        this.successMsg = res.message;
-        this.errorMsg = '';
-        this.selectedFile = null;
-      },
-      error: (err) => {
-        this.errorMsg = err.error?.error || 'Upload failed';
-        this.successMsg = '';
-      }
-    });
+  if (!this.selectedFile) {
+    this.errorMsg = 'Please select a file to upload.';
+    return;
   }
+
+  const formData = new FormData();
+  formData.append('file', this.selectedFile);
+  formData.append('document_type', this.selectedDocType);
+
+  this.http.post('http://127.0.0.1:5000/api/auth/user/upload-document', formData, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }).subscribe({
+    next: (res: any) => {
+      this.successMsg = res.message;
+      this.errorMsg = '';
+
+      // 🧼 Reset form UI
+      this.selectedFile = null;
+      this.selectedDocType = '';
+      const fileInput: any = document.getElementById('fileInput');
+      if (fileInput) fileInput.value = '';
+
+      // 🧼 Optionally reset Angular form
+      if (this.uploadFormRef) this.uploadFormRef.resetForm();
+    },
+    error: (err) => {
+      this.errorMsg = err.error?.error || 'Upload failed';
+      this.successMsg = '';
+    }
+  });
+}
+
+
 }

@@ -17,6 +17,7 @@ export class LoginComponent {
   mfaToken = '';
   successMsg = '';
   errorMsg = '';
+  showPassword: boolean = false;
 
   constructor(private http: HttpClient, private router: Router) {}
 

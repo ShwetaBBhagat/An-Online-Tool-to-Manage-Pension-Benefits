@@ -9,5 +9,7 @@ class Document(db.Model):
     filename = db.Column(db.String(255), nullable=False)
     filepath = db.Column(db.String(255), nullable=False)
     uploaded_at = db.Column(db.DateTime, default=datetime.utcnow)
+    document_type = db.Column(db.String(50)) 
+
 
     user = db.relationship('User', backref=db.backref('documents', lazy=True))

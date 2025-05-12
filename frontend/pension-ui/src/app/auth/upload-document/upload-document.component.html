@@ -2,6 +2,20 @@
   <h3 class="mb-4 text-center">📤 Upload Document</h3>
 
   <form (ngSubmit)="uploadDocument()" #uploadForm="ngForm" class="card shadow-sm p-4" enctype="multipart/form-data">
+
+    <!-- Document Category Dropdown -->
+    <div class="mb-3">
+      <label for="docType" class="form-label">Document Type</label>
+      <select id="docType" class="form-select" [(ngModel)]="selectedDocType" name="docType">
+        <option value="" disabled selected>Select document category</option>
+        <option value="identity">Identity & Verification</option>
+        <option value="transfer">Pension Transfer Document</option>
+        <option value="beneficiary">Beneficiary/Nominee Declaration</option>
+        <option value="employment">Employment or Eligibility Proof</option>
+      </select>
+    </div>
+
+    <!-- File Upload Input -->
     <div class="mb-3">
       <label for="fileInput" class="form-label">Select Document to Upload</label>
       <input 
@@ -14,24 +28,23 @@
       />
     </div>
 
+    <!-- Action Buttons -->
     <div class="d-flex justify-content-between mt-4">
       <button type="button" class="btn btn-secondary" [routerLink]="['/dashboard']">
         ⬅️ Back
       </button>
 
-    <button type="submit" class="btn btn-primary" [disabled]="!selectedFile">
-      <i class="fas fa-cloud-upload-alt me-2"></i>Upload
-    </button>
-
+      <button type="submit" class="btn btn-primary" [disabled]="!selectedFile">
+        <i class="fas fa-cloud-upload-alt me-2"></i>Upload
+      </button>
     </div>
   </form>
 
-<div *ngIf="successMsg" class="alert alert-success mt-3 text-center">
-  <i class="fas fa-check-circle me-2"></i>{{ successMsg }}
-</div>
-
-<div *ngIf="errorMsg" class="alert alert-danger mt-3 text-center">
-  <i class="fas fa-exclamation-triangle me-2"></i>{{ errorMsg }}
-</div>
-
+  <!-- Feedback Messages -->
+  <div *ngIf="successMsg" class="alert alert-success mt-3 text-center">
+    <i class="fas fa-check-circle me-2"></i>{{ successMsg }}
+  </div>
+  <div *ngIf="errorMsg" class="alert alert-danger mt-3 text-center">
+    <i class="fas fa-exclamation-triangle me-2"></i>{{ errorMsg }}
+  </div>
 </div>

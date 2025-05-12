@@ -23,16 +23,26 @@
 
           <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input 
-              type="password"
-              id="password"
-              [(ngModel)]="password"
-              name="password"
-              class="form-control"
-              required
-              placeholder="Enter your password"
-            />
+            
+            <div class="input-group">
+              <input 
+                [type]="showPassword ? 'text' : 'password'" 
+                id="password"
+                [(ngModel)]="password"
+                name="password"
+                class="form-control"
+                required
+                placeholder="Enter your password"
+              />
+              <button 
+                type="button" 
+                class="btn btn-outline-secondary" 
+                (click)="showPassword = !showPassword">
+                {{ showPassword ? 'Hide' : 'Show' }}
+              </button>
+            </div>
           </div>
+
 
           <div class="mb-3">
             <label for="mfaToken" class="form-label">MFA Token (6-digit)</label>

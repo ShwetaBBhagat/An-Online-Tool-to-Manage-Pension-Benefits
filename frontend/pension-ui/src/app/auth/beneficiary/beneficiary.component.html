@@ -1,0 +1,42 @@
+<div class="container mt-5">
+  <div class="card p-4 shadow">
+    <h3 class="mb-4 text-center">
+      <i class="fas fa-user-friends me-2"></i>Beneficiary Details
+    </h3>
+
+    <form (ngSubmit)="saveBeneficiary()" #beneficiaryForm="ngForm">
+      <div class="mb-3">
+        <label class="form-label">Full Name</label>
+        <input [(ngModel)]="beneficiary.full_name" name="full_name" class="form-control" required />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Relationship</label>
+        <input [(ngModel)]="beneficiary.relationship" name="relationship" class="form-control" />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Percentage</label>
+        <input type="number" [(ngModel)]="beneficiary.percentage" name="percentage" class="form-control" min="1" max="100" required />
+      </div>
+
+      <button class="btn btn-primary w-100" [disabled]="beneficiaryForm.invalid">
+        <i class="fas fa-save me-2"></i>Save Beneficiary
+      </button>
+    </form>
+
+    <div *ngIf="successMsg" class="alert alert-success mt-3 text-center">
+      <i class="fas fa-check-circle me-2"></i>{{ successMsg }}
+    </div>
+
+    <div *ngIf="errorMsg" class="alert alert-danger mt-3 text-center">
+      <i class="fas fa-exclamation-triangle me-2"></i>{{ errorMsg }}
+    </div>
+  </div>
+</div>
+
+<div class="text-center mt-4">
+  <button class="btn btn-secondary" [routerLink]="['/dashboard']">
+    ⬅️ Back to Dashboard
+  </button>
+</div>

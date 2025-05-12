@@ -5,6 +5,7 @@ from flask import send_file
 from models.user_model import db, User
 from models.pension_statement_model import db, PensionStatement
 from models.document_model import Document
+from models.beneficiary_model import Beneficiary
 
 import bcrypt
 import pyotp
@@ -320,6 +321,8 @@ def upload_document(current_user):
         return jsonify({"error": "No file part"}), 400
 
     file = request.files['file']
+    document_type = request.form.get('document_type')  
+
     if file.filename == '':
         return jsonify({"error": "No file selected"}), 400
 
@@ -328,7 +331,12 @@ def upload_document(current_user):
         filepath = os.path.join(UPLOAD_FOLDER, filename)
         file.save(filepath)
 
-        new_doc = Document(user_id=current_user.id, filename=filename, filepath=filepath)
+        new_doc = Document(
+            user_id=current_user.id,
+            filename=filename,
+            filepath=filepath,
+            document_type=document_type  
+        )
         db.session.add(new_doc)
         db.session.commit()
 
@@ -336,12 +344,18 @@ def upload_document(current_user):
 
     return jsonify({"error": "File type not allowed"}), 400
 
+
 #Employee Documents List
 @auth_bp.route('/user/documents', methods=['GET'])
 @token_required
 def list_user_documents(current_user):
     docs = Document.query.filter_by(user_id=current_user.id).all()
-    result = [{"id": d.id, "filename": d.filename, "uploaded_at": d.uploaded_at.strftime("%Y-%m-%d %H:%M")} for d in docs]
+    result = [{
+        "id": d.id,
+        "filename": d.filename,
+        "uploaded_at": d.uploaded_at.strftime("%Y-%m-%d %H:%M"),
+        "type": d.document_type or "Unknown"
+    } for d in docs]
     return jsonify({"documents": result}), 200
 
 #Employee View Documents
@@ -446,3 +460,51 @@ def get_user_analytics(current_user):
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+#Employee Add Benificiary 
+@auth_bp.route('/user/beneficiary', methods=['POST'])
+@token_required
+def add_or_update_beneficiary(current_user):
+    data = request.get_json()
+
+    full_name = data.get('full_name')
+    relationship = data.get('relationship')
+    percentage = data.get('percentage', 100)
+
+    if not full_name:
+        return jsonify({"error": "Full name is required"}), 400
+
+    # Update if exists, else create new
+    existing = Beneficiary.query.filter_by(user_id=current_user.id).first()
+
+    if existing:
+        existing.full_name = full_name
+        existing.relationship = relationship
+        existing.percentage = percentage
+    else:
+        new_b = Beneficiary(
+            user_id=current_user.id,
+            full_name=full_name,
+            relationship=relationship,
+            percentage=percentage
+        )
+        db.session.add(new_b)
+
+    db.session.commit()
+    return jsonify({"message": "Beneficiary saved successfully!"}), 200
+
+#View Employee Benificiary
+@auth_bp.route('/user/beneficiary', methods=['GET'])
+@token_required
+def get_beneficiary(current_user):
+    beneficiary = Beneficiary.query.filter_by(user_id=current_user.id).first()
+
+    if not beneficiary:
+        return jsonify({"message": "No beneficiary found"}), 404
+
+    return jsonify({
+        "id": beneficiary.id,
+        "full_name": beneficiary.full_name,
+        "relationship": beneficiary.relationship,
+        "percentage": float(beneficiary.percentage)
+    }), 200
