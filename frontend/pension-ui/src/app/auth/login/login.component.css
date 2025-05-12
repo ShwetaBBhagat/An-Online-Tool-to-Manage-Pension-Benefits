@@ -1,10 +1,28 @@
 .container {
   margin-top: 4rem;
+  animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .card {
   border-radius: 1rem;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
 }
 
 h3 {
@@ -13,26 +31,39 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #333;
 }
 
 label {
   font-weight: 500;
+  color: #333;
 }
+
 
 input.form-control {
   height: 50px;
   font-size: 1rem;
+  border-radius: 8px;
+  transition: box-shadow 0.3s ease;
+}
+
+input.form-control:focus {
+  box-shadow: 0 0 5px rgba(38, 132, 255, 0.4);
 }
 
 button.btn-primary {
   height: 50px;
   font-size: 1.1rem;
   font-weight: bold;
+  border-radius: 8px;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  border: none;
   transition: background-color 0.3s ease;
 }
 
 button.btn-primary:hover {
   background-color: #0056b3;
+  transform: scale(1.02);
 }
 
 .alert {
@@ -47,4 +78,14 @@ button.btn-primary:hover {
 
 .text-center {
   text-align: center;
+}
+
+.link-primary {
+  color: #2575fc;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.link-primary:hover {
+  text-decoration: underline;
 }

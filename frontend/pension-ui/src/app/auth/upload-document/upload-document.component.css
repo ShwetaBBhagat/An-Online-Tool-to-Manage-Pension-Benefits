@@ -1,36 +1,106 @@
+/* Page entrance animation */
 .container {
-    margin-top: 4rem;
+  margin-top: 4rem;
+  animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
   }
-  
-  h3 {
-    font-weight: bold;
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
-  
-  .card {
-    border-radius: 1rem;
-    background-color: #ffffff;
-  }
-  
-  label {
-    font-weight: 600;
-  }
-  
-  input.form-control {
-    height: 50px;
-    font-size: 1rem;
-  }
-  
-  button.btn {
-    min-width: 140px;
-    height: 45px;
-    font-weight: 500;
-  }
-  
-  button.btn-primary:hover {
-    background-color: #0056b3;
-  }
-  
-  button.btn-secondary:hover {
-    background-color: #5a6268;
-  }
-  
+}
+
+/* Header */
+h3 {
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(90deg, #6a11cb, #2575fc);
+  padding: 0.75rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Upload Card */
+.card {
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.01);
+}
+
+/* Input Styling */
+label {
+  font-weight: 600;
+}
+
+input.form-control {
+  height: 50px;
+  font-size: 1rem;
+  border-radius: 8px;
+  transition: box-shadow 0.3s ease;
+}
+
+input.form-control:focus {
+  box-shadow: 0 0 8px rgba(38, 132, 255, 0.3);
+}
+
+/* Button Styles */
+button.btn {
+  min-width: 140px;
+  height: 45px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+}
+
+button.btn-primary {
+  background: linear-gradient(90deg, #6a11cb, #2575fc);
+  color: white;
+  border: none;
+}
+
+button.btn-primary:hover {
+  background: linear-gradient(90deg, #2575fc, #6a11cb);
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+button.btn-secondary {
+  background: linear-gradient(90deg, #6a11cb, #2575fc);
+  color: white;
+  border: none;
+}
+
+button.btn-secondary:hover {
+  background: linear-gradient(90deg, #2575fc, #6a11cb);
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Alerts */
+.alert {
+  border-radius: 0.5rem;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}

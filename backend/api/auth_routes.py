@@ -1,27 +1,28 @@
 from flask import Blueprint, request, jsonify, url_for
+from flask_bcrypt import check_password_hash
+from flask import send_file
+
 from models.user_model import db, User
 from models.pension_statement_model import db, PensionStatement
+from models.document_model import Document
+
 import bcrypt
-from flask_bcrypt import check_password_hash
 import pyotp
 import jwt
 import datetime
 from config import Config
 import re
+import os
+import qrcode
+import io
+from werkzeug.utils import secure_filename
+
 from utils.email_service import send_welcome_email, send_reset_email
 from utils.password_reset import generate_reset_token, verify_reset_token
 from utils.helpers import generate_mfa_qr
 from utils.auth_middleware import token_required, admin_required
-import os
-import qrcode
 from utils.token_blacklist import blacklist_token
-from flask import send_file
 from utils.pdf_generator import StatementPDF
-import io
-from werkzeug.utils import secure_filename
-from models.document_model import Document
-
-
 
 auth_bp = Blueprint('auth_bp', __name__)  # Authentication Blueprint
 
@@ -34,27 +35,7 @@ if not os.path.exists(UPLOAD_FOLDER):
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def is_strong_password(password):
-    """
-    Validates if a password is strong:
-    - At least 8 characters long
-    - Contains uppercase and lowercase letters
-    - Contains at least one number
-    - Contains at least one special character (@$!%*?&)
-    """
-    if len(password) < 8:
-        return "Password must be at least 8 characters long"
-    if not re.search(r'[A-Z]', password):
-        return "Password must include at least one uppercase letter"
-    if not re.search(r'[a-z]', password):
-        return "Password must include at least one lowercase letter"
-    if not re.search(r'[0-9]', password):
-        return "Password must include at least one number"
-    if not re.search(r'[@$!%*?&]', password):
-        return "Password must include at least one special character (@$!%*?&)"
-    return None  # Password is strong
-
-
+#Employee Login
 @auth_bp.route('/login', methods=['POST'])
 def login():
     try:
@@ -100,6 +81,7 @@ def login():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+#Employee Request Password reset
 @auth_bp.route('/request-reset', methods=['POST'])
 def request_reset():
     """Step 1: User requests a password reset."""
@@ -124,6 +106,7 @@ def request_reset():
 
     return jsonify({"message": "Password reset link sent to your email"}), 200
 
+#Employee Password reset
 @auth_bp.route('/reset-password', methods=['POST'])
 def reset_password():
     """Step 2: User submits a new password with the reset token."""
@@ -149,6 +132,7 @@ def reset_password():
 
     return jsonify({"message": "Password has been reset successfully"}), 200
 
+#Employee Logout
 @auth_bp.route('/logout', methods=['POST'])
 def logout():
     """Invalidate JWT token (Logout)"""
@@ -175,6 +159,7 @@ def logout():
     except jwt.InvalidTokenError:
         return jsonify({"error": "Invalid token"}), 401
 
+#Employee Profile
 @auth_bp.route('/user/profile', methods=['GET'])
 @token_required
 def get_user_profile(current_user):
@@ -190,7 +175,7 @@ def get_user_profile(current_user):
         "contact_number": current_user.contact_number
     }), 200
 
-
+#Update Employee Profile
 @auth_bp.route('/user/update-profile', methods=['PUT'])
 @token_required
 def update_user_profile(current_user):
@@ -254,6 +239,7 @@ def update_user_profile(current_user):
     db.session.commit()
     return jsonify({"message": "Profile updated successfully!"}), 200
 
+#Employee Statements
 @auth_bp.route('/user/statements', methods=['GET'])
 @token_required
 def get_user_statements(current_user):
@@ -287,6 +273,7 @@ def get_user_statements(current_user):
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
 
+#Employee Statements Download
 @auth_bp.route('/user/statements/<int:statement_id>/download', methods=['GET'])
 @token_required
 def download_statement_pdf(current_user, statement_id):
@@ -325,6 +312,7 @@ def download_statement_pdf(current_user, statement_id):
         mimetype='application/pdf'
     )
 
+#Employee Document Upload
 @auth_bp.route('/user/upload-document', methods=['POST'])
 @token_required
 def upload_document(current_user):
@@ -348,6 +336,7 @@ def upload_document(current_user):
 
     return jsonify({"error": "File type not allowed"}), 400
 
+#Employee Documents List
 @auth_bp.route('/user/documents', methods=['GET'])
 @token_required
 def list_user_documents(current_user):
@@ -355,6 +344,7 @@ def list_user_documents(current_user):
     result = [{"id": d.id, "filename": d.filename, "uploaded_at": d.uploaded_at.strftime("%Y-%m-%d %H:%M")} for d in docs]
     return jsonify({"documents": result}), 200
 
+#Employee View Documents
 @auth_bp.route('/user/documents/<int:doc_id>/view', methods=['GET'])
 def view_user_document(doc_id):
     token = request.args.get('token')
@@ -376,6 +366,7 @@ def view_user_document(doc_id):
     except jwt.InvalidTokenError:
         return jsonify({"error": "Invalid token!"}), 401
 
+#Employee Document Download
 @auth_bp.route('/user/documents/<int:doc_id>/download', methods=['GET'])
 @token_required
 def download_document(current_user, doc_id):
@@ -384,6 +375,7 @@ def download_document(current_user, doc_id):
         return jsonify({"error": "Document not found"}), 404
     return send_file(doc.filepath, as_attachment=True, download_name=doc.filename)
 
+#Employee Analytics
 @auth_bp.route('/user/analytics', methods=['GET'])
 @token_required
 def get_user_analytics(current_user):

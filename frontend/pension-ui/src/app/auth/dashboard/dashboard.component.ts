@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-dashboard',
@@ -10,8 +11,10 @@ import { CommonModule } from '@angular/common';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent {
+export class DashboardComponent implements AfterViewInit {
   user: any = {};
+  modalShown = false;
+
   constructor(private http: HttpClient, private router: Router) {
     this.loadUserProfile();
   }
@@ -29,7 +32,9 @@ export class DashboardComponent {
       }
     }).subscribe({
       next: (res) => {
-        this.user = res;  // ✅ Save user data
+        this.user = res;
+        // Show modal if profile is incomplete and modal hasn't been shown yet
+        setTimeout(() => this.checkAndShowReminder(), 500);
       },
       error: (err) => {
         console.error('Failed to load user profile:', err);
@@ -37,11 +42,30 @@ export class DashboardComponent {
     });
   }
 
+  ngAfterViewInit(): void {
+    // Optional safety call — modal will only show after user is loaded
+  }
+
+  checkAndShowReminder(): void {
+    if (this.isProfileIncomplete() && !this.modalShown) {
+      const modal = new bootstrap.Modal(document.getElementById('incompleteProfileModal'));
+      modal.show();
+      this.modalShown = true;
+    }
+  }
+
+  isProfileIncomplete(): boolean {
+    const requiredFields = [
+      'email', 'ni_number', 'date_of_birth', 'current_salary',
+      'employment_status', 'investment_type', 'postal_code', 'contact_number'
+    ];
+    return requiredFields.some(field => !this.user?.[field]);
+  }
+
   logout() {
     const token = localStorage.getItem('userToken');
 
     if (!token) {
-      // No token available, just redirect to login
       this.router.navigate(['/login']);
       return;
     }
@@ -53,12 +77,11 @@ export class DashboardComponent {
     }).subscribe({
       next: (response) => {
         console.log(response.message);
-        localStorage.removeItem('userToken');  // Remove token from local storage
-        this.router.navigate(['/login']);      // Redirect to login page
+        localStorage.removeItem('userToken');
+        this.router.navigate(['/login']);
       },
       error: (error) => {
         console.error('Logout error:', error);
-        // Still remove token and redirect even if error
         localStorage.removeItem('userToken');
         this.router.navigate(['/login']);
       }

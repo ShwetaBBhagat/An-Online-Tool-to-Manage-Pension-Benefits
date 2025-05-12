@@ -1,5 +1,5 @@
 <div class="container mt-5">
-  <h3 class="mb-4 text-center">📑 My Uploaded Documents</h3>
+<h3 class="mb-4 text-center"><i class="fas fa-folder-open me-2"></i>My Uploaded Documents</h3>
 
   <div *ngIf="documents.length > 0; else noDocuments">
     <div class="table-responsive">
@@ -16,12 +16,12 @@
             <td>{{ doc.filename }}</td>
             <td>{{ doc.uploaded_at }}</td>
             <td>
-              <button class="btn btn-sm btn-outline-primary me-2" (click)="viewDocument(doc.id)">
-                👁️ View
-              </button>
-              <button class="btn btn-sm btn-outline-success" (click)="downloadDocument(doc.id, doc.filename)">
-                📥 Download
-              </button>
+            <button class="btn btn-sm btn-outline-primary me-2" (click)="viewDocument(doc.id)">
+              <i class="fas fa-eye me-1"></i> View
+            </button>
+            <button class="btn btn-sm btn-outline-success" (click)="downloadDocument(doc.id, doc.filename)">
+              <i class="fas fa-download me-1"></i> Download
+            </button>
             </td>
           </tr>
         </tbody>
@@ -30,7 +30,7 @@
 
     <!-- Back Button -->
     <div class="text-center mt-4">
-      <button class="btn btn-secondary" [routerLink]="['/auth/dashboard']">
+      <button class="btn btn-secondary" [routerLink]="['/dashboard']">
         ⬅️ Back to Dashboard
       </button>
     </div>

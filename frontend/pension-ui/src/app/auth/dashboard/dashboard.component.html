@@ -1,61 +1,110 @@
 <div class="container mt-5">
-  <h3 class="text-center mb-4">👤 User Dashboard</h3>
 
-  <!-- User Profile Card -->
-  <div class="card shadow-sm p-4 mb-4" *ngIf="user">
-    <h5 class="mb-3 text-primary">Your Profile</h5>
-    <div class="row">
-      <div class="col-md-6 mb-2">
-        <strong>Email:</strong> {{ user.email || '-' }}
+  <!-- Dashboard Header -->
+  <div class="text-center mb-5">
+    <h3><i class="fas fa-user-circle me-2"></i>User Dashboard</h3>
+    <p class="text-muted">Welcome to your pension portal</p>
+  </div>
+
+  <!-- Profile Summary Card -->
+  <div class="card shadow-sm p-4 mb-5" *ngIf="user">
+    <h5 class="mb-4 text-primary">
+      <i class="fas fa-id-card me-2"></i>Your Profile Overview
+    </h5>
+
+    <div class="row gy-3">
+      <div class="col-md-6">
+        <strong>Email:</strong> <br /> {{ user.email || '-' }}
       </div>
-      <div class="col-md-6 mb-2">
-        <strong>NI Number:</strong> {{ user.ni_number || '-' }}
+      <div class="col-md-6">
+        <strong>NI Number:</strong> <br /> {{ user.ni_number || '-' }}
       </div>
-      <div class="col-md-6 mb-2">
-        <strong>Date of Birth:</strong> {{ user.date_of_birth || '-' }}
+      <div class="col-md-6">
+        <strong>Date of Birth:</strong> <br /> {{ user.date_of_birth || '-' }}
       </div>
-      <div class="col-md-6 mb-2">
-        <strong>Current Salary:</strong> £{{ user.current_salary || '-' }}
+      <div class="col-md-6">
+        <strong>Current Salary:</strong> <br /> £{{ user.current_salary || '-' }}
       </div>
-      <div class="col-md-6 mb-2">
-        <strong>Employment Status:</strong> {{ user.employment_status || '-' }}
+      <div class="col-md-6">
+        <strong>Employment Status:</strong> <br /> {{ user.employment_status || '-' }}
       </div>
-      <div class="col-md-6 mb-2">
-        <strong>Investment Type:</strong> {{ user.investment_type || '-' }}
+      <div class="col-md-6">
+        <strong>Investment Type:</strong> <br /> {{ user.investment_type || '-' }}
       </div>
-      <div class="col-md-6 mb-2">
-        <strong>Postal Code:</strong> {{ user.postal_code || '-' }}
+      <div class="col-md-6">
+        <strong>Postal Code:</strong> <br /> {{ user.postal_code || '-' }}
       </div>
-      <div class="col-md-6 mb-2">
-        <strong>Contact Number:</strong> {{ user.contact_number || '-' }}
+      <div class="col-md-6">
+        <strong>Contact Number:</strong> <br /> {{ user.contact_number || '-' }}
       </div>
     </div>
   </div>
 
-  <!-- Action Buttons -->
-  <div class="row row-cols-1 row-cols-md-2 g-3">
-    <div class="col">
-      <button class="btn btn-primary w-100" [routerLink]="['/profile']">Update Profile</button>
-    </div>
+  <!-- Action Buttons Section -->
+  <div class="card shadow-sm p-4">
+    <h5 class="mb-4 text-primary">
+      <i class="fas fa-cogs me-2"></i>Quick Actions
+    </h5>
 
-    <div class="col">
-      <button class="btn btn-info w-100" [routerLink]="['/statements']">View Pension Statements</button>
-    </div>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+      <div class="col">
+        <button class="btn btn-primary w-100" [routerLink]="['/profile']">
+          <i class="fas fa-user-edit me-2"></i>Update Profile
+        </button>
+      </div>
 
-    <div class="col">
-      <button class="btn btn-secondary w-100" [routerLink]="['/upload-document']">Upload Document</button>
-    </div>
+      <div class="col">
+        <button class="btn btn-info w-100" [routerLink]="['/statements']">
+          <i class="fas fa-file-invoice-dollar me-2"></i>View Pension Statements
+        </button>
+      </div>
 
-    <div class="col">
-      <button class="btn btn-info w-100" [routerLink]="['/my-documents']">My Uploaded Documents</button>
-    </div>
+      <div class="col">
+        <button class="btn btn-secondary w-100" [routerLink]="['/upload-document']">
+          <i class="fas fa-upload me-2"></i>Upload Document
+        </button>
+      </div>
 
-    <div class="col">
-      <button class="btn btn-dark w-100" [routerLink]="['/analytics']">Pension Analytics</button>
-    </div>
+      <div class="col">
+        <button class="btn btn-info w-100" [routerLink]="['/my-documents']">
+          <i class="fas fa-folder-open me-2"></i>My Uploaded Documents
+        </button>
+      </div>
 
-    <div class="col">
-      <button class="btn btn-danger w-100" (click)="logout()">Logout</button>
+      <div class="col">
+        <button class="btn btn-dark w-100" [routerLink]="['/analytics']">
+          <i class="fas fa-chart-line me-2"></i>Pension Analytics
+        </button>
+      </div>
+
+      <div class="col">
+        <button class="btn btn-danger w-100" (click)="logout()">
+          <i class="fas fa-sign-out-alt me-2"></i>Logout
+        </button>
+      </div>
     </div>
   </div>
 </div>
+
+<!-- Incomplete Profile Modal -->
+<div class="modal fade" id="incompleteProfileModal" tabindex="-1" aria-labelledby="incompleteProfileLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-warning text-dark">
+      <div class="modal-header">
+        <h5 class="modal-title" id="incompleteProfileLabel">
+          <i class="fas fa-exclamation-triangle me-2"></i> Profile Incomplete
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Some required profile fields are missing. Please update your profile to access full features.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" routerLink="/profile" data-bs-dismiss="modal">
+          Complete Profile Now
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

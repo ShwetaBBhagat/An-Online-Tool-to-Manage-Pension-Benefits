@@ -11,6 +11,10 @@
     font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    position: fixed;
   }
   
   .brand {
