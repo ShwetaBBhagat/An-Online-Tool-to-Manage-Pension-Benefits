@@ -1,0 +1,203 @@
+{
+  "HOME": {
+    "HERO": {
+      "TITLE": "Secure Your Retirement with Confidence",
+      "SUBTITLE": "Your Personalized UK Pension Companion",
+      "BUTTON": "Get Started"
+    },
+    "IMPACT": {
+      "HEADING": "The Numbers That Define Our Impact",
+      "SUBTITLE": "Trusted by professionals across the UK pension landscape"
+    },
+    "NUMBERS": [
+      {
+        "target": "95",
+        "label": "Client Trust Score",
+        "desc": "Users consistently rate us for clarity, security, and ease of use.",
+        "prefix": "",
+        "suffix": "%"
+      },
+      {
+        "target": "20",
+        "label": "Years of Expertise",
+        "desc": "Delivering robust pension tools backed by UK financial regulations.",
+        "prefix": "",
+        "suffix": "+"
+      },
+      {
+        "target": "500",
+        "label": "Pension Funds Tracked",
+        "desc": "Helping thousands make informed retirement decisions.",
+        "prefix": "£",
+        "suffix": "M+"
+      }
+    ],
+    "FEATURES": {
+      "HEADING": "Power-Packed Features",
+      "SUBTITLE": "Everything you need to manage your pension—beautifully, securely, and on any device",
+      "CARD1": {
+        "TITLE": "Track Contributions",
+        "TEXT": "Interactive graphs show exactly how your funds are growing."
+      },
+      "CARD2": {
+        "TITLE": "Secure MFA Login",
+        "TEXT": "Multi-factor authentication and role-based access protect your data."
+      },
+      "CARD3": {
+        "TITLE": "Real-Time Alerts",
+        "TEXT": "Get notified of policy changes, contributions, and deadlines instantly."
+      },
+      "CARD4": {
+        "TITLE": "Multi-Language",
+        "TEXT": "Seamless i18n support—switch languages with one tap."
+      },
+      "CARD5": {
+        "TITLE": "AI Pension Chatbot",
+        "TEXT": "Get 24/7 answers to pension queries and personalized guidance via an intelligent assistant."
+      }
+    },
+    "TESTIMONIALS": {
+      "HEADING": "What Our Users Say",
+      "SUBHEADING": "★ 5-Star Reviews",
+      "LIST": [
+        {
+          "quote": "The portal finally gave me a clear picture of my entire pension.",
+          "name": "Sarah Collins",
+          "role": "Marketing Manager · London"
+        },
+        {
+          "quote": "Secure and incredibly easy to navigate—highly recommended.",
+          "name": "Michael Osei",
+          "role": "Software Engineer · Manchester"
+        },
+        {
+          "quote": "Love the contribution tracking charts. I feel in control of my future.",
+          "name": "Priya Patel",
+          "role": "Teacher · Birmingham"
+        }
+      ]
+    },
+    "COMPLIANCE": {
+      "TEXT": "We are compliant with <strong>GDPR</strong>, <strong>ISO 27001</strong>, and follow <strong>UK pension regulations</strong>.",
+      "GDPR": "GDPR",
+      "ISO": "ISO 27001",
+      "REGULATION": "UK Regulation"
+    },
+    "CONTACT": {
+      "HEADING": "Contact Us",
+      "SUBTITLE": "We’re here to help with your pension queries and support requests."
+    }
+  },
+  "NAV": {
+    "BRAND": "Pension Portal",
+    "HOME": "Home",
+    "ABOUT": "About Us",
+    "FAQ": "FAQ",
+    "EMPLOYEE": "Employee Login",
+    "EMPLOYER": "Employer Login",
+    "ADMIN": "Admin Login"
+  },
+  "ABOUT": {
+  "STORY": {
+    "HEADING": "How It All Began",
+    "TEXT": "Pension Portal was born from a simple idea — to simplify how individuals and employers manage their retirement funds. After experiencing the complexity of UK pension systems firsthand, our founders set out to create a transparent, secure, and user-friendly platform that empowers users with clarity and confidence. What began as a side project has now grown into a trusted companion for thousands."
+  },
+  "MISSION": {
+    "HEADING": "Our Mission",
+    "TEXT": "Our goal is to <strong>empower individuals and employers</strong> across the UK with <span class='highlight'>transparent</span>, <span class='highlight'>secure</span>, and <span class='highlight'>user-friendly</span> tools for managing pensions and planning their financial future.<br /><br />We believe everyone deserves <strong>clarity</strong> and <strong>confidence</strong> in their retirement journey."
+  },
+  "VISION": {
+    "HEADING": "Our Vision",
+    "TEXT": "To be the UK’s most trusted digital pension platform — simplifying financial futures through <strong>technology</strong>, <strong>transparency</strong>, and <strong>empowerment</strong>."
+  },
+  "VALUES": {
+    "CARD1": {
+      "TITLE": "Security First",
+      "TEXT": "We implement bank-grade security to ensure your data and finances stay safe."
+    },
+    "CARD2": {
+      "TITLE": "Transparency",
+      "TEXT": "Clear information, no fine print — always know where your money is going."
+    },
+    "CARD3": {
+      "TITLE": "Accessibility",
+      "TEXT": "Built for everyone — across devices, languages, and backgrounds."
+    },
+    "CARD4": {
+      "TITLE": "Innovation",
+      "TEXT": "We evolve with you — continuously improving with the latest technologies."
+    }
+  },
+  "TEAM": {
+  "HEADING": "Meet the Team",
+  "SUBTITLE": "A group of passionate individuals working together to simplify pensions and empower users.",
+  "NAME1": "John Doe",
+  "ROLE1": "Frontend Developer",
+  "BIO1": "Crafting sleek, intuitive user experiences with Angular & Material.",
+  "NAME2": "Ana Patel",
+  "ROLE2": "Backend Engineer",
+  "BIO2": "Designs secure, scalable APIs powering the pension engine.",
+  "NAME3": "Shweta Bhagat",
+  "ROLE3": "Product Lead",
+  "BIO3": "Drives product strategy and ensures user‑first design principles."
+}
+},
+"FAQ": {
+  "TITLE": "Frequently Asked Questions",
+  "SUBTITLE": "Get quick answers to common pension queries",
+  "LIST": [
+    {
+      "question": "How do I view my pension statement?",
+      "answer": "Log in to your dashboard and navigate to the 'Pension Statements' tab."
+    },
+    {
+      "question": "Can I update my personal information?",
+      "answer": "Yes, go to your profile settings and securely edit your personal details."
+    },
+    {
+      "question": "Is my pension data secure?",
+      "answer": "Absolutely. We use multi-factor authentication, role-based access control, and end-to-end encryption."
+    },
+    {
+      "question": "What should I do if I forget my login credentials?",
+      "answer": "Click on “Forgot Password” on the login page and follow the instructions to reset your password securely."
+    },
+    {
+      "question": "Can I upload pension-related documents?",
+      "answer": "Yes, you can upload and store pension documents securely via the Document Management section."
+    },
+    {
+      "question": "How do I switch my pension fund?",
+      "answer": "Contact your pension provider directly. You can view your current fund details on the dashboard under 'Pension Fund'."
+    },
+    {
+      "question": "Is there legal support available?",
+      "answer": "While we do not provide legal advice, we link to trusted third-party pension advisory services under the Resources tab."
+    },
+    {
+      "question": "How do I delete my account?",
+      "answer": "Email our support team to request secure account deletion."
+    },
+    {
+      "question": "How frequently is my pension data updated?",
+      "answer": "Your data is synced in real-time with your pension provider’s records."
+    },
+    {
+      "question": "What devices are supported?",
+      "answer": "Our platform works seamlessly across desktops, laptops, tablets, and smartphones."
+    },
+    {
+      "question": "Does the system support multiple languages?",
+      "answer": "Yes. The platform supports multiple languages, including English and Hindi."
+    },
+    {
+      "question": "Is there AI chatbot support for pension questions?",
+      "answer": "Yes. Our built-in AI assistant answers pension-related questions via the dashboard interface."
+    },
+    {
+      "question": "Can I download pension documents as PDFs?",
+      "answer": "Yes. You can download pension statements and uploaded files in PDF format for offline use."
+    }
+  ]
+}
+}

@@ -96,7 +96,7 @@ def request_reset():
     if not user:
         return jsonify({"error": "User not found"}), 404
 
-    # Generate reset token
+    # Generate reset token\
     reset_token = generate_reset_token(email)
     
     # Generate Reset Link
@@ -165,6 +165,7 @@ def logout():
 @token_required
 def get_user_profile(current_user):
     return jsonify({
+        "full_name": current_user.name,  # or current_user.full_name
         "email": current_user.email,
         "ni_number": current_user.ni_number,
         "date_of_birth": current_user.date_of_birth.isoformat() if current_user.date_of_birth else None,
@@ -173,8 +174,10 @@ def get_user_profile(current_user):
         "investment_type": current_user.investment_type,
         "address": current_user.address,
         "postal_code": current_user.postal_code,
-        "contact_number": current_user.contact_number
+        "contact_number": current_user.contact_number,
+        "employer_name": current_user.employer.name if current_user.employer else None
     }), 200
+
 
 #Update Employee Profile
 @auth_bp.route('/user/update-profile', methods=['PUT'])
@@ -285,16 +288,23 @@ def download_statement_pdf(current_user, statement_id):
     # Prepare data
     data = {
         "Statement ID": statement.id,
-        "Period": f"{statement.statement_start_date} to {statement.statement_end_date}",
-        "Date Issued": statement.statement_date,
+        "Employee Name": statement.user.name,
+        "Employer Name": statement.user.employer.name if statement.user and statement.user.employer else "N/A",
+        "Period": f"{statement.statement_start_date.strftime('%d %b %Y')} to {statement.statement_end_date.strftime('%d %b %Y')}",
+        "Date Issued": statement.statement_date.strftime('%d %b %Y'),
         "Pension Account": statement.account_number or "N/A",
-        "Salary": f"£{statement.salary}",
-        "Employer Contribution": f"£{statement.employer_contribution} ({statement.employer_percent}%)",
-        "Employee Contribution": f"£{statement.employee_contribution} ({statement.employee_percent}%)",
-        "Total Contribution": f"£{statement.total_contribution}",
-        "Fund": statement.fund_name,
-        "Fund Performance": f"{statement.fund_performance}%",
-        "Pot Value": f"£{statement.pot_value}"
+        "Salary": f"£{float(statement.salary):,.2f}",
+        "Employer Contribution": f"£{float(statement.employer_contribution):,.2f} ({statement.employer_percent}%)",
+        "Employee Contribution": f"£{float(statement.employee_contribution):,.2f} ({statement.employee_percent}%)",
+        "Total Contribution": f"£{float(statement.total_contribution):,.2f}",
+        "Fund Name": statement.fund_name or "N/A",
+        "Fund Performance": f"{float(statement.fund_performance):.2f}%",
+        "Pot Value": f"£{float(statement.pot_value):,.2f}",
+        "Risk Profile": statement.user.investment_type or "Not specified",
+        "GDPR Notice": (
+            "This statement contains sensitive personal and financial data. It is provided under UK GDPR "
+            "for pension management purposes. Do not share or distribute. Contact dpo@yourcompany.com for any concerns."
+        )
     }
 
     # Generate PDF

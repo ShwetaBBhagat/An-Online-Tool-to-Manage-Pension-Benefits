@@ -7,12 +7,20 @@
   </div>
 
   <!-- Profile Summary Card -->
+   
   <div class="card shadow-sm p-4 mb-5" *ngIf="user">
     <h5 class="mb-4 text-primary">
       <i class="fas fa-id-card me-2"></i>Your Profile Overview
     </h5>
 
     <div class="row gy-3">
+      <div class="col-md-6">
+  <strong>Full Name:</strong> <br /> {{ user.full_name || '-' }}
+</div>
+<div class="col-md-6">
+  <strong>Employer:</strong> <br /> {{ user.employer_name || '-' }}
+</div>
+
       <div class="col-md-6">
         <strong>Email:</strong> <br /> {{ user.email || '-' }}
       </div>
@@ -39,6 +47,30 @@
       </div>
     </div>
   </div>
+
+  <!-- Beneficiary Info -->
+<div class="card shadow-sm p-4 mb-5" *ngIf="beneficiary">
+  <h5 class="mb-4 text-primary">
+    <i class="fas fa-user-friends me-2"></i>Beneficiary Info
+  </h5>
+  <div class="row gy-3">
+    <div class="col-md-6">
+      <strong>Full Name:</strong> <br /> {{ beneficiary.full_name || '-' }}
+    </div>
+    <div class="col-md-6">
+      <strong>Relationship:</strong> <br /> {{ beneficiary.relationship || '-' }}
+    </div>
+    <div class="col-md-6">
+      <strong>Percentage:</strong> <br /> {{ beneficiary.percentage || '-' }}%
+    </div>
+  </div>
+</div>
+
+<!-- Optional fallback if none -->
+<div class="alert alert-info text-center" *ngIf="!beneficiary">
+  No beneficiary added yet. <a [routerLink]="['/beneficiary']" class="link-primary">Add now</a>
+</div>
+
 
   <!-- Action Buttons Section -->
   <div class="card shadow-sm p-4">

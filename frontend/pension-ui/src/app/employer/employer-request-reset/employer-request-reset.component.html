@@ -1,0 +1,37 @@
+<div class="container mt-5" style="max-width: 450px;">
+  <div class="card shadow-lg p-4 animate__animated animate__fadeIn">
+    <h3 class="text-center mb-4 text-primary">
+      <i class="fas fa-key me-2"></i>Employer Password Reset
+    </h3>
+
+    <form (ngSubmit)="requestReset()" #resetForm="ngForm" autocomplete="off">
+      <div class="mb-3">
+        <label for="email" class="form-label">Enter your registered email</label>
+        <input
+          type="email"
+          id="email"
+          [(ngModel)]="email"
+          name="email"
+          class="form-control"
+          placeholder="employer@example.com"
+          required
+        />
+      </div>
+
+      <button 
+        class="btn btn-primary w-100" 
+        type="submit" 
+        [disabled]="resetForm.invalid || loading">
+        <i class="fas fa-envelope me-2"></i>Send Reset Link
+      </button>
+    </form>
+
+    <div *ngIf="successMsg" class="alert alert-success mt-3 text-center">
+      <i class="fas fa-check-circle me-2"></i>{{ successMsg }}
+    </div>
+
+    <div *ngIf="errorMsg" class="alert alert-danger mt-3 text-center">
+      <i class="fas fa-exclamation-circle me-2"></i>{{ errorMsg }}
+    </div>
+  </div>
+</div>

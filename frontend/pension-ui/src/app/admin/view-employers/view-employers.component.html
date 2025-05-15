@@ -1,53 +1,58 @@
 <div class="container mt-5">
-  <h3 class="text-center mb-5 text-primary">🏢 Registered Employers</h3>
+  <!-- Header -->
+  <h3 class="text-center mb-5 text-primary animate__animated animate__fadeInDown">
+    <i class="fas fa-building me-2"></i>Registered Employers
+  </h3>
 
   <!-- No Employers Found -->
-  <div *ngIf="employers.length === 0" class="alert alert-info text-center">
-    No employers found.
+  <div *ngIf="employers.length === 0" class="alert alert-warning text-center animate__animated animate__fadeIn">
+    <i class="fas fa-exclamation-circle me-2"></i>No employers found.
   </div>
 
   <!-- Employers Table -->
-  <div *ngIf="employers.length > 0" class="table-responsive card shadow-sm p-3">
-    <table class="table table-hover table-striped align-middle">
-      <thead class="table-dark text-center">
-        <tr>
-          <th>#</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Contact Number</th>
-          <th>Address</th>
-          <th>Registered On</th>
-          <th>View Users</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let emp of employers; let i = index" class="text-center">
-          <td>{{ i + 1 }}</td>
-          <td>{{ emp.name }}</td>
-          <td>{{ emp.email }}</td>
-          <td>{{ emp.contact_number || '-' }}</td>
-          <td>{{ emp.address || '-' }}</td>
-          <td>{{ emp.created_at }}</td>
-          <td>
-            <a [routerLink]="['/admin/employers', emp.id, 'users']" class="btn btn-sm btn-outline-primary">
-              👥 View Users
-            </a>
-          </td>
-          <td>
-            <button class="btn btn-sm btn-outline-danger" (click)="deleteEmployer(emp.id)">
-              🗑️ Delete
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div *ngIf="employers.length > 0" class="card shadow-sm p-3 animate__animated animate__fadeInUp">
+    <div class="table-responsive">
+      <table class="table table-hover table-striped align-middle text-center">
+        <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Address</th>
+            <th>Registered</th>
+            <th>Users</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let emp of employers; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ emp.name }}</td>
+            <td>{{ emp.email }}</td>
+            <td>{{ emp.contact_number || '-' }}</td>
+            <td>{{ emp.address || '-' }}</td>
+            <td>{{ emp.created_at }}</td>
+            <td>
+              <a [routerLink]="['/admin/employers', emp.id, 'users']" class="btn btn-sm btn-outline-info action-btn">
+                <i class="fas fa-users me-1"></i>View
+              </a>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-outline-danger action-btn" (click)="deleteEmployer(emp.id)">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <!-- Back Button -->
-  <div class="text-center mt-5">
-    <button class="btn btn-secondary" [routerLink]="['/admin/dashboard']">
-      ⬅️ Back to Dashboard
+  <div class="text-center mt-5 animate__animated animate__fadeInUp">
+    <button class="btn btn-outline-secondary px-4" [routerLink]="['/admin/dashboard']">
+      <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
     </button>
   </div>
 </div>

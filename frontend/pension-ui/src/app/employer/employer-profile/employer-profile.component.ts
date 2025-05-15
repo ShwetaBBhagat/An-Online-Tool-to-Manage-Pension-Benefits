@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-employer-profile',
   standalone: true,
-  imports: [CommonModule, HttpClientModule,FormsModule],
+  imports: [CommonModule, HttpClientModule,FormsModule, RouterModule],
   templateUrl: './employer-profile.component.html',
   styleUrls: ['./employer-profile.component.css']
 })

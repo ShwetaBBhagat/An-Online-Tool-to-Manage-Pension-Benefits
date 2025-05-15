@@ -1,0 +1,56 @@
+.container {
+  margin-top: 4rem;
+  padding-bottom: 2rem;
+}
+
+/* Headings */
+h3 {
+  font-weight: 700;
+  font-size: 1.8rem;
+  letter-spacing: 0.5px;
+}
+
+/* Table */
+.table {
+  border-radius: 1rem;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+}
+
+.table th {
+  font-size: 0.95rem;
+  font-weight: 600;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.table td {
+  font-size: 0.95rem;
+  vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f0faff;
+}
+
+/* Alert */
+.alert {
+  font-size: 1rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.75rem;
+}
+
+/* Button */
+button.btn {
+  padding: 0.65rem 1.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 10px;
+  transition: all 0.2s ease-in-out;
+}
+
+button.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.08);
+}

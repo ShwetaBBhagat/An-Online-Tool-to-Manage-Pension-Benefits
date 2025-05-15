@@ -1,101 +1,100 @@
 <div class="container mt-5">
-  <h3 class="mb-5 text-center text-primary">📄 Statements for {{ userName }}</h3>
+  <!-- Page Heading -->
+  <h3 class="text-dark fw-bold mb-4 animate__animated animate__fadeInDown">
+    <i class="fas fa-file-alt me-2 text-primary"></i>Statements for <span class="text-primary">{{ userName }}</span>
+  </h3>
 
-  <!-- Filters Form -->
-  <form class="row g-3 mb-5 card shadow-sm p-4" (ngSubmit)="fetchStatements()">
-    <div class="col-md-3">
-      <label>Start Date</label>
-      <input [(ngModel)]="start" name="start" type="date" class="form-control" />
+<!-- Filters Panel -->
+<div class="card shadow-sm p-4 mb-4 animate__animated animate__fadeIn">
+  <form class="row g-3" (ngSubmit)="fetchStatements()">
+    <div class="col-md-2">
+      <label class="form-label small fw-semibold">Start</label>
+      <input type="date" [(ngModel)]="start" name="start" class="form-control form-control-sm" />
+    </div>
+    <div class="col-md-2">
+      <label class="form-label small fw-semibold">End</label>
+      <input type="date" [(ngModel)]="end" name="end" class="form-control form-control-sm" />
+    </div>
+    <div class="col-md-2">
+      <label class="form-label small fw-semibold">Min Salary (£)</label>
+      <input type="number" [(ngModel)]="minSalary" name="minSalary" class="form-control form-control-sm" />
+    </div>
+    <div class="col-md-2">
+      <label class="form-label small fw-semibold">Max Salary (£)</label>
+      <input type="number" [(ngModel)]="maxSalary" name="maxSalary" class="form-control form-control-sm" />
+    </div>
+    <div class="col-md-2">
+      <label class="form-label small fw-semibold">Fund Name</label>
+      <input type="text" [(ngModel)]="fundName" name="fundName" class="form-control form-control-sm" />
     </div>
 
-    <div class="col-md-3">
-      <label>End Date</label>
-      <input [(ngModel)]="end" name="end" type="date" class="form-control" />
-    </div>
-
-    <div class="col-md-3">
-      <label>Min Salary (£)</label>
-      <input [(ngModel)]="minSalary" name="minSalary" type="number" class="form-control" />
-    </div>
-
-    <div class="col-md-3">
-      <label>Max Salary (£)</label>
-      <input [(ngModel)]="maxSalary" name="maxSalary" type="number" class="form-control" />
-    </div>
-
-    <div class="col-md-3">
-      <label>Fund Name</label>
-      <input [(ngModel)]="fundName" name="fundName" type="text" class="form-control" />
-    </div>
-
-    <div class="col-md-3">
-      <label>Min Performance (%)</label>
-      <input [(ngModel)]="minPerf" name="minPerf" type="number" class="form-control" />
-    </div>
-
-    <div class="col-md-3">
-      <label>Max Performance (%)</label>
-      <input [(ngModel)]="maxPerf" name="maxPerf" type="number" class="form-control" />
-    </div>
-
-    <div class="col-md-3 d-flex gap-2 align-items-end">
-      <button type="submit" class="btn btn-primary w-100">🔍 Apply</button>
-      <button type="button" class="btn btn-secondary w-100" (click)="resetFilters()">🔄 Reset</button>
+    <!-- Button Row -->
+    <div class="col-md-12 d-flex justify-content-end gap-2 mt-3">
+      <button type="submit" class="btn btn-sm btn-primary">
+        <i class="fas fa-filter me-2"></i>Apply
+      </button>
+      <button type="button" class="btn btn-sm btn-outline-secondary" (click)="resetFilters()">
+        <i class="fas fa-sync-alt me-2"></i>Reset Filters
+      </button>
     </div>
   </form>
+</div>
 
-  <!-- Generate New Statement -->
-  <div class="d-flex justify-content-end mb-4">
-    <button class="btn btn-success" (click)="generateStatement()">
-      ➕ Auto Generate Pension Statement
+
+  <!-- Generate Button Below Filters -->
+  <div class="d-flex justify-content-end mb-4 animate__animated animate__fadeIn">
+    <button class="btn btn-success px-4 shadow-sm" (click)="generateStatement()">
+      <i class="fas fa-plus me-2"></i>Auto Generate Statement
     </button>
   </div>
 
   <!-- Statements Table -->
-  <div *ngIf="statements.length > 0; else noStatements" class="table-responsive card shadow-sm p-3">
-    <table class="table table-hover table-striped align-middle">
-      <thead class="table-dark text-center">
-        <tr>
-          <th>Start Date</th>
-          <th>End Date</th>
-          <th>Fund</th>
-          <th>Salary (£)</th>
-          <th>Fund Performance (%)</th>
-          <th>Total Contribution (£)</th>
-          <th>Pot Value (£)</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let s of statements" class="text-center">
-          <td>{{ s.statement_start_date }}</td>
-          <td>{{ s.statement_end_date }}</td>
-          <td>{{ s.fund_name }}</td>
-          <td>£{{ s.salary }}</td>
-          <td>{{ s.fund_performance }}</td>
-          <td>£{{ s.total_contribution }}</td>
-          <td>£{{ s.pot_value }}</td>
-          <td>
-            <button class="btn btn-sm btn-outline-danger" (click)="deleteStatement(s.statement_id)">
-              🗑️ Delete
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div *ngIf="statements.length > 0; else noStatements" class="card shadow-sm animate__animated animate__fadeInUp">
+    <div class="table-responsive p-3">
+      <table class="table table-hover table-striped align-middle text-center">
+        <thead class="table-light">
+          <tr>
+            <th>Start</th>
+            <th>End</th>
+            <th>Fund</th>
+            <th>Salary (£)</th>
+            <th>Performance (%)</th>
+            <th>Contribution (£)</th>
+            <th>Pot Value (£)</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let s of statements">
+            <td>{{ s.statement_start_date }}</td>
+            <td>{{ s.statement_end_date }}</td>
+            <td>{{ s.fund_name }}</td>
+            <td>£{{ s.salary }}</td>
+            <td>{{ s.fund_performance }}</td>
+            <td>£{{ s.total_contribution }}</td>
+            <td>£{{ s.pot_value }}</td>
+            <td>
+              <button class="btn btn-sm btn-outline-danger" (click)="deleteStatement(s.statement_id)">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
-  <!-- No Data Message -->
+  <!-- No Data -->
   <ng-template #noStatements>
-    <div class="alert alert-info text-center">
-      No pension statements found for this user.
+    <div class="alert alert-warning text-center">
+      <i class="fas fa-info-circle me-2"></i>No pension statements found for this user.
     </div>
   </ng-template>
 
   <!-- Back Button -->
   <div class="text-center mt-5">
-    <button class="btn btn-secondary" [routerLink]="['/admin/all-users']">
-      ⬅️ Back to Users
+    <button class="btn btn-outline-secondary px-4" [routerLink]="['/admin/all-users']">
+      <i class="fas fa-arrow-left me-2"></i>Back to Users
     </button>
   </div>
 </div>

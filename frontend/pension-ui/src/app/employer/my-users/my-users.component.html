@@ -1,50 +1,59 @@
-<div class="container mt-5">
-    <h3 class="mb-4 text-center">👥 My Staff</h3>
-  
-    <div *ngIf="users.length === 0" class="text-center text-muted">
-      No users found under your company.
-    </div>
-  
-    <div *ngIf="users.length > 0" class="table-responsive">
-      <table class="table table-hover table-striped shadow-sm">
-        <thead class="table-dark text-center">
-          <tr>
-            <th>#</th>
-            <th>user id</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>NI Number</th>
-            <th>Salary (£)</th>
-            <th>Investment Type</th>
-            <th>Profile Completed</th>
-            <th>Statements</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let user of users; let i = index">
-            <td>{{ i + 1 }}</td>
-            <td>{{ user.id }}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.ni_number || '-' }}</td>
-            <td>{{ user.current_salary }}</td>
-            <td>{{ user.investment_type || '-' }}</td>
-            <td>
-              <span class="badge" [ngClass]="user.profile_completed ? 'bg-success' : 'bg-danger'">
-                {{ user.profile_completed ? 'Yes' : 'No' }}
-              </span>
-            </td>
-            <td>
-              <a [routerLink]="['/employer/user', user.id, 'statements']" class="btn btn-sm btn-outline-primary">
-                View Statements
-              </a>
-            </td>
-            
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  
-    <div *ngIf="errorMsg" class="alert alert-danger mt-3 text-center">{{ errorMsg }}</div>
+<div class="container mt-5 animate__animated animate__fadeIn">
+  <h3 class="mb-4 text-center text-primary">
+    <i class="fas fa-users me-2"></i>My Staff
+  </h3>
+
+  <!-- No Users Message -->
+  <div *ngIf="users.length === 0" class="alert alert-info text-center">
+    <i class="fas fa-info-circle me-2"></i>No users found under your company.
   </div>
-  
+
+  <!-- Users Table -->
+  <div *ngIf="users.length > 0" class="table-responsive animate__animated animate__fadeInUp">
+    <table class="table table-hover table-striped shadow-sm align-middle">
+      <thead class="table-dark text-center">
+        <tr>
+          <th>#</th>
+          <th><i class="fas fa-id-card"></i> ID</th>
+          <th><i class="fas fa-user"></i> Name</th>
+          <th><i class="fas fa-envelope"></i> Email</th>
+          <th><i class="fas fa-fingerprint"></i> NI Number</th>
+          <th><i class="fas fa-pound-sign"></i> Salary (£)</th>
+          <th><i class="fas fa-chart-line"></i> Investment Type</th>
+          <th><i class="fas fa-check-circle"></i> Profile</th>
+          <th><i class="fas fa-file-alt"></i> Statements</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users; let i = index" class="text-center">
+          <td>{{ i + 1 }}</td>
+          <td>{{ user.id }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.ni_number || '-' }}</td>
+          <td>£{{ user.current_salary }}</td>
+          <td>{{ user.investment_type || '-' }}</td>
+          <td>
+            <span class="badge" [ngClass]="user.profile_completed ? 'bg-success' : 'bg-secondary'">
+              {{ user.profile_completed ? 'Yes' : 'No' }}
+            </span>
+          </td>
+          <td>
+            <a [routerLink]="['/employer/user', user.id, 'statements']" class="btn btn-sm btn-outline-primary">
+              <i class="fas fa-eye me-1"></i> View
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+    <div class="text-center mt-4">
+    <button class="btn btn-secondary" [routerLink]="['/employer/dashboard']">
+      ⬅️ Back to Dashboard
+    </button>
+  </div>
+  <!-- Error Alert -->
+  <div *ngIf="errorMsg" class="alert alert-danger text-center mt-3 animate__animated animate__fadeIn">
+    <i class="fas fa-exclamation-triangle me-2"></i>{{ errorMsg }}
+  </div>
+</div>

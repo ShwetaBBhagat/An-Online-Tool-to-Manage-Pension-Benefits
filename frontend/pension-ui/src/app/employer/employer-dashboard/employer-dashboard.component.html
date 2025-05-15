@@ -1,57 +1,68 @@
-<div class="container mt-5">
-  <h3 class="mb-4 text-center">📊 Employer Dashboard Summary</h3>
+<div class="container mt-5 animate__animated animate__fadeIn">
+  <h3 class="text-center mb-5 text-primary">
+    <i class="fas fa-chart-pie me-2"></i>Employer Dashboard Summary
+  </h3>
 
-  <div class="text-center mb-4 d-flex flex-wrap justify-content-center gap-2">
-    <a [routerLink]="['/employer/my-users']" class="btn btn-outline-secondary">
-      👥 View My Staff
-    </a>    
-    <a [routerLink]="['/employer/employer-profile']" class="btn btn-outline-info">
-      🏢 View Profile
+  <!-- Quick Actions -->
+  <div class="d-flex flex-wrap justify-content-center gap-3 mb-5">
+    <a [routerLink]="['/employer/my-users']" class="btn btn-outline-secondary btn-lg animate__animated animate__fadeInLeft">
+      <i class="fas fa-users me-2"></i>View My Staff
     </a>
-    <a [routerLink]="['/employer/add-user']" class="btn btn-outline-success">
-      ➕ Add Staff
-    </a>    
-    <!-- <a [routerLink]="['/employer/documents']" class="btn btn-outline-secondary">
-      📄 View Staff Documents
-    </a>  -->
+    <a [routerLink]="['/employer/employer-profile']" class="btn btn-outline-info btn-lg animate__animated animate__fadeInUp">
+      <i class="fas fa-id-badge me-2"></i>View Profile
+    </a>
+    <a [routerLink]="['/employer/add-user']" class="btn btn-outline-success btn-lg animate__animated animate__fadeInRight">
+      <i class="fas fa-user-plus me-2"></i>Add Staff
+    </a>
+    <!-- Request Password Reset Button -->
+<a [routerLink]="['/employer/employer-request-reset']" class="btn btn-outline-warning">
+  <i class="fas fa-unlock-alt me-2"></i>Request Password Reset
+</a>
+
   </div>
 
+  <!-- Stat Cards -->
   <div *ngIf="summary" class="row g-4">
-    <div class="col-md-4 col-sm-6">
-      <div class="card text-white bg-primary shadow h-100">
+    <div class="col-md-4 col-sm-6 animate__animated animate__fadeInLeft">
+      <div class="card bg-primary text-white shadow-sm h-100">
         <div class="card-body text-center">
-          <h5>Total Staff</h5>
+          <i class="fas fa-users fa-2x mb-3"></i>
+          <h5 class="card-title">Total Staff</h5>
           <p class="fs-3">{{ summary.total_staff }}</p>
         </div>
       </div>
     </div>
 
-    <div class="col-md-4 col-sm-6">
-      <div class="card text-white bg-success shadow h-100">
+    <div class="col-md-4 col-sm-6 animate__animated animate__fadeInUp">
+      <div class="card bg-success text-white shadow-sm h-100">
         <div class="card-body text-center">
-          <h5>Total Pot Value (£)</h5>
+          <i class="fas fa-wallet fa-2x mb-3"></i>
+          <h5 class="card-title">Total Pot Value</h5>
           <p class="fs-3">£{{ summary.total_pot_value | number:'1.2-2' }}</p>
         </div>
       </div>
     </div>
 
-    <div class="col-md-4 col-sm-6">
-      <div class="card text-white bg-info shadow h-100">
+    <div class="col-md-4 col-sm-6 animate__animated animate__fadeInRight">
+      <div class="card bg-info text-white shadow-sm h-100">
         <div class="card-body text-center">
-          <h5>Average Pot per User (£)</h5>
+          <i class="fas fa-chart-line fa-2x mb-3"></i>
+          <h5 class="card-title">Avg Pot per User</h5>
           <p class="fs-3">£{{ summary.average_pot_value | number:'1.2-2' }}</p>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="d-flex justify-content-end mb-4">
-    <button class="btn btn-danger" (click)="logout()">
-      🔒 Logout
+  <!-- Logout -->
+  <div class="text-end mt-5">
+    <button class="btn btn-danger px-4 animate__animated animate__fadeInUp" (click)="logout()">
+      <i class="fas fa-sign-out-alt me-2"></i>Logout
     </button>
   </div>
-  
-  <div *ngIf="errorMsg" class="alert alert-danger text-center mt-4">
-    {{ errorMsg }}
+
+  <!-- Error -->
+  <div *ngIf="errorMsg" class="alert alert-danger text-center mt-4 animate__animated animate__fadeIn">
+    <i class="fas fa-exclamation-circle me-2"></i>{{ errorMsg }}
   </div>
 </div>

@@ -1,62 +1,69 @@
 <div class="container mt-5">
-  <h2 class="text-center mb-4 text-primary">🛡️ Welcome, Admin</h2>
+  <!-- Dashboard Header -->
+  <h2 class="text-center mb-4 text-primary animate__animated animate__fadeInDown">
+    <i class="fas fa-shield-alt me-2"></i> Welcome, Admin
+  </h2>
 
   <!-- Admin Actions -->
-  <div class="d-flex justify-content-center flex-wrap gap-3 mb-5">
-    <a routerLink="/admin/all-users" class="btn btn-outline-primary btn-lg">
-      👥 View All Users
+  <div class="d-flex justify-content-center flex-wrap gap-3 mb-5 animate__animated animate__fadeInUp">
+    <a routerLink="/admin/all-users" class="btn btn-outline-primary btn-lg action-btn">
+      <i class="fas fa-users me-2"></i>View All Users
     </a>
-    <a routerLink="/admin/view-employers" class="btn btn-outline-primary btn-lg">
-      🏢 View Employers
+    <a routerLink="/admin/view-employers" class="btn btn-outline-primary btn-lg action-btn">
+      <i class="fas fa-building me-2"></i>View Employers
     </a>
-    <a routerLink="/admin/add-employer" class="btn btn-outline-success btn-lg">
-      ➕ Add Employer
+    <a routerLink="/admin/add-employer" class="btn btn-outline-success btn-lg action-btn">
+      <i class="fas fa-user-plus me-2"></i>Add Employer
     </a>
   </div>
 
   <!-- Summary Cards -->
   <div class="row g-4">
     <div class="col-md-4 col-sm-6">
-      <div class="card shadow-sm bg-primary text-white text-center p-3">
+      <div class="card shadow-sm summary-card bg-primary text-white text-center p-4 animate__animated animate__fadeInLeft">
+        <i class="fas fa-users fa-2x mb-2"></i>
         <h5 class="card-title">Total Users</h5>
         <p class="card-text fs-3">{{ totalUsers }}</p>
       </div>
     </div>
 
     <div class="col-md-4 col-sm-6">
-      <div class="card shadow-sm bg-success text-white text-center p-3">
+      <div class="card shadow-sm summary-card bg-success text-white text-center p-4 animate__animated animate__fadeInUp">
+        <i class="fas fa-briefcase fa-2x mb-2"></i>
         <h5 class="card-title">Total Employers</h5>
         <p class="card-text fs-3">{{ totalEmployers }}</p>
       </div>
     </div>
 
     <div class="col-md-4 col-sm-6">
-      <div class="card shadow-sm bg-warning text-white text-center p-3">
+      <div class="card shadow-sm summary-card bg-warning text-white text-center p-4 animate__animated animate__fadeInRight">
+        <i class="fas fa-file-upload fa-2x mb-2"></i>
         <h5 class="card-title">Documents Uploaded</h5>
         <p class="card-text fs-3">{{ totalDocuments }}</p>
       </div>
     </div>
 
     <div class="col-md-6 col-sm-6">
-      <div class="card shadow-sm bg-info text-white text-center p-3">
+      <div class="card shadow-sm summary-card bg-info text-white text-center p-4 animate__animated animate__fadeInLeft">
+        <i class="fas fa-file-invoice-dollar fa-2x mb-2"></i>
         <h5 class="card-title">Pension Statements</h5>
         <p class="card-text fs-3">{{ totalStatements }}</p>
       </div>
     </div>
 
     <div class="col-md-6 col-sm-6">
-      <div class="card shadow-sm bg-dark text-white text-center p-3">
+      <div class="card shadow-sm summary-card bg-dark text-white text-center p-4 animate__animated animate__fadeInRight">
+        <i class="fas fa-coins fa-2x mb-2"></i>
         <h5 class="card-title">Total Pot Value</h5>
         <p class="card-text fs-3">£{{ totalPotValue | number:'1.2-2' }}</p>
       </div>
     </div>
   </div>
 
-  <!-- Admin Dashboard Back and Logout -->
-<div class="text-center mt-5">
-  <button class="btn btn-danger" (click)="logoutAdmin()">
-    🔒 Logout
-  </button>
-</div>
-
+  <!-- Logout -->
+  <div class="text-center mt-5 animate__animated animate__fadeInUp">
+    <button class="btn btn-danger btn-lg px-5 action-btn" (click)="logoutAdmin()">
+      <i class="fas fa-sign-out-alt me-2"></i>Logout
+    </button>
+  </div>
 </div>

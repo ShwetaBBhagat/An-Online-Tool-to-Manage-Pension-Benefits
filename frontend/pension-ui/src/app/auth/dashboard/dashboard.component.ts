@@ -14,9 +14,11 @@ declare var bootstrap: any;
 export class DashboardComponent implements AfterViewInit {
   user: any = {};
   modalShown = false;
+  beneficiary: any = null;
 
   constructor(private http: HttpClient, private router: Router) {
     this.loadUserProfile();
+    this.loadBeneficiary();
   }
 
   loadUserProfile() {
@@ -42,6 +44,19 @@ export class DashboardComponent implements AfterViewInit {
     });
   }
 
+  loadBeneficiary() {
+  const token = localStorage.getItem('userToken');
+  this.http.get<any>('http://127.0.0.1:5000/api/auth/user/beneficiary', {
+    headers: { Authorization: `Bearer ${token}` }
+  }).subscribe({
+    next: res => {
+      this.beneficiary = res;
+    },
+    error: err => {
+      this.beneficiary = null; // No data
+    }
+  });
+}
   ngAfterViewInit(): void {
     // Optional safety call — modal will only show after user is loaded
   }

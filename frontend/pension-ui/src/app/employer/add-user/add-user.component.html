@@ -1,40 +1,61 @@
-<div class="container mt-5">
-    <h3 class="mb-4 text-center">➕ Add New User</h3>
-  
-    <form (ngSubmit)="addUser()" #userForm="ngForm" class="card shadow p-4">
-      <div class="mb-3">
-        <label>Name</label>
-        <input type="text" [(ngModel)]="name" name="name" class="form-control" required />
-      </div>
-  
-      <div class="mb-3">
-        <label>Email</label>
-        <input type="email" [(ngModel)]="email" name="email" class="form-control" required />
-      </div>
-  
-      <div class="mb-3">
-        <label>Salary (£)</label>
-        <input type="number" [(ngModel)]="salary" name="salary" class="form-control" required />
-      </div>
-  
-      <div class="mb-3">
-        <label>Date of Birth</label>
-        <input type="date" [(ngModel)]="dateOfBirth" name="date_of_birth" class="form-control" required />
-      </div>
-  
-      <div class="mb-3">
-        <label>Investment Type</label>
-        <select [(ngModel)]="investmentType" name="investment_type" class="form-select">
-          <option value="Low">Low</option>
-          <option value="Medium" selected>Medium</option>
-          <option value="High">High</option>
-        </select>
-      </div>
-  
-      <button class="btn btn-success w-100" [disabled]="userForm.invalid">Add User</button>
-    </form>
-  
-    <div *ngIf="successMsg" class="alert alert-success mt-3 text-center">{{ successMsg }}</div>
-    <div *ngIf="errorMsg" class="alert alert-danger mt-3 text-center">{{ errorMsg }}</div>
+<div class="container mt-5 animate__animated animate__fadeIn">
+  <h3 class="mb-4 text-center text-success">
+    <i class="fas fa-user-plus me-2"></i>Add New User
+  </h3>
+
+  <form (ngSubmit)="addUser()" #userForm="ngForm" class="card shadow p-4 animate__animated animate__fadeInUp">
+    <!-- Name -->
+    <div class="mb-3">
+      <label class="form-label"><i class="fas fa-user me-2 text-muted"></i>Name</label>
+      <input type="text" [(ngModel)]="name" name="name" class="form-control" required />
+    </div>
+
+    <!-- Email -->
+    <div class="mb-3">
+      <label class="form-label"><i class="fas fa-envelope me-2 text-muted"></i>Email</label>
+      <input type="email" [(ngModel)]="email" name="email" class="form-control" required />
+    </div>
+
+    <!-- Salary -->
+    <div class="mb-3">
+      <label class="form-label"><i class="fas fa-pound-sign me-2 text-muted"></i>Salary (£)</label>
+      <input type="number" [(ngModel)]="salary" name="salary" class="form-control" required />
+    </div>
+
+    <!-- DOB -->
+    <div class="mb-3">
+      <label class="form-label"><i class="fas fa-birthday-cake me-2 text-muted"></i>Date of Birth</label>
+      <input type="date" [(ngModel)]="dateOfBirth" name="date_of_birth" class="form-control" required />
+    </div>
+
+    <!-- Investment Type -->
+    <div class="mb-3">
+      <label class="form-label"><i class="fas fa-chart-line me-2 text-muted"></i>Investment Type</label>
+      <select [(ngModel)]="investmentType" name="investment_type" class="form-select">
+        <option value="Low">Low</option>
+        <option value="Medium" selected>Medium</option>
+        <option value="High">High</option>
+      </select>
+    </div>
+
+    <!-- Submit -->
+    <button class="btn btn-success w-100 mt-3" [disabled]="userForm.invalid">
+      <i class="fas fa-user-plus me-2"></i>Add User
+    </button>
+  </form>
+
+  <!-- Alerts -->
+  <div *ngIf="successMsg" class="alert alert-success mt-3 text-center animate__animated animate__fadeIn">
+    <i class="fas fa-check-circle me-2"></i>{{ successMsg }}
   </div>
-  
+  <div *ngIf="errorMsg" class="alert alert-danger mt-3 text-center animate__animated animate__fadeIn">
+    <i class="fas fa-exclamation-triangle me-2"></i>{{ errorMsg }}
+  </div>
+
+  <!-- Back Button -->
+  <div class="text-center mt-4">
+    <button class="btn btn-secondary" [routerLink]="['/employer/dashboard']">
+      <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+    </button>
+  </div>
+</div>

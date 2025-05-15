@@ -1,12 +1,21 @@
 <mat-toolbar>
 
-  <span class="brand" routerLink="/">Pension Portal</span>
+  <span class="brand" routerLink="/">{{ 'NAV.BRAND' | translate }}</span>
   <span class="spacer"></span>
 
-  <a mat-button routerLink="/">Home</a>
-  <a mat-button routerLink="/about">About Us</a>
-  <a mat-button routerLink="/faq">FAQ</a>
-  <button mat-button [routerLink]="'/auth/employee-login'">Employee Login</button>
-  <button mat-button [routerLink]="'/employer/login'">Employer Login</button>
-  <button mat-button [routerLink]="'/admin/login'">Admin Login</button>
+  <a mat-button routerLink="/">{{ 'NAV.HOME' | translate }}</a>
+  <a mat-button routerLink="/about">{{ 'NAV.ABOUT' | translate }}</a>
+  <a mat-button routerLink="/faq">{{ 'NAV.FAQ' | translate }}</a>
+  <button mat-button [routerLink]="'/auth/employee-login'">{{ 'NAV.EMPLOYEE' | translate }}</button>
+  <button mat-button [routerLink]="'/employer/login'">{{ 'NAV.EMPLOYER' | translate }}</button>
+  <button mat-button [routerLink]="'/admin/login'">{{ 'NAV.ADMIN' | translate }}</button>
+
+  <!-- Language Switcher Dropdown -->
+<select class="lang-dropdown"
+        [(ngModel)]="selectedLang"
+        (change)="changeLang($event)">
+  <option value="en">English</option>
+  <option value="hin">हिन्दी</option>
+</select>
+
 </mat-toolbar>

@@ -16,3 +16,5 @@ class Config:
     JWT_SECRET_KEY = "280303"  
     JWT_RESET_SECRET = "170598"
     JWT_ACCESS_TOKEN_EXPIRES = 2 * 60 * 60  # Tokens expire in 2 hours
+
+    CLIENT_URL = "http://localhost:4200"

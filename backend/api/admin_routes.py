@@ -2,15 +2,18 @@ import jwt
 import datetime
 from models import db
 from config import Config
+from flask import Blueprint, jsonify, request
+from werkzeug.security import check_password_hash
+from sqlalchemy import extract
+
 from models.user_model import User
 from models.admin_model import Admin
 from models.document_model import Document
-from flask import Blueprint, jsonify, request
-from werkzeug.security import check_password_hash
+from models.pension_statement_model import PensionStatement
+
 from utils.token_blacklist import blacklist_token
 from utils.password_reset import generate_employer_token
 from utils.email_service import send_employer_setup_email
-from models.pension_statement_model import PensionStatement
 from utils.email_service import send_statement_notification
 from utils.auth_middleware import token_required, admin_required
 
@@ -50,6 +53,58 @@ def admin_login():
 @admin_required
 def admin_check(current_user):
     return jsonify({"message": f"Welcome, Admin {current_user.name}!"}), 200
+
+#Admin Dashboard Summary Shows totals: users, employers, documents, statements, and pot value
+@admin_bp.route('/admin/dashboard-summary', methods=['GET'])
+@token_required
+@admin_required
+def admin_dashboard_summary(current_admin):
+    from models.user_model import User
+    from models.employer_model import Employer
+    from models.pension_statement_model import PensionStatement
+    from models.document_model import Document  # if your docs are stored here
+
+    total_users = User.query.count()
+    total_employers = Employer.query.count()
+    total_documents = Document.query.count()
+    total_statements = PensionStatement.query.count()
+
+    pot_sum = db.session.query(
+        db.func.sum(PensionStatement.pot_value)
+    ).scalar() or 0.0
+
+    return jsonify({
+        "status": "success",
+        "summary": {
+            "total_users": total_users,
+            "total_employers": total_employers,
+            "total_documents": total_documents,
+            "total_statements": total_statements,
+            "total_pot_value": float(pot_sum)
+        }
+    }), 200
+
+#Admin Logout
+@admin_bp.route('/logout', methods=['POST'])
+@admin_required
+def admin_logout(current_admin):
+    """Admin Logout — Invalidate the Admin JWT Token."""
+    token = None
+
+    # Extract token from Authorization header
+    if 'Authorization' in request.headers:
+        token = request.headers['Authorization'].split(" ")[1]
+
+    if not token:
+        return jsonify({"error": "Token is missing!"}), 401
+
+    try:
+        # No need to decode again, just blacklist
+        blacklist_token(token)
+        return jsonify({"message": "Admin logged out successfully!"}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 #view registered users
 @admin_bp.route('/admin/users', methods=['GET'])
@@ -99,61 +154,6 @@ def get_all_users(current_user):
         "total_users": len(result),
         "users": result
     }), 200
-
-
-#Admin Dashboard Summary Shows totals: users, employers, documents, statements, and pot value
-@admin_bp.route('/admin/dashboard-summary', methods=['GET'])
-@token_required
-@admin_required
-def admin_dashboard_summary(current_admin):
-    from models.user_model import User
-    from models.employer_model import Employer
-    from models.pension_statement_model import PensionStatement
-    from models.document_model import Document  # if your docs are stored here
-
-    total_users = User.query.count()
-    total_employers = Employer.query.count()
-    total_documents = Document.query.count()
-    total_statements = PensionStatement.query.count()
-
-    pot_sum = db.session.query(
-        db.func.sum(PensionStatement.pot_value)
-    ).scalar() or 0.0
-
-    return jsonify({
-        "status": "success",
-        "summary": {
-            "total_users": total_users,
-            "total_employers": total_employers,
-            "total_documents": total_documents,
-            "total_statements": total_statements,
-            "total_pot_value": float(pot_sum)
-        }
-    }), 200
-
-
-#admin logout
-@admin_bp.route('/logout', methods=['POST'])
-@admin_required
-def admin_logout(current_admin):
-    """Admin Logout — Invalidate the Admin JWT Token."""
-    token = None
-
-    # Extract token from Authorization header
-    if 'Authorization' in request.headers:
-        token = request.headers['Authorization'].split(" ")[1]
-
-    if not token:
-        return jsonify({"error": "Token is missing!"}), 401
-
-    try:
-        # No need to decode again, just blacklist
-        blacklist_token(token)
-        return jsonify({"message": "Admin logged out successfully!"}), 200
-
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
 
 #View Pension Statements for Any User
 @admin_bp.route('/admin/user/<int:user_id>/statements', methods=['GET'])
@@ -335,54 +335,6 @@ def delete_pension_statement(current_user, statement_id):
         "message": f"Pension statement ID {statement_id} has been deleted successfully."
     }), 200
 
-@admin_bp.route('/documents/<int:doc_id>/view', methods=['GET'])
-@token_required
-@admin_required
-def admin_view_document(current_user, doc_id):
-    token = request.args.get('token')
-    if not token:
-        return jsonify({"error": "Token is missing!"}), 401
-
-    try:
-        decoded_token = jwt.decode(token, Config.JWT_SECRET_KEY, algorithms=["HS256"])
-        if decoded_token.get('role') != 'admin':
-            return jsonify({"error": "Not authorized"}), 403
-
-        doc = Document.query.get(doc_id)
-        if not doc:
-            return jsonify({"error": "Document not found"}), 404
-
-        return send_file(doc.filepath, mimetype='application/pdf')
-
-    except jwt.ExpiredSignatureError:
-        return jsonify({"error": "Token has expired!"}), 401
-    except jwt.InvalidTokenError:
-        return jsonify({"error": "Invalid token!"}), 401
-
-@admin_bp.route('/documents/<int:doc_id>/download', methods=['GET'])
-@token_required
-@admin_required
-def admin_download_document(current_user, doc_id):
-    token = request.args.get('token')
-    if not token:
-        return jsonify({"error": "Token is missing!"}), 401
-
-    try:
-        decoded_token = jwt.decode(token, Config.JWT_SECRET_KEY, algorithms=["HS256"])
-        if decoded_token.get('role') != 'admin':
-            return jsonify({"error": "Not authorized"}), 403
-
-        doc = Document.query.get(doc_id)
-        if not doc:
-            return jsonify({"error": "Document not found"}), 404
-
-        return send_file(doc.filepath, as_attachment=True, download_name=doc.filename)
-
-    except jwt.ExpiredSignatureError:
-        return jsonify({"error": "Token has expired!"}), 401
-    except jwt.InvalidTokenError:
-        return jsonify({"error": "Invalid token!"}), 401
-
 #View all employers
 @admin_bp.route('/admin/employers', methods=['GET'])
 @token_required
@@ -415,37 +367,57 @@ def get_all_employers(current_admin):
 @admin_required
 def create_employer(current_admin):
     from models.employer_model import Employer
-    from utils.password_reset import generate_employer_token
     from utils.email_service import send_employer_setup_email
+    from utils.helpers import generate_random_password, hash_password
+    import pyotp, qrcode, os, jwt
+    import re
 
     data = request.get_json()
     name = data.get("name")
     email = data.get("email")
-    contact_number = data.get("contact_number")
-    address = data.get("address")
-
+    contact_number = data.get("contact_number", "")
+    address = data.get("address", "")
+   
+    # Basic validation
     if not all([name, email]):
         return jsonify({"error": "Name and email are required"}), 400
+
+    email_regex = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+    if not re.match(email_regex, email):
+        return jsonify({"error": "Invalid email format."}), 400
 
     if Employer.query.filter_by(email=email).first():
         return jsonify({"error": "Employer with this email already exists"}), 409
 
-    # Step 1: Create employer (without password yet)
+    # Generate MFA secret and QR
+    mfa_secret = pyotp.random_base32()
+    otp_uri = f"otpauth://totp/PensionPortal:{email}?secret={mfa_secret}&issuer=PensionPortal"
+
+    qr_dir = os.path.join(os.getcwd(), "backend", "qrcodes")
+    os.makedirs(qr_dir, exist_ok=True)
+
+    qr_path = os.path.join(qr_dir, f"{email}_mfa.png")
+    qrcode.make(otp_uri).save(qr_path)
+
+    # Generate temp password
+    temp_password = generate_random_password()
+    hashed_password = hash_password(temp_password)
+
+    # Create employer record
     new_employer = Employer(
         name=name,
         email=email,
         contact_number=contact_number,
-        address=address
+        address=address,
+        password=hashed_password,
+        mfa_secret=mfa_secret
     )
+
     db.session.add(new_employer)
     db.session.commit()
 
-    # Step 2: Generate token and setup link
-    token = generate_employer_token(email)
-    setup_link = f"https://yourfrontend.com/employer/set-password?token={token}"
-
-    # Step 3: Send welcome/setup email
-    send_employer_setup_email(email, name, setup_link)
+    # Send welcome email with MFA QR code and password
+    send_employer_setup_email(email, name, qr_path, temp_password)
 
     return jsonify({
         "message": "Employer created successfully. Setup email sent.",

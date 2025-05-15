@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';  // Import if you are using [routerLink]
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-add-employer',
@@ -20,17 +20,23 @@ export class AddEmployerComponent {
     address: ''
   };
 
-  successMsg: string = '';
-  errorMsg: string = '';
-  loading: boolean = false;
+  successMsg = '';
+  errorMsg = '';
+  loading = false;
 
   constructor(private http: HttpClient) {}
 
   submitForm() {
-    const token = localStorage.getItem('adminToken');
+    // Basic frontend validation
+    if (!this.employer.name || !this.employer.email) {
+      this.errorMsg = 'Name and email are required.';
+      this.successMsg = '';
+      return;
+    }
 
+    const token = localStorage.getItem('adminToken');
     if (!token) {
-      this.errorMsg = "Unauthorized. Please login again.";
+      this.errorMsg = 'Unauthorized. Please login again.';
       return;
     }
 
@@ -38,13 +44,18 @@ export class AddEmployerComponent {
       Authorization: `Bearer ${token}`
     });
 
-    this.loading = true; // Start loading
+    this.loading = true;
 
     this.http.post<any>('http://127.0.0.1:5000/api/admin/add-employers', this.employer, { headers }).subscribe({
       next: (res) => {
         this.successMsg = res.message;
         this.errorMsg = '';
-        this.employer = { name: '', email: '', contact_number: '', address: '' }; // Clear form
+        this.employer = {
+          name: '',
+          email: '',
+          contact_number: '',
+          address: ''
+        };
         this.loading = false;
       },
       error: (err) => {

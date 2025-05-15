@@ -5,121 +5,122 @@ import {
   ViewChildren,
   QueryList,
   HostListener,
-  Inject
+  Inject,
+  OnInit
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { PLATFORM_ID } from '@angular/core';
 import { VoiceflowLoaderService } from './voiceflow-loader.service';
-
-
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatButtonModule],
+  imports: [CommonModule, RouterModule, MatButtonModule, TranslateModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements AfterViewInit {
-  /* ──────────  COUNTER DATA ────────── */
-  numbers = [
-    {
-      target: 95,
-      label: 'Client Trust Score',
-      desc: 'Users consistently rate us for clarity, security, and ease of use.',
-      prefix: '',
-      suffix: '%'
-    },
-    {
-      target: 20,
-      label: 'Years of Expertise',
-      desc: 'Delivering robust pension tools backed by UK financial regulations.',
-      prefix: '',
-      suffix: '+'
-    },
-    {
-      target: 500,
-      label: 'Pension Funds Tracked',
-      desc: 'Helping thousands make informed retirement decisions.',
-      prefix: '£',
-      suffix: 'M+'
-    }
-  ];
-
-  /* ──────────  TESTIMONIAL DATA ────── */
-  testimonials = [
-    {
-      quote: 'The portal finally gave me a clear picture of my entire pension.',
-      name: 'Sarah Collins',
-      role: 'Marketing Manager · London'
-    },
-    {
-      quote: 'Secure and incredibly easy to navigate—highly recommended.',
-      name: 'Michael Osei',
-      role: 'Software Engineer · Manchester'
-    },
-    {
-      quote: 'Love the contribution tracking charts. I feel in control of my future.',
-      name: 'Priya Patel',
-      role: 'Teacher · Birmingham'
-    }
-  ];
+export class HomeComponent implements OnInit, AfterViewInit {
+  numbers: any[] = [];
+  testimonials: any[] = [];
   activeIndex = 0;
+
+  public isBrowser = false;
   private intervalId!: ReturnType<typeof setInterval>;
   private touchStartX = 0;
 
+  @ViewChildren('statRef', { read: ElementRef }) statRefs!: QueryList<ElementRef>;
+
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    private chatbot: VoiceflowLoaderService
-  ) {}
-  
+    private chatbot: VoiceflowLoaderService,
+    private translate: TranslateService
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
 
-  /* refs for counters */
-  @ViewChildren('statRef') statRefs!: QueryList<ElementRef>;
-
-  /* ──────────  LIFECYCLE  ──────────── */
-  ngAfterViewInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.chatbot.loadChatbotScript();
-      this.initCounters();
-      this.startAutoRotate();
-    }
-  }
-
-  /* ──────────  COUNTER LOGIC  ──────── */
-  private initCounters() {
-    const animate = (el: HTMLElement) => {
-      const endVal = +el.getAttribute('data-target')!;
-      this.animateValue(el, 0, endVal, 1500);
-    };
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            animate(entry.target as HTMLElement);
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1 } // lower so tiny visibility triggers
-    );
-
-    // kick off immediately in case section is already visible
-    this.statRefs.forEach((ref) => {
-      animate(ref.nativeElement);
-      observer.observe(ref.nativeElement);
+    this.translate.onLangChange.subscribe(() => {
+      this.loadTranslatedContent();
     });
   }
 
-  private animateValue(
-    el: HTMLElement,
-    start: number,
-    end: number,
-    duration: number
-  ) {
+  ngOnInit(): void {
+    let preferredLang = 'en';
+    if (this.isBrowser) {
+      preferredLang = localStorage.getItem('preferredLang') || 'en';
+    }
+
+    this.translate.use(preferredLang).subscribe(() => {
+      this.loadTranslatedContent();
+    });
+  }
+
+  ngAfterViewInit(): void {
+    if (this.isBrowser) {
+      this.chatbot.loadChatbotScript();
+      this.startAutoRotate();
+
+      setTimeout(() => {
+        this.initCounters();
+        this.statRefs.changes.subscribe(() => this.initCounters());
+      }, 200);
+    }
+  }
+
+  private loadTranslatedContent(): void {
+    this.translate.get('HOME.NUMBERS').subscribe((data) => {
+      const rawNumbers = Array.isArray(data) ? data : [];
+
+      this.numbers = rawNumbers.map(item => ({
+        ...item,
+        target: parseInt(item.target, 10) || 0
+      }));
+
+      if (this.isBrowser) {
+        setTimeout(() => {
+          this.initCounters();
+          this.statRefs.changes.subscribe(() => this.initCounters());
+        }, 0);
+      }
+    });
+
+    this.translate.get('HOME.TESTIMONIALS.LIST').subscribe((data) => {
+      this.testimonials = Array.isArray(data) ? data : [];
+    });
+  }
+
+  private initCounters(): void {
+    if (!this.isBrowser || typeof IntersectionObserver === 'undefined') {
+      this.statRefs.forEach((ref, i) => {
+        const el = ref.nativeElement;
+        const endVal = this.numbers[i]?.target || 0;
+        el.innerText = endVal.toString();
+      });
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const el = entry.target as HTMLElement;
+          const i = this.statRefs.toArray().findIndex(ref => ref.nativeElement === el);
+          const endVal = this.numbers[i]?.target || 0;
+          this.animateValue(el, 0, endVal, 1500);
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    this.statRefs.forEach(ref => observer.observe(ref.nativeElement));
+  }
+
+  private animateValue(el: HTMLElement, start: number, end: number, duration: number): void {
+    if (!this.isBrowser || typeof requestAnimationFrame === 'undefined') {
+      el.innerText = end.toString();
+      return;
+    }
+
     let startTime: number | null = null;
 
     const step = (timestamp: number) => {
@@ -133,29 +134,30 @@ export class HomeComponent implements AfterViewInit {
     requestAnimationFrame(step);
   }
 
-  /* ──────────  TESTIMONIAL ROTATOR ─── */
-  private startAutoRotate() {
+  private startAutoRotate(): void {
+    if (!this.isBrowser) return;
     this.intervalId = setInterval(() => this.next(), 5000);
   }
 
-  next() {
+  next(): void {
+    if (this.testimonials.length === 0) return;
     this.activeIndex = (this.activeIndex + 1) % this.testimonials.length;
   }
 
-  prev() {
-    this.activeIndex =
-      (this.activeIndex - 1 + this.testimonials.length) %
-      this.testimonials.length;
+  prev(): void {
+    if (this.testimonials.length === 0) return;
+    this.activeIndex = (this.activeIndex - 1 + this.testimonials.length) % this.testimonials.length;
   }
 
-  /* ─────  Swipe Support on Mobile  ─── */
   @HostListener('touchstart', ['$event'])
-  onTouchStart(evt: TouchEvent) {
+  onTouchStart(evt: TouchEvent): void {
+    if (!this.isBrowser) return;
     this.touchStartX = evt.changedTouches[0].clientX;
   }
 
   @HostListener('touchend', ['$event'])
-  onTouchEnd(evt: TouchEvent) {
+  onTouchEnd(evt: TouchEvent): void {
+    if (!this.isBrowser) return;
     const diff = evt.changedTouches[0].clientX - this.touchStartX;
     if (Math.abs(diff) > 50) diff > 0 ? this.prev() : this.next();
   }

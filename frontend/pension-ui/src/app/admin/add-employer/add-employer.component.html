@@ -1,7 +1,10 @@
 <div class="container mt-5" style="max-width: 600px;">
-  <h3 class="mb-4 text-center">➕ Add New Employer</h3>
+  <h3 class="mb-4 text-center text-primary">
+    <i class="fas fa-user-plus me-2"></i> Add New Employer
+  </h3>
 
-  <form (ngSubmit)="submitForm()" #employerForm="ngForm" class="card shadow-sm p-4">
+  <!-- Employer Form -->
+  <form (ngSubmit)="submitForm()" #employerForm="ngForm" class="card shadow-sm p-4 border-0">
     <div class="mb-3">
       <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
       <input type="text" id="name" [(ngModel)]="employer.name" name="name" class="form-control" required />
@@ -22,21 +25,24 @@
       <textarea id="address" [(ngModel)]="employer.address" name="address" rows="3" class="form-control"></textarea>
     </div>
 
-    <div class="d-flex justify-content-between mt-4">
-      <button type="button" class="btn btn-secondary" [routerLink]="['/admin/dashboard']">
-        ⬅️ Back to Dashboard
+    <!-- Buttons -->
+    <div class="d-flex justify-content-between align-items-center mt-4">
+      <button type="button" class="btn btn-outline-secondary" [routerLink]="['/admin/dashboard']">
+        <i class="fas fa-arrow-left me-2"></i>Back
       </button>
-
-      <button type="submit" class="btn btn-primary" [disabled]="employerForm.invalid">
-        ➕ Add Employer
+      <button type="submit" class="btn btn-primary" [disabled]="employerForm.invalid || loading">
+        <i class="fas fa-plus me-2"></i>Add Employer
       </button>
     </div>
   </form>
 
-  <div *ngIf="successMsg" class="alert alert-success mt-3 text-center">
-    {{ successMsg }}
+  <!-- Success Alert -->
+  <div *ngIf="successMsg" class="alert alert-success mt-3 text-center animate__animated animate__fadeIn">
+    <i class="fas fa-check-circle me-2"></i>{{ successMsg }}
   </div>
-  <div *ngIf="errorMsg" class="alert alert-danger mt-3 text-center">
-    {{ errorMsg }}
+
+  <!-- Error Alert -->
+  <div *ngIf="errorMsg" class="alert alert-danger mt-3 text-center animate__animated animate__fadeIn">
+    <i class="fas fa-exclamation-circle me-2"></i>{{ errorMsg }}
   </div>
 </div>

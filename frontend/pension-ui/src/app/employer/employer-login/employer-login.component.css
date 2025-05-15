@@ -1,37 +1,101 @@
+/* Container Styling */
 .container {
-    max-width: 450px;
-    margin: auto;
-  }
-  
-  .card {
-    border: none;
-    border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-  }
-  
+  max-width: 450px;
+  margin: auto;
+  margin-top: 5rem;
+  padding-bottom: 2rem;
+}
+
+/* Card */
+.card {
+  border: none;
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  background-color: #ffffff;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Heading */
+h3 {
+  font-weight: 700;
+  color: #343a40;
+  font-size: 1.75rem;
+  text-align: center;
+}
+
+/* Labels */
+label {
+  font-weight: 500;
+  margin-bottom: 5px;
+  font-size: 0.95rem;
+}
+
+/* Input Fields */
+input.form-control {
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 1rem;
+  border: 1px solid #ced4da;
+  transition: border-color 0.2s ease-in-out;
+}
+
+input.form-control:focus {
+  border-color: #007bff;
+  box-shadow: none;
+}
+
+/* Button Styles */
+button {
+  border-radius: 8px;
+  padding: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.2s ease-in-out;
+}
+
+button:disabled {
+  opacity: 0.7;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Alert Message */
+.alert {
+  border-radius: 8px;
+  font-size: 0.95rem;
+  padding: 0.75rem 1rem;
+  margin-top: 1rem;
+}
+
+/* Password Toggle Button (Eye Icon) */
+.position-absolute button {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  font-size: 0.9rem;
+  padding: 0;
+  color: #6c757d;
+}
+
+.position-absolute button:hover {
+  color: #000;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 576px) {
   h3 {
-    font-weight: bold;
-    color: #343a40;
+    font-size: 1.5rem;
   }
-  
-  label {
-    font-weight: 500;
-    margin-bottom: 5px;
-  }
-  
-  input.form-control {
-    border-radius: 8px;
-    padding: 10px;
-  }
-  
+
   button {
-    border-radius: 8px;
-    padding: 10px;
-    font-weight: 600;
-    font-size: 16px;
+    font-size: 0.95rem;
   }
-  
-  .alert {
-    border-radius: 8px;
-  }
-  
+}

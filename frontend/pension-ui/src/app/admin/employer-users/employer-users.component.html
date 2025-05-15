@@ -1,39 +1,46 @@
 <div class="container mt-5">
-  <h3 class="text-center mb-4 text-primary">👥 Users under Employer #{{ employerId }}</h3>
+  <!-- Section Header -->
+  <h3 class="text-center mb-4 text-primary animate__animated animate__fadeInDown">
+    <i class="fas fa-users me-2"></i>Users under Employer 
+  </h3>
 
-  <div *ngIf="users.length === 0" class="alert alert-info text-center">
-    No users found for this employer.
+  <!-- No Users Alert -->
+  <div *ngIf="users.length === 0" class="alert alert-warning text-center animate__animated animate__fadeIn">
+    <i class="fas fa-exclamation-circle me-2"></i>No users found for this employer.
   </div>
 
-  <div *ngIf="users.length > 0" class="table-responsive card shadow-sm p-3">
-    <table class="table table-hover table-striped align-middle">
-      <thead class="table-dark text-center">
-        <tr>
-          <th>#</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>NI Number</th>
-          <th>Salary (£)</th>
-          <th>Investment Type</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of users; let i = index" class="text-center">
-          <td>{{ i + 1 }}</td>
-          <td>{{ user.name }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.ni_number || '-' }}</td>
-          <td>£{{ user.salary }}</td>
-          <td>{{ user.investment_type || '-' }}</td>
-        </tr>
-      </tbody>
-    </table>
+  <!-- Users Table -->
+  <div *ngIf="users.length > 0" class="card shadow-sm p-3 animate__animated animate__fadeInUp">
+    <div class="table-responsive">
+      <table class="table table-hover table-striped align-middle text-center">
+        <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th><i class="fas fa-user me-1"></i>Name</th>
+            <th><i class="fas fa-envelope me-1"></i>Email</th>
+            <th><i class="fas fa-id-card me-1"></i>NI Number</th>
+            <th><i class="fas fa-pound-sign me-1"></i>Salary (£)</th>
+            <th><i class="fas fa-chart-line me-1"></i>Investment Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.ni_number || '-' }}</td>
+            <td>£{{ user.salary }}</td>
+            <td>{{ user.investment_type || '-' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <!-- Back Button -->
-  <div class="text-center mt-4">
-    <button class="btn btn-secondary" [routerLink]="['/admin/view-employers']">
-      ⬅️ Back to Employers
+  <div class="text-center mt-4 animate__animated animate__fadeInUp">
+    <button class="btn btn-outline-secondary px-4" [routerLink]="['/admin/view-employers']">
+      <i class="fas fa-arrow-left me-2"></i>Back to Employers
     </button>
   </div>
 </div>

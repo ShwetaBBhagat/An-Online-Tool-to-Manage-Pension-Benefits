@@ -4,7 +4,6 @@ import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { AllUsersComponent } from './admin/all-users/all-users.component';
 import { UserStatementsComponent } from './admin/user-statements/user-statements.component';
-import { ViewDocumentsComponent } from './admin/view-documents/view-documents.component';
 import { ViewEmployersComponent } from './admin/view-employers/view-employers.component';
 import { AddEmployerComponent } from './admin/add-employer/add-employer.component';
 import { EmployerUsersComponent } from './admin/employer-users/employer-users.component';
@@ -15,8 +14,8 @@ import { MyUsersComponent } from './employer/my-users/my-users.component';
 import { EmployerProfileComponent } from './employer/employer-profile/employer-profile.component';
 import { AddUserComponent } from './employer/add-user/add-user.component';
 import { EmployerUserStatementsComponent } from './employer/user-statements/user-statements.component';
-import { ViewEmployerDocumentsComponent } from './employer/view-documents/view-documents.component';
-import { SetPasswordComponent } from './employer/set-password/set-password.component';
+import { EmployerRequestResetComponent } from './employer/employer-request-reset/employer-request-reset.component';
+import { EmployerResetPasswordComponent } from './employer/reset-password/reset-password.component';
 
 import { RequestResetComponent } from './auth/request-reset/request-reset.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
@@ -42,7 +41,6 @@ export const routes: Routes = [
   { path: 'admin/dashboard',component: AdminDashboardComponent },
   { path: 'admin/all-users',component: AllUsersComponent },
   { path: 'admin/users/:id/statements', component: UserStatementsComponent },
-  { path: 'admin/view-documents', component: ViewDocumentsComponent },
   { path: 'admin/view-employers', component: ViewEmployersComponent },
   { path: 'admin/add-employer', component: AddEmployerComponent },
   { path: 'admin/employers/:id/users', component: EmployerUsersComponent },
@@ -53,8 +51,8 @@ export const routes: Routes = [
   { path: 'employer/employer-profile', component: EmployerProfileComponent },
   { path: 'employer/add-user', component: AddUserComponent },
   { path: 'employer/user/:id/statements', component: EmployerUserStatementsComponent},
-  { path: 'employer/documents', component: ViewEmployerDocumentsComponent },
-  { path: 'employer/set-password', component: SetPasswordComponent },
+  { path: 'employer/employer-request-reset', component: EmployerRequestResetComponent},
+  { path: 'employer/reset-password', component: EmployerResetPasswordComponent},
 
   { path: 'login', component: LoginComponent },
   { path: 'request-reset', component: RequestResetComponent },

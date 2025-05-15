@@ -8,6 +8,11 @@
   
   .card {
     border-radius: 1rem;
+    transition: box-shadow 0.3s ease-in-out;
+  }
+
+  .card:hover {
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
   }
   
   input.form-control, select.form-select {
@@ -15,6 +20,19 @@
     font-size: 1rem;
   }
   
+  .btn i {
+  font-size: 1rem;
+  }
+
+  .action-btn {
+  transition: all 0.2s ease-in-out;
+  }
+
+.action-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 10px rgba(220, 53, 69, 0.25); /* red for delete */  
+  }
+
   button.btn {
     min-width: 130px;
     height: 45px;

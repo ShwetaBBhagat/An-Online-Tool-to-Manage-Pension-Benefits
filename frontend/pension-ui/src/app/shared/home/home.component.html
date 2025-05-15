@@ -1,10 +1,11 @@
 <section class="hero-banner" data-aos="fade-in" data-aos-duration="1200">
   <div class="overlay">
     <div class="hero-content">
-      <h1 class="fade-in-title" data-aos="fade-up" data-aos-delay="100">Secure Your Retirement with Confidence</h1>
-      <p class="fade-in-subtitle" data-aos="fade-up" data-aos-delay="300">Your Personalized UK Pension Companion</p>
-      <button mat-raised-button color="accent" routerLink="/auth/employee-login"      data-aos="zoom-in"
-      data-aos-delay="500">Get Started</button>
+      <h1 class="fade-in-title" data-aos="fade-up" data-aos-delay="100">{{ 'HOME.HERO.TITLE' | translate }}</h1>
+      <p class="fade-in-subtitle" data-aos="fade-up" data-aos-delay="300">{{ 'HOME.HERO.SUBTITLE' | translate }}</p>
+      <button mat-raised-button color="accent" routerLink="/auth/employee-login" data-aos="zoom-in" data-aos-delay="500">
+        {{ 'HOME.HERO.BUTTON' | translate }}
+      </button>
     </div>
   </div>
 </section>
@@ -12,129 +13,85 @@
 <!-- ============  IMPACT SECTION  ============ -->
 <section class="impact-section">
   <div class="impact-container" data-aos="fade-right">
-    <h2 class="impact-heading">The Numbers That Define Our Impact</h2>
-    <p class="impact-subtitle">Trusted by professionals across the UK pension landscape</p>
+    <h2 class="impact-heading">{{ 'HOME.IMPACT.HEADING' | translate }}</h2>
+    <p class="impact-subtitle">{{ 'HOME.IMPACT.SUBTITLE' | translate }}</p>
 
-    <div class="impact-grid">
-      <div
-      class="impact-card"
-      *ngFor="let num of numbers; let i = index"
-      [attr.data-aos]="'fade-up'"
-      [attr.data-aos-delay]="i * 100" >
-    
+    <div class="impact-grid" *ngIf="numbers.length > 0">
+      <div class="impact-card" *ngFor="let num of numbers; let i = index" [attr.data-aos]="'fade-up'" [attr.data-aos-delay]="i * 100">
         <h3 class="impact-number">
           {{ num.prefix }}
-          <span
-            #statRef
-            class="counter"
-            [attr.data-target]="num.target"
-          >0</span>
+          <span #statRef class="counter" [attr.data-target]="num.target">0</span>
           {{ num.suffix }}
         </h3>
-    
         <p class="impact-label">{{ num.label }}</p>
         <p class="impact-text">{{ num.desc }}</p>
       </div>
     </div>    
-    
   </div>
 </section>
 
-
 <!-- ============  FEATURES SECTION  ============ -->
 <section class="features-section">
-  <h2 class="features-heading">Power‑Packed Features</h2>
-  <p class="features-subtitle">
-    Everything you need to manage your pension—beautifully, securely, and on any device
-  </p>
+  <h2 class="features-heading">{{ 'HOME.FEATURES.HEADING' | translate }}</h2>
+  <p class="features-subtitle">{{ 'HOME.FEATURES.SUBTITLE' | translate }}</p>
 
   <div class="features-grid" data-aos="fade-left">
-
     <div class="feature-card slide-up" style="animation-delay: .1s">
       <span class="material-icons feature-icon">trending_up</span>
-      <h3 class="feature-title">Track Contributions</h3>
-      <p class="feature-text">
-        Interactive graphs show exactly how your funds are growing.
-      </p>
+      <h3 class="feature-title">{{ 'HOME.FEATURES.CARD1.TITLE' | translate }}</h3>
+      <p class="feature-text">{{ 'HOME.FEATURES.CARD1.TEXT' | translate }}</p>
     </div>
 
     <div class="feature-card slide-up" style="animation-delay: .3s">
       <span class="material-icons feature-icon">lock</span>
-      <h3 class="feature-title">Secure MFA Login</h3>
-      <p class="feature-text">
-        Multi‑factor authentication & role‑based access protect your data.
-      </p>
+      <h3 class="feature-title">{{ 'HOME.FEATURES.CARD2.TITLE' | translate }}</h3>
+      <p class="feature-text">{{ 'HOME.FEATURES.CARD2.TEXT' | translate }}</p>
     </div>
 
     <div class="feature-card slide-up" style="animation-delay: .4s">
       <span class="material-icons feature-icon">notifications_active</span>
-      <h3 class="feature-title">Real‑Time Alerts</h3>
-      <p class="feature-text">
-        Get notified of policy changes, contributions, and deadlines instantly.
-      </p>
+      <h3 class="feature-title">{{ 'HOME.FEATURES.CARD3.TITLE' | translate }}</h3>
+      <p class="feature-text">{{ 'HOME.FEATURES.CARD3.TEXT' | translate }}</p>
     </div>
 
     <div class="feature-card slide-up" style="animation-delay: .5s">
       <span class="material-icons feature-icon">translate</span>
-      <h3 class="feature-title">Multi‑Language</h3>
-      <p class="feature-text">
-        Seamless i18n support—switch languages with one tap.
-      </p>
+      <h3 class="feature-title">{{ 'HOME.FEATURES.CARD4.TITLE' | translate }}</h3>
+      <p class="feature-text">{{ 'HOME.FEATURES.CARD4.TEXT' | translate }}</p>
     </div>
-    
-        <div class="feature-card slide-up" style="animation-delay: .8s">
-          <span class="material-icons feature-icon">chat_bubble</span>
-          <h3 class="feature-title">AI Pension Chatbot</h3>
-          <p class="feature-text">
-            Get 24/7 answers to pension queries and personalised guidance via an intelligent assistant.
-          </p>
-        </div>
 
+    <div class="feature-card slide-up" style="animation-delay: .8s">
+      <span class="material-icons feature-icon">chat_bubble</span>
+      <h3 class="feature-title">{{ 'HOME.FEATURES.CARD5.TITLE' | translate }}</h3>
+      <p class="feature-text">{{ 'HOME.FEATURES.CARD5.TEXT' | translate }}</p>
+    </div>
   </div>
 </section>
 
 <!-- ==========  TESTIMONIALS  ========== -->
 <section class="testimonials-wrapper">
-  <h2 class="section-heading">What Our Users Say</h2>
+  <h2 class="section-heading">{{ 'HOME.TESTIMONIALS.HEADING' | translate }}</h2>
 
-  <!-- Card displaying the active testimonial -->
   <div class="testimonial-card" data-aos="fade-down">
-    <!-- Mini sub‑headline -->
-<p class="mini-heading">★ 5‑Star Reviews</p>
+    <p class="mini-heading">{{ 'HOME.TESTIMONIALS.SUBHEADING' | translate }}</p>
+    <div class="stars">
+      <i class="fa-solid fa-star"></i>
+      <i class="fa-solid fa-star"></i>
+      <i class="fa-solid fa-star"></i>
+      <i class="fa-solid fa-star"></i>
+      <i class="fa-solid fa-star"></i>
+    </div>
 
-<!-- Stars row -->
-<div class="stars">
-  <i class="fa-solid fa-star"></i>
-  <i class="fa-solid fa-star"></i>
-  <i class="fa-solid fa-star"></i>
-  <i class="fa-solid fa-star"></i>
-  <i class="fa-solid fa-star"></i>
-</div>
-
-    <!-- Quotes (one per testimonial) -->
-    <p
-      class="quote"
-      *ngFor="let t of testimonials; let i = index"
-      [class.show]="i === activeIndex"
-    >
-      “{{ t.quote }}”
-    </p>
-
+    <ng-container *ngIf="testimonials.length > 0"><p class="quote" *ngFor="let t of testimonials; let i = index" [class.show]="i === activeIndex">“{{ t.quote }}”</p></ng-container>
     <hr />
-
-    <!-- Author / role of active testimonial -->
-    <p class="author">{{ testimonials[activeIndex].name }}</p>
-    <p class="role">{{ testimonials[activeIndex].role }}</p>
+    <ng-container *ngIf="testimonials.length > 0">
+  <p class="author">{{ testimonials[activeIndex].name }}</p>
+  <p class="role">{{ testimonials[activeIndex].role }}</p>
+</ng-container>
   </div>
 
-  <!-- Navigation dots -->
   <div class="dots">
-    <span
-      *ngFor="let _ of testimonials; let i = index"
-      class="dot"
-      [class.active]="i === activeIndex"
-      (click)="activeIndex = i"
-    ></span>
+    <span *ngFor="let _ of testimonials; let i = index" class="dot" [class.active]="i === activeIndex" (click)="activeIndex = i"></span>
   </div>
 </section>
 
@@ -142,24 +99,19 @@
 <section class="compliance-strip">
   <div class="compliance-content" data-aos="fade-up">
     <i class="fa-solid fa-shield-halved main-icon"></i>
-
-    <p class="compliance-text">
-      We are compliant with <strong>GDPR</strong>, <strong>ISO 27001</strong>,
-      and follow <strong>UK pension regulations</strong>.
-    </p>
-
+    <p class="compliance-text" [innerHTML]="'HOME.COMPLIANCE.TEXT' | translate"></p>
     <div class="compliance-icons">
       <div class="icon-block" data-aos="zoom-in" data-aos-delay="100">
         <i class="fa-solid fa-user-shield"></i>
-        <span>GDPR</span>
+        <span>{{ 'HOME.COMPLIANCE.GDPR' | translate }}</span>
       </div>
       <div class="icon-block" data-aos="zoom-in" data-aos-delay="200">
         <i class="fa-solid fa-certificate"></i>
-        <span>ISO 27001</span>
+        <span>{{ 'HOME.COMPLIANCE.ISO' | translate }}</span>
       </div>
       <div class="icon-block" data-aos="zoom-in" data-aos-delay="300">
         <i class="fa-solid fa-scale-balanced"></i>
-        <span>UK Regulation</span>
+        <span>{{ 'HOME.COMPLIANCE.REGULATION' | translate }}</span>
       </div>
     </div>
   </div>
@@ -168,8 +120,8 @@
 <!-- ========== CONTACT US SECTION ========== -->
 <section class="contact-section">
   <div class="contact-container" data-aos="fade-up">
-    <h2 class="contact-heading">Contact Us</h2>
-    <p class="contact-subtitle">We’re here to help with your pension queries and support requests.</p>
+    <h2 class="contact-heading">{{ 'HOME.CONTACT.HEADING' | translate }}</h2>
+    <p class="contact-subtitle">{{ 'HOME.CONTACT.SUBTITLE' | translate }}</p>
 
     <div class="contact-details">
       <div class="contact-item">
@@ -182,19 +134,14 @@
       </div>
       <div class="contact-item">
         <i class="fa-solid fa-location-dot"></i>
-        <span>123 Pension Lane, London, UK</span>
+        <span>Pension Portal , Concordia House , 123 Golden Lane, London, UK </span>
       </div>
     </div>
 
     <div class="map-container">
       <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d19802.5608597904!2d-0.1277586!3d51.5073509!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48761b333d502c19%3A0xdee9f6e6e9d2cc56!2sLondon!5e0!3m2!1sen!2suk!4v1685984208341!5m2!1sen!2suk"
-        width="100%"
-        height="400"
-        style="border:0;"
-        allowfullscreen=""
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade">
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1982.123456789!2d-0.0971234!3d51.5221234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48761b1234567890%3A0xabcdef1234567890!2s123%20Golden%20Lane%2C%20London%20EC1Y%200TL!5e0!3m2!1sen!2suk!4v1621234567890!5m2!1sen!2suk"
+        width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy">
       </iframe>
     </div>
   </div>

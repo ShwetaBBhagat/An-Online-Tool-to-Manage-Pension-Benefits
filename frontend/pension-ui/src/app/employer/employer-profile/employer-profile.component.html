@@ -1,40 +1,60 @@
-<div class="container mt-5">
-  <h3 class="mb-4 text-center">🏢 My Employer Profile</h3>
+<div class="container mt-5 animate__animated animate__fadeIn">
+  <h3 class="mb-4 text-center text-primary">
+    <i class="fas fa-id-badge me-2"></i>My Employer Profile
+  </h3>
 
-  <div *ngIf="profile" class="card shadow p-4 mb-4">
+  <!-- Profile Details -->
+  <div *ngIf="profile" class="card shadow-sm p-4 mb-5 border-start border-primary border-4 animate__animated animate__fadeInUp">
     <div class="mb-3">
-      <strong>Name:</strong> {{ profile.name }}
+      <i class="fas fa-user-tie me-2 text-secondary"></i><strong>Name:</strong> {{ profile.name }}
     </div>
     <div class="mb-3">
-      <strong>Email:</strong> {{ profile.email }}
+      <i class="fas fa-envelope me-2 text-secondary"></i><strong>Email:</strong> {{ profile.email }}
     </div>
     <div class="mb-3">
-      <strong>Contact Number:</strong> {{ profile.contact_number || '-' }}
+      <i class="fas fa-phone me-2 text-secondary"></i><strong>Contact:</strong> {{ profile.contact_number || '-' }}
     </div>
     <div class="mb-3">
-      <strong>Address:</strong> {{ profile.address || '-' }}
+      <i class="fas fa-map-marker-alt me-2 text-secondary"></i><strong>Address:</strong> {{ profile.address || '-' }}
     </div>
     <div class="mb-3">
-      <strong>Joined On:</strong> {{ profile.created_at }}
+      <i class="fas fa-calendar-alt me-2 text-secondary"></i><strong>Joined On:</strong> {{ profile.created_at }}
     </div>
   </div>
 
-  <h5 class="text-center mb-3">✏️ Update Profile</h5>
+  <!-- Edit Form Header -->
+  <h5 class="text-center text-dark mb-3">
+    <i class="fas fa-edit me-2"></i>Update Profile Details
+  </h5>
 
-  <form (ngSubmit)="updateProfile()" #updateForm="ngForm" class="card shadow p-4">
+  <!-- Update Form -->
+  <form (ngSubmit)="updateProfile()" #updateForm="ngForm" class="card shadow-sm p-4 animate__animated animate__fadeInUp">
     <div class="mb-3">
-      <label>Contact Number</label>
+      <label class="form-label">Contact Number</label>
       <input type="text" [(ngModel)]="editContactNumber" name="contact_number" class="form-control" />
     </div>
 
     <div class="mb-3">
-      <label>Address</label>
-      <textarea [(ngModel)]="editAddress" name="address" class="form-control"></textarea>
+      <label class="form-label">Address</label>
+      <textarea [(ngModel)]="editAddress" name="address" class="form-control" rows="3"></textarea>
     </div>
 
-    <button class="btn btn-primary w-100" [disabled]="updateForm.invalid">Update Profile</button>
+    <button class="btn btn-primary w-100" [disabled]="updateForm.invalid">
+      <i class="fas fa-save me-2"></i>Update Profile
+    </button>
   </form>
 
-  <div *ngIf="successMsg" class="alert alert-success mt-3 text-center">{{ successMsg }}</div>
-  <div *ngIf="errorMsg" class="alert alert-danger mt-3 text-center">{{ errorMsg }}</div>
+  <!-- Alerts -->
+  <div *ngIf="successMsg" class="alert alert-success mt-3 text-center animate__animated animate__fadeIn">
+    <i class="fas fa-check-circle me-2"></i>{{ successMsg }}
+  </div>
+  <div *ngIf="errorMsg" class="alert alert-danger mt-3 text-center animate__animated animate__fadeIn">
+    <i class="fas fa-exclamation-triangle me-2"></i>{{ errorMsg }}
+  </div>
+
+    <div class="text-center mt-4">
+    <button class="btn btn-secondary" [routerLink]="['/employer/dashboard']">
+      ⬅️ Back to Dashboard
+    </button>
+  </div>
 </div>

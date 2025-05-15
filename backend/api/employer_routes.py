@@ -1,34 +1,59 @@
 from flask import Blueprint, request, jsonify
-from models.employer_model import Employer
 from flask_bcrypt import check_password_hash
+
+from models.employer_model import Employer
+from models import db
+
 import jwt
 import datetime
 from config import Config
+
 from utils.auth_middleware import token_required, employer_required, admin_required
-from models import db
 from utils.helpers import generate_random_password
 from utils.helpers import hash_password
 
 
 employer_bp = Blueprint('employer_bp', __name__)
 
-#employer login
+# employer login
 @employer_bp.route('/employer/login', methods=['POST'])
 def employer_login():
+    import bcrypt
+    from models.employer_model import Employer
+
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
+    mfa_token = data.get('mfa_token')  
 
     if not email or not password:
-        return jsonify({"error": "Email and password are required"}), 400
+        return jsonify({"error": "Email and password are required."}), 400
 
     employer = Employer.query.filter_by(email=email).first()
     if not employer:
-        return jsonify({"error": "Employer not found"}), 404
+        return jsonify({"error": "Employer not found."}), 404
 
-    if not check_password_hash(employer.password, password):
-        return jsonify({"error": "Invalid password"}), 401
+    if not employer.password:
+        return jsonify({"error": "Password not set. Please check your setup email."}), 403
 
+    if not bcrypt.checkpw(password.encode('utf-8'), employer.password.encode('utf-8')):
+        return jsonify({"error": "Invalid password."}), 401
+
+    # MFA validation if enabled
+    if employer.mfa_secret:
+        if not mfa_token:
+            return jsonify({"error": "MFA token required."}), 400
+
+        import pyotp
+        totp = pyotp.TOTP(employer.mfa_secret)
+        if not totp.verify(mfa_token):
+            return jsonify({"error": "Invalid MFA token."}), 401
+
+    # Update last login timestamp
+    employer.last_login = datetime.datetime.utcnow()
+    db.session.commit()
+
+    # Generate JWT token
     token = jwt.encode({
         "employer_id": employer.id,
         "email": employer.email,
@@ -37,7 +62,7 @@ def employer_login():
     }, Config.JWT_SECRET_KEY, algorithm="HS256")
 
     return jsonify({
-        "message": "Employer login successful",
+        "message": "Employer login successful.",
         "access_token": token
     }), 200
 
@@ -323,64 +348,50 @@ def employer_dashboard_summary(current_user):
         }
     }), 200
 
-#view uploaded documnets by their user
-@employer_bp.route('/employer/documents', methods=['GET'])
-@token_required
-@employer_required
-def get_employer_documents(current_user):
-    from models.user_model import User
-    from models.document_model import Document
+# Employer Password Reset - Request
+@employer_bp.route('/employer/request-reset', methods=['POST'])
+def employer_request_reset():
+    """Step 1: Employer requests a password reset link via email."""
     from models.employer_model import Employer
-    import jwt
+    from utils.password_reset import generate_reset_token
+    from utils.email_service import send_reset_email
 
-    # Decode employer email from token
-    token = request.headers.get("Authorization").split(" ")[1]
-    decoded = jwt.decode(token, Config.JWT_SECRET_KEY, algorithms=["HS256"])
-    employer_email = decoded.get("email")
+    data = request.get_json()
+    email = data.get("email")
 
-    employer = Employer.query.filter_by(email=employer_email).first()
+    if not email:
+        return jsonify({"error": "Email is required"}), 400
+
+    employer = Employer.query.filter_by(email=email).first()
     if not employer:
         return jsonify({"error": "Employer not found"}), 404
 
-    # Get all user IDs under this employer
-    users = User.query.filter_by(employer_id=employer.id).all()
-    user_ids = [u.id for u in users]
+    # Generate token & link
+    token = generate_reset_token(email)
+    reset_url = f"{Config.CLIENT_URL}/employer/reset-password?token={token}"
 
-    # Fetch documents linked to those users
-    documents = Document.query.filter(Document.user_id.in_(user_ids)).order_by(Document.uploaded_at.desc()).all()
+    # Send reset email
+    send_reset_email(email, reset_url)
 
-    result = []
-    for doc in documents:
-        result.append({
-            "document_id": doc.id,
-            "user_id": doc.user_id,
-            "filename": doc.filename,
-            "file_type": doc.file_type,
-            "uploaded_at": doc.uploaded_at.strftime("%Y-%m-%d %H:%M:%S")
-        })
+    return jsonify({"message": "Password reset link sent to your email."}), 200
 
-    return jsonify({
-        "status": "success",
-        "total_documents": len(result),
-        "documents": result
-    }), 200
-
-
-#employer set password
-@employer_bp.route('/employer/set-password', methods=['POST'])
-def set_employer_password():
-    from utils.password_reset import verify_employer_token
+# Employer Password Reset - Confirm
+@employer_bp.route('/employer/reset-password', methods=['POST'])
+def employer_reset_password():
+    """Step 2: Employer submits new password via reset link."""
     from models.employer_model import Employer
-    import bcrypt
+    from utils.password_reset import verify_reset_token
+    from utils.helpers import hash_password
 
     data = request.get_json()
     token = data.get("token")
-    password = data.get("password")
+    new_password = data.get("password")
 
-    if not token or not password:
-        return jsonify({"error": "Token and password required"}), 400
+    if not token or not new_password:
+        return jsonify({"error": "Token and password are required"}), 400
 
-    email = verify_employer_token(token)
+    # Decode token to get email
+    email = verify_reset_token(token)
     if not email:
         return jsonify({"error": "Invalid or expired token"}), 400
 
@@ -388,12 +399,13 @@ def set_employer_password():
     if not employer:
         return jsonify({"error": "Employer not found"}), 404
 
-    hashed_pw = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-    employer.password = hashed_pw
+    # Hash and update password
+    employer.password = hash_password(new_password)
     db.session.commit()
 
-    return jsonify({"message": "Password has been set successfully!"}), 200
+    return jsonify({"message": "Password has been reset successfully."}), 200
 
+#Employer Logout
 @employer_bp.route('/logout', methods=['POST'])
 @employer_required
 def employer_logout(current_employer):

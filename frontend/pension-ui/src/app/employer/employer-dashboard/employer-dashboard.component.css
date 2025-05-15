@@ -1,22 +1,151 @@
+/* Container Spacing */
 .container {
-    max-width: 1200px;
-    margin: auto;
+  margin-top: 4rem;
+  padding-bottom: 2rem;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+/* Page Heading */
+h2, h3 {
+  font-weight: 700;
+  font-size: 2rem;
+  color: #0d6efd;
+  text-align: center;
+  letter-spacing: 0.5px;
+  margin-bottom: 2rem;
+}
+
+/* Action Buttons */
+a.btn-lg, .btn-lg {
+  min-width: 220px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  font-size: 1rem;
+  border-radius: 12px;
+  transition: all 0.3s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+a.btn-lg i, .btn-lg i {
+  font-size: 1.2rem;
+  margin-right: 8px;
+}
+
+a.btn-lg:hover, .btn-lg:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(13, 110, 253, 0.25);
+}
+
+/* Button Layout */
+.d-flex.gap-3 {
+  gap: 1.5rem !important;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Summary Cards with Bootstrap Color Support */
+.card.bg-primary,
+.card.bg-success,
+.card.bg-info,
+.card.bg-warning,
+.card.bg-danger {
+  color: #ffffff;
+  border: none;
+  border-radius: 1rem;
+  padding: 1.75rem 1.5rem;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+  animation: zoomIn 0.6s ease;
+}
+
+.card.bg-primary:hover,
+.card.bg-success:hover,
+.card.bg-info:hover,
+.card.bg-warning:hover,
+.card.bg-danger:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Card Icons */
+.card i {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 10px;
+  border-radius: 50%;
+}
+
+/* Card Titles */
+.card h5 {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Card Values */
+.card p, .card .fs-3 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+/* Logout Button */
+button.btn-danger {
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  background-color: #dc3545;
+  border: none;
+}
+
+button.btn-danger:hover {
+  background-color: #bb2d3b;
+  box-shadow: 0 6px 12px rgba(220, 53, 69, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Animate.css Integration */
+.animate__animated {
+  animation-duration: 0.6s;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes zoomIn {
+  0% { opacity: 0; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Responsive Fixes */
+@media (max-width: 768px) {
+  .card p {
+    font-size: 1.5rem;
   }
-  
-  .card {
-    border-radius: 12px;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+
+  .btn-lg {
+    width: 100%;
+    margin-bottom: 1rem;
   }
-  
-  h3 {
-    font-weight: bold;
-  }
-  
-  a.btn {
-    min-width: 200px;
-  }
-  
-  .alert {
-    border-radius: 8px;
-  }
-  
+}
+
+.btn-outline-warning {
+  border: 1px solid #ffc107;
+  color: #ffc107;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-outline-warning:hover {
+  background-color: #ffc107;
+  color: #fff;
+  transform: translateY(-2px);
+}
+

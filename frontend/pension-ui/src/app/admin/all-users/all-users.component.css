@@ -1,40 +1,126 @@
+/* Layout */
 .container {
-    margin-top: 4rem;
+  margin-top: 4rem;
+  padding-bottom: 2rem;
+}
+
+/* Section Heading */
+h3 {
+  font-weight: bold;
+  font-size: 1.75rem;
+  letter-spacing: 0.5px;
+  color: #0d6efd;
+  animation: fadeInDown 0.6s ease-in-out;
+}
+
+/* Form Inputs */
+input.form-control,
+select.form-select {
+  height: 45px;
+  font-size: 1rem;
+  transition: all 0.3s ease-in-out;
+}
+
+input.form-control:focus,
+select.form-select:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* Buttons */
+button.btn {
+  min-width: 120px;
+  height: 45px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+button.btn i {
+  margin-right: 6px;
+}
+
+/* Primary Button Hover */
+button.btn-primary:hover {
+  background-color: #0a58ca;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(13, 110, 253, 0.2);
+}
+
+/* Secondary Button Hover */
+button.btn-secondary:hover {
+  background-color: #495057;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(108, 117, 125, 0.2);
+}
+
+/* Table & Card Styling */
+.card {
+  border-radius: 1rem;
+  animation: fadeInUp 0.7s ease-in-out;
+}
+
+table thead th {
+  vertical-align: middle;
+  font-size: 0.95rem;
+}
+
+.table td, .table th {
+  vertical-align: middle;
+  font-size: 0.95rem;
+}
+
+/* Badge Styles */
+.badge {
+  font-size: 0.85rem;
+  padding: 0.45em 0.75em;
+  border-radius: 8px;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+/* Transitions for Buttons */
+a.btn,
+button.btn {
+  transition: all 0.3s ease-in-out;
+}
+
+a.btn:hover,
+button.btn:hover {
+  transform: scale(1.04);
+}
+
+/* Animation Keyframes (fallback if Animate.css not used) */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
   }
-  
-  h3 {
-    font-weight: bold;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  input.form-control, select.form-select {
-    height: 45px;
-    font-size: 1rem;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  button.btn {
-    min-width: 120px;
-    height: 45px;
-    font-weight: 500;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  button.btn-primary:hover {
-    background-color: #0056b3;
-  }
-  
-  button.btn-secondary:hover {
-    background-color: #5a6268;
-  }
-  
-  .card {
-    border-radius: 1rem;
-  }
-  
-  table thead th {
-    vertical-align: middle;
-  }
-  
-  .badge {
-    font-size: 0.9rem;
-    padding: 0.5em 0.75em;
-  }
-  
+}
+
+.filter-card {
+  border-radius: 1rem;
+  background-color: #ffffff;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.filter-card:hover {
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
+.table-wrapper {
+  border-radius: 1rem;
+}

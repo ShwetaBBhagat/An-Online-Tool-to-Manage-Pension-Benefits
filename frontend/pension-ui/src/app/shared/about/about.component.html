@@ -1,21 +1,16 @@
-
 <!-- ========== ORIGIN STORY SECTION ========== -->
 <section class="story-section" data-aos="fade-right">
-
   <div class="story-container">
-    <div class="story-image" >
+    <div class="story-image">
       <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=1000&q=80" />
     </div>
-    <div class="story-content" >
+    <div class="story-content">
       <h2 class="story-heading">
         <i class="fa-solid fa-seedling"></i>
-        <span class="gradient-text">How It All Began</span>
+        <span class="gradient-text">{{ 'ABOUT.STORY.HEADING' | translate }}</span>
       </h2>
       <p class="story-text">
-        Pension Portal was born from a simple idea — to simplify how individuals and employers manage their retirement funds. 
-        After experiencing the complexity of UK pension systems firsthand, our founders set out to create a transparent, 
-        secure, and user-friendly platform that empowers users with clarity and confidence. 
-        What began as a side project has now grown into a trusted companion for thousands.
+        {{ 'ABOUT.STORY.TEXT' | translate }}
       </p>
     </div>
   </div>
@@ -27,76 +22,55 @@
     <div class="mission-icon-wrapper">
       <i class="fa-solid fa-bullseye mission-icon"></i>
     </div>
-    <h2 class="mission-heading gradient-text">Our Mission</h2>
-    <p class="mission-text">
-      Our goal is to <strong>empower individuals and employers</strong> across the UK with 
-      <span class="highlight">transparent</span>, <span class="highlight">secure</span>, and 
-      <span class="highlight">user-friendly</span> tools for managing pensions and planning their financial future.<br /><br />
-      We believe everyone deserves <strong>clarity</strong> and <strong>confidence</strong> in their retirement journey.
-    </p>
+    <h2 class="mission-heading gradient-text">{{ 'ABOUT.MISSION.HEADING' | translate }}</h2>
+    <p class="mission-text" [innerHTML]="'ABOUT.MISSION.TEXT' | translate"></p>
   </div>
 </section>
-
 
 <!-- ========== VISION & VALUES SECTION ========== -->
 <section class="vision-section">
   <div class="layout-container">
     <div class="vision-intro" data-aos="fade-up">
       <i class="fa-solid fa-lightbulb vision-icon"></i>
-      <h2 class="vision-heading gradient-text">Our Vision</h2>
-      <p class="vision-text">
-        To be the UK’s most trusted digital pension platform —
-        simplifying financial futures through <strong>technology</strong>,
-        <strong>transparency</strong>, and <strong>empowerment</strong>.
-      </p>
+      <h2 class="vision-heading gradient-text">{{ 'ABOUT.VISION.HEADING' | translate }}</h2>
+      <p class="vision-text" [innerHTML]="'ABOUT.VISION.TEXT' | translate"></p>
     </div>
 
     <div class="values-grid">
       <div class="value-card" data-aos="zoom-in" data-aos-delay="0">
-        <div class="icon-wrapper">
-          <i class="fa-solid fa-lock"></i>
-        </div>
-        <h3>Security First</h3>
-        <p>We implement bank-grade security to ensure your data and finances stay safe.</p>
+        <div class="icon-wrapper"><i class="fa-solid fa-lock"></i></div>
+        <h3>{{ 'ABOUT.VALUES.CARD1.TITLE' | translate }}</h3>
+        <p>{{ 'ABOUT.VALUES.CARD1.TEXT' | translate }}</p>
       </div>
 
       <div class="value-card" data-aos="zoom-in" data-aos-delay="100">
-        <div class="icon-wrapper">
-          <i class="fa-solid fa-eye"></i>
-        </div>
-        <h3>Transparency</h3>
-        <p>Clear information, no fine print — always know where your money is going.</p>
+        <div class="icon-wrapper"><i class="fa-solid fa-eye"></i></div>
+        <h3>{{ 'ABOUT.VALUES.CARD2.TITLE' | translate }}</h3>
+        <p>{{ 'ABOUT.VALUES.CARD2.TEXT' | translate }}</p>
       </div>
 
       <div class="value-card" data-aos="zoom-in" data-aos-delay="200">
-        <div class="icon-wrapper">
-          <i class="fa-solid fa-people-group"></i>
-        </div>
-        <h3>Accessibility</h3>
-        <p>Built for everyone — across devices, languages, and backgrounds.</p>
+        <div class="icon-wrapper"><i class="fa-solid fa-people-group"></i></div>
+        <h3>{{ 'ABOUT.VALUES.CARD3.TITLE' | translate }}</h3>
+        <p>{{ 'ABOUT.VALUES.CARD3.TEXT' | translate }}</p>
       </div>
 
       <div class="value-card" data-aos="zoom-in" data-aos-delay="300">
-        <div class="icon-wrapper">
-          <i class="fa-solid fa-rocket"></i>
-        </div>
-        <h3>Innovation</h3>
-        <p>We evolve with you — continuously improving with the latest technologies.</p>
+        <div class="icon-wrapper"><i class="fa-solid fa-rocket"></i></div>
+        <h3>{{ 'ABOUT.VALUES.CARD4.TITLE' | translate }}</h3>
+        <p>{{ 'ABOUT.VALUES.CARD4.TEXT' | translate }}</p>
       </div>
     </div>
   </div>
 </section>
-
 
 <!-- ========== TEAM PREVIEW SECTION ========== -->
 <section class="team-section section-alt">
   <div class="layout-container">
     <div class="team-intro" data-aos="fade-up">
       <i class="fa-solid fa-users team-icon"></i>
-      <h2 class="team-heading gradient-text">Meet the Team</h2>
-      <p class="team-subtitle">
-        A group of passionate individuals working together to simplify pensions and empower users.
-      </p>
+      <h2 class="team-heading gradient-text">{{ 'ABOUT.TEAM.HEADING' | translate }}</h2>
+      <p class="team-subtitle">{{ 'ABOUT.TEAM.SUBTITLE' | translate }}</p>
     </div>
 
     <div class="team-grid">
@@ -104,30 +78,28 @@
         <div class="avatar-wrapper">
           <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="John Doe" />
         </div>
-        <h3>John Doe</h3>
-        <p class="role">Frontend Developer</p>
-        <p class="bio">Crafting sleek, intuitive user experiences with Angular & Material.</p>
+        <h3>{{ 'ABOUT.TEAM.NAME1' | translate }}</h3>
+        <p class="role">{{ 'ABOUT.TEAM.ROLE1' | translate }}</p>
+        <p class="bio">{{ 'ABOUT.TEAM.BIO1' | translate }}</p>
       </div>
 
       <div class="team-card" data-aos="fade-up" data-aos-delay="100">
         <div class="avatar-wrapper">
           <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Ana Patel" />
         </div>
-        <h3>Ana Patel</h3>
-        <p class="role">Backend Engineer</p>
-        <p class="bio">Designs secure, scalable APIs powering the pension engine.</p>
+        <h3>{{ 'ABOUT.TEAM.NAME2' | translate }}</h3>
+        <p class="role">{{ 'ABOUT.TEAM.ROLE2' | translate }}</p>
+        <p class="bio">{{ 'ABOUT.TEAM.BIO2' | translate }}</p>
       </div>
 
       <div class="team-card" data-aos="fade-up" data-aos-delay="200">
         <div class="avatar-wrapper">
           <img src="https://randomuser.me/api/portraits/women/76.jpg" alt="Shweta Bhagat" />
         </div>
-        <h3>Shweta Bhagat</h3>
-        <p class="role">Product Lead</p>
-        <p class="bio">Drives product strategy and ensures user‑first design principles.</p>
+        <h3>{{ 'ABOUT.TEAM.NAME3' | translate }}</h3>
+        <p class="role">{{ 'ABOUT.TEAM.ROLE3' | translate }}</p>
+        <p class="bio">{{ 'ABOUT.TEAM.BIO3' | translate }}</p>
       </div>
     </div>
   </div>
 </section>
-
-  

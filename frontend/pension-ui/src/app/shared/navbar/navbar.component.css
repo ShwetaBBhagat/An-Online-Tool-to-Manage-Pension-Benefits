@@ -50,4 +50,39 @@
     color: #e0f7fa;
     transform: translateY(-1px);
   }
-  
+  .mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.lang-dropdown {
+  background: linear-gradient(90deg, #6a11cb, #2575fc);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  margin-left: 12px;
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.lang-dropdown:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #e0f7fa;
+  transform: translateY(-1px);
+}

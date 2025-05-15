@@ -1,0 +1,22 @@
+.container {
+  margin-top: 4rem;
+}
+
+.card {
+  border-radius: 1rem;
+  background: #fff;
+}
+
+h3 {
+  font-weight: 600;
+}
+
+input.form-control {
+  height: 48px;
+  font-size: 1rem;
+}
+
+button {
+  height: 48px;
+  font-weight: 600;
+}
