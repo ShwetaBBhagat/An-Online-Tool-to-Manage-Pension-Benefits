@@ -1,0 +1,203 @@
+{
+  "HOME": {
+    "HERO": {
+      "TITLE": "Sichern Sie Ihre Rente mit Vertrauen",
+      "SUBTITLE": "Ihr persönlicher UK-Rentenbegleiter",
+      "BUTTON": "Jetzt starten"
+    },
+    "IMPACT": {
+      "HEADING": "Die Zahlen, die unseren Einfluss zeigen",
+      "SUBTITLE": "Vertrauenswürdig in der gesamten britischen Rentenlandschaft"
+    },
+    "NUMBERS": [
+      {
+        "target": "95",
+        "label": "Kundenzufriedenheit",
+        "desc": "Benutzer bewerten uns regelmäßig für Klarheit, Sicherheit und Benutzerfreundlichkeit.",
+        "prefix": "",
+        "suffix": "%"
+      },
+      {
+        "target": "20",
+        "label": "Jahre Erfahrung",
+        "desc": "Bereitstellung robuster Rentenwerkzeuge gemäß britischen Vorschriften.",
+        "prefix": "",
+        "suffix": "+"
+      },
+      {
+        "target": "500",
+        "label": "Überwachte Rentenfonds",
+        "desc": "Tausenden geholfen, fundierte Rentenentscheidungen zu treffen.",
+        "prefix": "£",
+        "suffix": "M+"
+      }
+    ],
+    "FEATURES": {
+      "HEADING": "Leistungsstarke Funktionen",
+      "SUBTITLE": "Alles, was Sie brauchen, um Ihre Rente zu verwalten – schön, sicher und auf jedem Gerät",
+      "CARD1": {
+        "TITLE": "Beiträge verfolgen",
+        "TEXT": "Interaktive Diagramme zeigen genau, wie Ihr Fonds wächst."
+      },
+      "CARD2": {
+        "TITLE": "Sicherer MFA-Login",
+        "TEXT": "Mehrfaktor-Authentifizierung und rollenbasierter Zugriff schützen Ihre Daten."
+      },
+      "CARD3": {
+        "TITLE": "Echtzeit-Benachrichtigungen",
+        "TEXT": "Erhalten Sie sofortige Benachrichtigungen über Änderungen und Beiträge."
+      },
+      "CARD4": {
+        "TITLE": "Mehrsprachigkeit",
+        "TEXT": "Nahtlose i18n-Unterstützung – wechseln Sie mit einem Klick die Sprache."
+      },
+      "CARD5": {
+        "TITLE": "AI-Renten-Chatbot",
+        "TEXT": "24/7 Antworten auf Rentenfragen mit einem intelligenten Assistenten."
+      }
+    },
+    "TESTIMONIALS": {
+      "HEADING": "Was unsere Nutzer sagen",
+      "SUBHEADING": "★ 5-Sterne-Bewertungen",
+      "LIST": [
+        {
+          "quote": "Das Portal hat mir endlich einen klaren Überblick über meine gesamte Rente gegeben.",
+          "name": "Sarah Collins",
+          "role": "Marketing-Managerin · London"
+        },
+        {
+          "quote": "Sicher und unglaublich einfach zu bedienen – sehr empfehlenswert.",
+          "name": "Michael Osei",
+          "role": "Softwareentwickler · Manchester"
+        },
+        {
+          "quote": "Ich liebe die Diagramme zur Beitragserfassung. Ich fühle mich kontrolliert über meine Zukunft.",
+          "name": "Priya Patel",
+          "role": "Lehrerin · Birmingham"
+        }
+      ]
+    },
+    "COMPLIANCE": {
+      "TEXT": "Wir sind konform mit <strong>DSGVO</strong>, <strong>ISO 27001</strong> und halten uns an die <strong>britischen Rentenbestimmungen</strong>.",
+      "GDPR": "DSGVO",
+      "ISO": "ISO 27001",
+      "REGULATION": "UK-Regulierung"
+    },
+    "CONTACT": {
+      "HEADING": "Kontaktieren Sie uns",
+      "SUBTITLE": "Wir helfen Ihnen gerne bei Ihren Rentenfragen und Supportanfragen."
+    }
+  },
+  "NAV": {
+    "BRAND": "Rentenportal",
+    "HOME": "Startseite",
+    "ABOUT": "Über uns",
+    "FAQ": "FAQ",
+    "EMPLOYEE": "Mitarbeiter-Login",
+    "EMPLOYER": "Arbeitgeber-Login",
+    "ADMIN": "Admin-Login"
+  },
+  "ABOUT": {
+    "STORY": {
+      "HEADING": "Wie alles begann",
+      "TEXT": "Das Rentenportal entstand aus einer einfachen Idee – die Verwaltung von Rentenfonds für Einzelpersonen und Arbeitgeber zu vereinfachen. Nach eigener Erfahrung mit der Komplexität des britischen Rentensystems setzten sich unsere Gründer das Ziel, eine transparente, sichere und benutzerfreundliche Plattform zu schaffen, die den Nutzern Klarheit und Vertrauen bietet. Was als Nebenprojekt begann, ist heute ein vertrauenswürdiger Begleiter für Tausende."
+    },
+    "MISSION": {
+      "HEADING": "Unsere Mission",
+      "TEXT": "Unser Ziel ist es, <strong>Einzelpersonen und Arbeitgeber</strong> in Großbritannien mit <span class='highlight'>transparenten</span>, <span class='highlight'>sicheren</span> und <span class='highlight'>benutzerfreundlichen</span> Tools zur Verwaltung ihrer Rente zu unterstützen.<br /><br />Wir glauben, dass jeder <strong>Klarheit</strong> und <strong>Vertrauen</strong> in seiner Ruhestandsplanung verdient."
+    },
+    "VISION": {
+      "HEADING": "Unsere Vision",
+      "TEXT": "Das vertrauenswürdigste digitale Rentenportal im Vereinigten Königreich zu sein – die finanzielle Zukunft durch <strong>Technologie</strong>, <strong>Transparenz</strong> und <strong>Ermächtigung</strong> zu vereinfachen."
+    },
+    "VALUES": {
+      "CARD1": {
+        "TITLE": "Sicherheit an erster Stelle",
+        "TEXT": "Wir implementieren bankensichere Maßnahmen zum Schutz Ihrer Daten und Finanzen."
+      },
+      "CARD2": {
+        "TITLE": "Transparenz",
+        "TEXT": "Klare Informationen, keine Kleingedruckten – wissen Sie immer, wo Ihr Geld hingeht."
+      },
+      "CARD3": {
+        "TITLE": "Barrierefreiheit",
+        "TEXT": "Für alle gemacht – auf Geräten, in Sprachen und für verschiedene Hintergründe."
+      },
+      "CARD4": {
+        "TITLE": "Innovation",
+        "TEXT": "Wir entwickeln uns mit Ihnen weiter – durch neueste Technologien."
+      }
+    },
+    "TEAM": {
+      "HEADING": "Lernen Sie das Team kennen",
+      "SUBTITLE": "Ein engagiertes Team, das daran arbeitet, Renten zu vereinfachen und Nutzer zu stärken.",
+      "NAME1": "Johann Müller",
+      "ROLE1": "Frontend-Entwickler",
+      "BIO1": "Gestaltet intuitive Nutzeroberflächen mit Angular & Material.",
+      "NAME2": "Ana Patel",
+      "ROLE2": "Backend-Ingenieurin",
+      "BIO2": "Entwirft sichere und skalierbare APIs für die Renten-Engine.",
+      "NAME3": "Shweta Bhagat",
+      "ROLE3": "Produktleiterin",
+      "BIO3": "Leitet die Produktstrategie mit Fokus auf benutzerzentriertes Design."
+    }
+  },
+  "FAQ": {
+    "TITLE": "Häufig gestellte Fragen",
+    "SUBTITLE": "Schnelle Antworten auf häufige Rentenfragen",
+    "LIST": [
+      {
+        "question": "Wie kann ich meine Rentenabrechnung einsehen?",
+        "answer": "Melden Sie sich in Ihrem Dashboard an und klicken Sie auf 'Pension Statements'."
+      },
+      {
+        "question": "Kann ich meine persönlichen Daten aktualisieren?",
+        "answer": "Ja, gehen Sie zu Ihren Profileinstellungen und bearbeiten Sie Ihre Daten sicher."
+      },
+      {
+        "question": "Sind meine Rentendaten sicher?",
+        "answer": "Ja, wir verwenden MFA, RBAC und End-to-End-Verschlüsselung."
+      },
+      {
+        "question": "Was tun, wenn ich meine Zugangsdaten vergesse?",
+        "answer": "Klicken Sie auf „Passwort vergessen“ und folgen Sie den Anweisungen zur sicheren Wiederherstellung."
+      },
+      {
+        "question": "Kann ich Dokumente hochladen?",
+        "answer": "Ja, im Dokumentenbereich können Sie Dateien sicher speichern."
+      },
+      {
+        "question": "Wie kann ich meinen Rentenfonds wechseln?",
+        "answer": "Kontaktieren Sie Ihren Anbieter. Ihre aktuellen Fonds finden Sie unter 'Pension Fund' im Dashboard."
+      },
+      {
+        "question": "Gibt es rechtliche Unterstützung?",
+        "answer": "Wir bieten keine rechtliche Beratung, aber Links zu vertrauenswürdigen Drittanbietern unter 'Ressourcen'."
+      },
+      {
+        "question": "Wie lösche ich mein Konto?",
+        "answer": "Senden Sie eine E-Mail an den Support, um eine sichere Kontolöschung zu beantragen."
+      },
+      {
+        "question": "Wie oft werden meine Rentendaten aktualisiert?",
+        "answer": "Beiträge und Abrechnungen werden in Echtzeit mit Ihrem Anbieter synchronisiert."
+      },
+      {
+        "question": "Welche Geräte werden unterstützt?",
+        "answer": "Unsere Plattform funktioniert auf PCs, Tablets und Smartphones."
+      },
+      {
+        "question": "Unterstützt das System mehrere Sprachen?",
+        "answer": "Ja. Das Portal unterstützt u.a. Englisch, Hindi und Deutsch."
+      },
+      {
+        "question": "Gibt es einen KI-Chatbot für Rentenfragen?",
+        "answer": "Ja. Ein integrierter Assistent beantwortet Fragen direkt im Dashboard."
+      },
+      {
+        "question": "Kann ich Dokumente als PDF herunterladen?",
+        "answer": "Ja. Sie können Rentenabrechnungen und Dokumente als PDF speichern."
+      }
+    ]
+  }
+}

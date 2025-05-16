@@ -15,6 +15,7 @@ import { PLATFORM_ID } from '@angular/core';
 import { VoiceflowLoaderService } from './voiceflow-loader.service';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
+
 @Component({
   selector: 'app-home',
   standalone: true,

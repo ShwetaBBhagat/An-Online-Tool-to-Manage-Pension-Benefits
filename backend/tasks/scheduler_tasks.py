@@ -5,7 +5,7 @@ import datetime
 from sqlalchemy import func
 
 def generate_monthly_statements():
-    print("⏳ Running Monthly Pension Statement Auto-Generator...")
+    print("Running Monthly Pension Statement Auto-Generator...")
 
     today = datetime.date.today()
     first_day = today.replace(day=1)
@@ -53,4 +53,4 @@ def generate_monthly_statements():
 
 
     db.session.commit()
-    print(f"✅ Pension statements generated for {len(users)} users.")
+    print(f"Pension statements generated for {len(users)} users.")

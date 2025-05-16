@@ -4,7 +4,7 @@ import { provideHttpClient, HttpClientModule, HttpClient } from '@angular/common
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 // 🏗️ Factory for translation loader
@@ -21,6 +21,8 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(
       HttpClientModule,
       TranslateModule.forRoot({
+        // Remove localStorage from here!
+        defaultLanguage: 'en',
         loader: {
           provide: TranslateLoader,
           useFactory: HttpLoaderFactory,

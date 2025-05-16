@@ -229,7 +229,7 @@ def update_user_profile(current_user):
     if investment_type and investment_type not in ["Low", "Medium", "High"]:
         return jsonify({"error": "Invalid investment type. Choose 'Low', 'Medium', or 'High'"}), 400
 
-    # ✅ Passed all validations, now update fields
+    # Passed all validations, now update fields
     current_user.date_of_birth = dob or current_user.date_of_birth
     current_user.ni_number = ni_number or current_user.ni_number
     current_user.current_salary = salary or current_user.current_salary

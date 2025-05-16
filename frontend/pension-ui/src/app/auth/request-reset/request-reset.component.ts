@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';      // ✅ Important for ngModel
-import { CommonModule } from '@angular/common';     // ✅ Important for *ngIf
+import { FormsModule } from '@angular/forms';      // Important for ngModel
+import { CommonModule } from '@angular/common';     // Important for *ngIf
 
 @Component({
   selector: 'app-request-reset',
-  standalone: true,           // ✅ Standalone component
-  imports: [FormsModule, CommonModule], // ✅ Declare required modules
+  standalone: true,           // Standalone component
+  imports: [FormsModule, CommonModule], // Declare required modules
   templateUrl: './request-reset.component.html',
   styleUrls: ['./request-reset.component.css']
 })

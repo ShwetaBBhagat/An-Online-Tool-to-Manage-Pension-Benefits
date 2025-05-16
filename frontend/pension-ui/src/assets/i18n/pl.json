@@ -1,0 +1,203 @@
+{
+  "HOME": {
+    "HERO": {
+      "TITLE": "Zabezpiecz swoją emeryturę z pewnością",
+      "SUBTITLE": "Twój spersonalizowany doradca emerytalny w Wielkiej Brytanii",
+      "BUTTON": "Rozpocznij"
+    },
+    "IMPACT": {
+      "HEADING": "Liczby definiujące nasz wpływ",
+      "SUBTITLE": "Zaufany przez specjalistów w całym Zjednoczonym Królestwie"
+    },
+    "NUMBERS": [
+      {
+        "target": "95",
+        "label": "Wskaźnik zaufania klientów",
+        "desc": "Użytkownicy regularnie oceniają nas za przejrzystość, bezpieczeństwo i łatwość obsługi.",
+        "prefix": "",
+        "suffix": "%"
+      },
+      {
+        "target": "20",
+        "label": "Lata doświadczenia",
+        "desc": "Dostarczamy solidne narzędzia emerytalne zgodne z przepisami Wielkiej Brytanii.",
+        "prefix": "",
+        "suffix": "+"
+      },
+      {
+        "target": "500",
+        "label": "Śledzone fundusze emerytalne",
+        "desc": "Pomagamy tysiącom podejmować świadome decyzje emerytalne.",
+        "prefix": "£",
+        "suffix": "M+"
+      }
+    ],
+    "FEATURES": {
+      "HEADING": "Funkcje pełne możliwości",
+      "SUBTITLE": "Wszystko, czego potrzebujesz do zarządzania emeryturą — pięknie, bezpiecznie i na każdym urządzeniu",
+      "CARD1": {
+        "TITLE": "Śledzenie składek",
+        "TEXT": "Interaktywne wykresy pokazują dokładnie, jak rosną Twoje środki."
+      },
+      "CARD2": {
+        "TITLE": "Bezpieczne logowanie MFA",
+        "TEXT": "Uwierzytelnianie wieloskładnikowe i dostęp oparty na rolach chronią Twoje dane."
+      },
+      "CARD3": {
+        "TITLE": "Powiadomienia w czasie rzeczywistym",
+        "TEXT": "Otrzymuj natychmiastowe powiadomienia o zmianach, składkach i terminach."
+      },
+      "CARD4": {
+        "TITLE": "Wielojęzyczność",
+        "TEXT": "Bezproblemowe wsparcie i18n — zmień język jednym kliknięciem."
+      },
+      "CARD5": {
+        "TITLE": "Chatbot emerytalny AI",
+        "TEXT": "Uzyskaj odpowiedzi 24/7 na pytania dotyczące emerytury dzięki inteligentnemu asystentowi."
+      }
+    },
+    "TESTIMONIALS": {
+      "HEADING": "Co mówią nasi użytkownicy",
+      "SUBHEADING": "★ Opinie 5-gwiazdkowe",
+      "LIST": [
+        {
+          "quote": "Portal w końcu dał mi jasny obraz całej mojej emerytury.",
+          "name": "Sarah Collins",
+          "role": "Kierownik ds. marketingu · Londyn"
+        },
+        {
+          "quote": "Bezpieczny i niezwykle łatwy w obsłudze — gorąco polecam.",
+          "name": "Michael Osei",
+          "role": "Programista · Manchester"
+        },
+        {
+          "quote": "Uwielbiam wykresy śledzenia składek. Czuję, że mam kontrolę nad swoją przyszłością.",
+          "name": "Priya Patel",
+          "role": "Nauczycielka · Birmingham"
+        }
+      ]
+    },
+    "COMPLIANCE": {
+      "TEXT": "Jesteśmy zgodni z <strong>RODO</strong>, <strong>ISO 27001</strong> oraz <strong>przepisami emerytalnymi Wielkiej Brytanii</strong>.",
+      "GDPR": "RODO",
+      "ISO": "ISO 27001",
+      "REGULATION": "Regulacje Wielkiej Brytanii"
+    },
+    "CONTACT": {
+      "HEADING": "Skontaktuj się z nami",
+      "SUBTITLE": "Jesteśmy tutaj, aby pomóc w kwestiach związanych z emeryturą i wsparciem."
+    }
+  },
+  "NAV": {
+    "BRAND": "Portal Emerytalny",
+    "HOME": "Strona główna",
+    "ABOUT": "O nas",
+    "FAQ": "FAQ",
+    "EMPLOYEE": "Logowanie pracownika",
+    "EMPLOYER": "Logowanie pracodawcy",
+    "ADMIN": "Logowanie administratora"
+  },
+  "ABOUT": {
+    "STORY": {
+      "HEADING": "Jak to się zaczęło",
+      "TEXT": "Portal Emerytalny narodził się z prostego pomysłu — uprościć sposób, w jaki osoby fizyczne i pracodawcy zarządzają swoimi funduszami emerytalnymi. Po doświadczeniu złożoności brytyjskich systemów emerytalnych nasi założyciele postanowili stworzyć przejrzystą, bezpieczną i przyjazną dla użytkownika platformę, która daje użytkownikom jasność i pewność. To, co zaczęło się jako projekt poboczny, stało się zaufanym narzędziem dla tysięcy osób."
+    },
+    "MISSION": {
+      "HEADING": "Nasza misja",
+      "TEXT": "Naszym celem jest <strong>wzmacnianie pozycji osób i pracodawców</strong> w całej Wielkiej Brytanii dzięki <span class='highlight'>przejrzystym</span>, <span class='highlight'>bezpiecznym</span> i <span class='highlight'>łatwym w obsłudze</span> narzędziom do zarządzania emeryturą i planowania przyszłości.<br /><br />Wierzymy, że każdy zasługuje na <strong>jasność</strong> i <strong>pewność</strong> w swojej emerytalnej podróży."
+    },
+    "VISION": {
+      "HEADING": "Nasza wizja",
+      "TEXT": "Być najbardziej zaufaną cyfrową platformą emerytalną w Wielkiej Brytanii — upraszczając finanse dzięki <strong>technologii</strong>, <strong>przejrzystości</strong> i <strong>wzmocnieniu pozycji</strong>."
+    },
+    "VALUES": {
+      "CARD1": {
+        "TITLE": "Bezpieczeństwo przede wszystkim",
+        "TEXT": "Stosujemy zabezpieczenia na poziomie bankowym, aby chronić Twoje dane i finanse."
+      },
+      "CARD2": {
+        "TITLE": "Przejrzystość",
+        "TEXT": "Jasne informacje, żadnych drobnych druków — zawsze wiesz, gdzie trafiają Twoje środki."
+      },
+      "CARD3": {
+        "TITLE": "Dostępność",
+        "TEXT": "Dla każdego — na każdym urządzeniu, w każdym języku i z każdej grupy społecznej."
+      },
+      "CARD4": {
+        "TITLE": "Innowacja",
+        "TEXT": "Ewoluuje z Tobą — stale się rozwija dzięki najnowszym technologiom."
+      }
+    },
+    "TEAM": {
+      "HEADING": "Poznaj zespół",
+      "SUBTITLE": "Zespół pasjonatów pracujących nad uproszczeniem emerytur i wspieraniem użytkowników.",
+      "NAME1": "Jan Kowalski",
+      "ROLE1": "Frontend Developer",
+      "BIO1": "Tworzy intuicyjne doświadczenia użytkowników za pomocą Angular & Material.",
+      "NAME2": "Ana Patel",
+      "ROLE2": "Backend Developer",
+      "BIO2": "Projektuje bezpieczne, skalowalne API dla silnika emerytalnego.",
+      "NAME3": "Shweta Bhagat",
+      "ROLE3": "Kierownik Produktu",
+      "BIO3": "Prowadzi strategię produktu i zapewnia projektowanie zorientowane na użytkownika."
+    }
+  },
+  "FAQ": {
+    "TITLE": "Najczęściej zadawane pytania",
+    "SUBTITLE": "Uzyskaj szybkie odpowiedzi na pytania dotyczące emerytur",
+    "LIST": [
+      {
+        "question": "Jak mogę zobaczyć mój wyciąg emerytalny?",
+        "answer": "Zaloguj się do swojego panelu i przejdź do zakładki 'Pension Statements'."
+      },
+      {
+        "question": "Czy mogę zaktualizować moje dane osobowe?",
+        "answer": "Tak, przejdź do ustawień profilu i zaktualizuj dane w bezpieczny sposób."
+      },
+      {
+        "question": "Czy moje dane emerytalne są bezpieczne?",
+        "answer": "Zdecydowanie tak. Używamy MFA, RBAC i szyfrowania end-to-end."
+      },
+      {
+        "question": "Co zrobić, jeśli zapomnę danych logowania?",
+        "answer": "Kliknij „Zapomniałeś hasła” na stronie logowania i postępuj zgodnie z instrukcjami, aby zresetować hasło."
+      },
+      {
+        "question": "Czy mogę przesyłać dokumenty związane z emeryturą?",
+        "answer": "Tak, sekcja Zarządzanie Dokumentami umożliwia bezpieczne przechowywanie plików."
+      },
+      {
+        "question": "Jak mogę zmienić mój fundusz emerytalny?",
+        "answer": "Skontaktuj się ze swoim dostawcą emerytalnym. Szczegóły funduszu znajdziesz w panelu."
+      },
+      {
+        "question": "Czy dostępna jest pomoc prawna?",
+        "answer": "Nie udzielamy porad prawnych, ale udostępniamy linki do zaufanych doradców emerytalnych."
+      },
+      {
+        "question": "Jak mogę usunąć moje konto?",
+        "answer": "Skontaktuj się z pomocą techniczną przez e-mail, aby poprosić o bezpieczne usunięcie konta."
+      },
+      {
+        "question": "Jak często aktualizowane są dane emerytalne?",
+        "answer": "Dane składek i wyciągów są synchronizowane w czasie rzeczywistym z dostawcą emerytalnym."
+      },
+      {
+        "question": "Jakie urządzenia są obsługiwane?",
+        "answer": "Platforma działa płynnie na komputerach, tabletach i smartfonach."
+      },
+      {
+        "question": "Czy system obsługuje wiele języków?",
+        "answer": "Tak. Platforma obsługuje język angielski, hindi, francuski i inne."
+      },
+      {
+        "question": "Czy jest dostępny chatbot AI do pytań emerytalnych?",
+        "answer": "Tak. Zintegrowany asystent AI może pomóc w pytaniach związanych z emeryturą na panelu."
+      },
+      {
+        "question": "Czy mogę pobierać dokumenty emerytalne w formacie PDF?",
+        "answer": "Tak. Wyciągi emerytalne i przesłane pliki można pobierać jako pliki PDF."
+      }
+    ]
+  }
+}

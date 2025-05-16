@@ -19,10 +19,10 @@ export class ProfileComponent {
   errorMsg = '';
 
   constructor(private http: HttpClient, private router: Router) {
-    this.loadUserProfile();  // ✅ Call to load profile when page loads
+    this.loadUserProfile();  // Call to load profile when page loads
   }
 
-  // ✅ 1. Method to load user profile
+  // 1. Method to load user profile
   loadUserProfile() {
     const token = localStorage.getItem('userToken');
     if (!token) {
@@ -36,7 +36,7 @@ export class ProfileComponent {
       }
     }).subscribe({
       next: (res) => {
-        this.profile = res;  // ✅ Pre-fill form
+        this.profile = res;  // Pre-fill form
       },
       error: (err) => {
         console.error('Failed to load profile:', err);
@@ -44,7 +44,7 @@ export class ProfileComponent {
     });
   }
 
-  // ✅ 2. Method to update user profile
+  // 2. Method to update user profile
   updateProfile() {
     const token = localStorage.getItem('userToken');
     if (!token) {

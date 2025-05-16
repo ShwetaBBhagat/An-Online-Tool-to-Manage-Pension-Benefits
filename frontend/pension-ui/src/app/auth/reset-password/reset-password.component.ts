@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-reset-password',
-  standalone: true,           // ✅ Standalone component
+  standalone: true,           // Standalone component
   imports: [FormsModule, CommonModule],
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.css']

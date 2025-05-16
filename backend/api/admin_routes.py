@@ -47,7 +47,7 @@ def admin_login():
     }), 200
 
 
-# 🧑‍💼 Basic Admin Check Route
+#Basic Admin Check Route
 @admin_bp.route('/admin/ping', methods=['GET'])
 @token_required
 @admin_required

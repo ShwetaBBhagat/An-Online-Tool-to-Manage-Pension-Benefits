@@ -34,7 +34,7 @@ export class AnalyticsComponent {
         if (res.status === 'success') {
           this.analytics = res.analytics;
 
-          // 🔥 Wait for Angular to detect new DOM, then initialize chart
+          // Wait for Angular to detect new DOM, then initialize chart
           this.cdr.detectChanges(); // Force detect changes manually
           setTimeout(() => {
             this.initializeChart();

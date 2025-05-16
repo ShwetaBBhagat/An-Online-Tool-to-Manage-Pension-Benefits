@@ -1,0 +1,203 @@
+{
+  "HOME": {
+    "HERO": {
+      "TITLE": "Sécurisez votre retraite en toute confiance",
+      "SUBTITLE": "Votre compagnon de retraite personnalisé au Royaume-Uni",
+      "BUTTON": "Commencer"
+    },
+    "IMPACT": {
+      "HEADING": "Les chiffres qui définissent notre impact",
+      "SUBTITLE": "Approuvé par les professionnels dans tout le Royaume-Uni"
+    },
+    "NUMBERS": [
+      {
+        "target": "95",
+        "label": "Indice de confiance des clients",
+        "desc": "Les utilisateurs nous évaluent régulièrement pour notre clarté, sécurité et facilité d’utilisation.",
+        "prefix": "",
+        "suffix": "%"
+      },
+      {
+        "target": "20",
+        "label": "Années d’expertise",
+        "desc": "Offrir des outils de retraite conformes à la réglementation britannique.",
+        "prefix": "",
+        "suffix": "+"
+      },
+      {
+        "target": "500",
+        "label": "Fonds de pension suivis",
+        "desc": "Aider des milliers de personnes à prendre des décisions éclairées sur leur retraite.",
+        "prefix": "£",
+        "suffix": "M+"
+      }
+    ],
+    "FEATURES": {
+      "HEADING": "Fonctionnalités puissantes",
+      "SUBTITLE": "Tout ce dont vous avez besoin pour gérer votre retraite — joliment, en toute sécurité, sur n'importe quel appareil",
+      "CARD1": {
+        "TITLE": "Suivi des contributions",
+        "TEXT": "Des graphiques interactifs montrent précisément l’évolution de vos fonds."
+      },
+      "CARD2": {
+        "TITLE": "Connexion MFA sécurisée",
+        "TEXT": "L’authentification multifactorielle et les accès par rôles protègent vos données."
+      },
+      "CARD3": {
+        "TITLE": "Alertes en temps réel",
+        "TEXT": "Soyez alerté immédiatement des changements, contributions et délais."
+      },
+      "CARD4": {
+        "TITLE": "Multilingue",
+        "TEXT": "Support i18n fluide — changez de langue en un clic."
+      },
+      "CARD5": {
+        "TITLE": "Chatbot pension IA",
+        "TEXT": "Obtenez des réponses 24h/24 à vos questions de retraite via un assistant intelligent."
+      }
+    },
+    "TESTIMONIALS": {
+      "HEADING": "Ce que disent nos utilisateurs",
+      "SUBHEADING": "★ Avis 5 étoiles",
+      "LIST": [
+        {
+          "quote": "Le portail m’a enfin donné une vue claire de ma retraite complète.",
+          "name": "Sarah Collins",
+          "role": "Responsable marketing · Londres"
+        },
+        {
+          "quote": "Sûr et incroyablement facile à utiliser — fortement recommandé.",
+          "name": "Michael Osei",
+          "role": "Développeur logiciel · Manchester"
+        },
+        {
+          "quote": "J’adore les graphiques de suivi des contributions. Je me sens en contrôle de mon avenir.",
+          "name": "Priya Patel",
+          "role": "Enseignante · Birmingham"
+        }
+      ]
+    },
+    "COMPLIANCE": {
+      "TEXT": "Nous sommes conformes au <strong>RGPD</strong>, à la <strong>norme ISO 27001</strong> et aux <strong>règlementations britanniques sur les retraites</strong>.",
+      "GDPR": "RGPD",
+      "ISO": "ISO 27001",
+      "REGULATION": "Réglementation du Royaume-Uni"
+    },
+    "CONTACT": {
+      "HEADING": "Contactez-nous",
+      "SUBTITLE": "Nous sommes là pour répondre à vos questions sur les retraites et demandes d’assistance."
+    }
+  },
+  "NAV": {
+    "BRAND": "Portail Retraite",
+    "HOME": "Accueil",
+    "ABOUT": "À propos",
+    "FAQ": "FAQ",
+    "EMPLOYEE": "Connexion Employé",
+    "EMPLOYER": "Connexion Employeur",
+    "ADMIN": "Connexion Admin"
+  },
+  "ABOUT": {
+    "STORY": {
+      "HEADING": "Comment tout a commencé",
+      "TEXT": "Pension Portal est né d’une idée simple — simplifier la gestion des retraites pour les particuliers et les employeurs. Après avoir expérimenté la complexité des systèmes de retraite britanniques, nos fondateurs ont décidé de créer une plateforme transparente, sécurisée et facile à utiliser qui offre clarté et confiance. Ce qui a commencé comme un projet secondaire est maintenant un outil de confiance pour des milliers d’utilisateurs."
+    },
+    "MISSION": {
+      "HEADING": "Notre mission",
+      "TEXT": "Notre objectif est d’<strong>autonomiser les particuliers et les employeurs</strong> à travers le Royaume-Uni grâce à des outils <span class='highlight'>transparents</span>, <span class='highlight'>sécurisés</span> et <span class='highlight'>conviviaux</span> pour gérer les retraites et planifier l’avenir.<br /><br />Nous croyons que tout le monde mérite <strong>clarté</strong> et <strong>confiance</strong> dans son parcours de retraite."
+    },
+    "VISION": {
+      "HEADING": "Notre vision",
+      "TEXT": "Devenir la plateforme de retraite numérique la plus fiable du Royaume-Uni — en simplifiant les finances par <strong>technologie</strong>, <strong>transparence</strong> et <strong>autonomisation</strong>."
+    },
+    "VALUES": {
+      "CARD1": {
+        "TITLE": "Sécurité avant tout",
+        "TEXT": "Nous utilisons une sécurité de niveau bancaire pour protéger vos données et vos finances."
+      },
+      "CARD2": {
+        "TITLE": "Transparence",
+        "TEXT": "Des informations claires, sans astérisques — sachez toujours où va votre argent."
+      },
+      "CARD3": {
+        "TITLE": "Accessibilité",
+        "TEXT": "Conçu pour tous — sur tous les appareils, langues et horizons."
+      },
+      "CARD4": {
+        "TITLE": "Innovation",
+        "TEXT": "Nous évoluons avec vous — grâce aux technologies les plus récentes."
+      }
+    },
+    "TEAM": {
+      "HEADING": "Rencontrez l’équipe",
+      "SUBTITLE": "Une équipe passionnée œuvrant pour simplifier les retraites et responsabiliser les utilisateurs.",
+      "NAME1": "Jean Dupont",
+      "ROLE1": "Développeur Frontend",
+      "BIO1": "Crée des expériences utilisateurs intuitives avec Angular & Material.",
+      "NAME2": "Ana Patel",
+      "ROLE2": "Ingénieure Backend",
+      "BIO2": "Conçoit des API sécurisées et évolutives pour le moteur de retraite.",
+      "NAME3": "Shweta Bhagat",
+      "ROLE3": "Responsable Produit",
+      "BIO3": "Pilote la stratégie produit et garantit des principes de design centrés sur l’utilisateur."
+    }
+  },
+  "FAQ": {
+    "TITLE": "Questions fréquemment posées",
+    "SUBTITLE": "Trouvez rapidement des réponses à vos questions sur les retraites",
+    "LIST": [
+      {
+        "question": "Comment consulter mon relevé de retraite ?",
+        "answer": "Connectez-vous à votre tableau de bord et accédez à l’onglet 'Pension Statements'."
+      },
+      {
+        "question": "Puis-je mettre à jour mes informations personnelles ?",
+        "answer": "Oui, allez dans les paramètres de profil et modifiez vos informations en toute sécurité."
+      },
+      {
+        "question": "Mes données de retraite sont-elles sécurisées ?",
+        "answer": "Absolument. Nous utilisons MFA, RBAC et le chiffrement de bout en bout."
+      },
+      {
+        "question": "Que faire si j’oublie mes identifiants de connexion ?",
+        "answer": "Cliquez sur « Mot de passe oublié » et suivez les instructions pour le réinitialiser en toute sécurité."
+      },
+      {
+        "question": "Puis-je téléverser des documents relatifs à la retraite ?",
+        "answer": "Oui, dans la section de gestion des documents, vous pouvez stocker vos fichiers en toute sécurité."
+      },
+      {
+        "question": "Comment changer mon fonds de retraite ?",
+        "answer": "Veuillez contacter votre fournisseur de retraite. Vous pouvez consulter les détails actuels du fonds dans le tableau de bord."
+      },
+      {
+        "question": "Y a-t-il une assistance juridique disponible ?",
+        "answer": "Nous ne fournissons pas de conseils juridiques, mais nous proposons des liens vers des services de conseil tiers de confiance."
+      },
+      {
+        "question": "Comment supprimer mon compte ?",
+        "answer": "Contactez l’assistance par e-mail pour demander la suppression sécurisée de votre compte."
+      },
+      {
+        "question": "À quelle fréquence mes données de retraite sont-elles mises à jour ?",
+        "answer": "Les données de contributions et de relevés sont synchronisées en temps réel avec votre fournisseur."
+      },
+      {
+        "question": "Quels appareils sont pris en charge ?",
+        "answer": "La plateforme fonctionne parfaitement sur ordinateurs, tablettes et smartphones."
+      },
+      {
+        "question": "Le système prend-il en charge plusieurs langues ?",
+        "answer": "Oui. La plateforme prend en charge l’anglais, le hindi, le français et d’autres langues."
+      },
+      {
+        "question": "Un chatbot IA est-il disponible pour les questions de retraite ?",
+        "answer": "Oui. Un assistant IA intégré peut répondre à vos questions dans le tableau de bord."
+      },
+      {
+        "question": "Puis-je télécharger les documents de retraite au format PDF ?",
+        "answer": "Oui. Les relevés de pension et les fichiers peuvent être téléchargés au format PDF."
+      }
+    ]
+  }
+}

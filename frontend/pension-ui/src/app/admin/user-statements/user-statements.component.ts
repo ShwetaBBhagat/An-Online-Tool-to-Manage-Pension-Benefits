@@ -48,12 +48,12 @@ export class UserStatementsComponent {
       { headers }
     ).subscribe({
       next: (res) => {
-        alert(`✅ Statement generated for ${res.user} (Pot: £${res.pot_value})`);
+        alert(`Statement generated for ${res.user} (Pot: £${res.pot_value})`);
         this.fetchStatements(); // reload the table
       },
       error: (err) => {
         const message = err.error?.error || 'Something went wrong';
-        alert(`❌ Failed to generate statement: ${message}`);
+        alert(`Failed to generate statement: ${message}`);
       }
     });
   }
@@ -103,7 +103,7 @@ export class UserStatementsComponent {
       },
       error: (err) => {
         const msg = err.error?.error || 'Failed to delete statement';
-        alert(`❌ ${msg}`);
+        alert(`${msg}`);
       }
     });
   }

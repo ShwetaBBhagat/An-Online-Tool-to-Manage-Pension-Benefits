@@ -49,7 +49,7 @@ export class ViewEmployersComponent {
       },
       error: (err) => {
         const msg = err.error?.error || 'Error deleting employer';
-        alert(`❌ ${msg}`);
+        alert(`${msg}`);
       }
     });
   }  
